@@ -261,6 +261,35 @@ header::after{
   .result-score{font-size:3rem}
   .welcome-box{padding:36px 24px}
 }
+  <script>
+        // إعداد وقت الامتحان 40 دقيقة
+        let timeInSeconds = 40 * 60; 
+        const timerDisplay = document.createElement('div'); // إنشاء عنصر للتايمر
+        timerDisplay.style.cssText = "position:fixed; top:20px; left:20px; background:#1a1a3a; color:#fff; padding:10px 20px; border-radius:10px; border:1px solid #9b59b6; z-index:1000; font-size:20px; font-weight:bold;";
+        document.body.appendChild(timerDisplay);
+
+        function startTimer() {
+            let timer = setInterval(function () {
+                let minutes = Math.floor(timeInSeconds / 60);
+                let seconds = timeInSeconds % 60;
+                timerDisplay.innerHTML = `⏱️ ${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                if (timeInSeconds <= 0) {
+                    clearInterval(timer);
+                    alert("انتهى الوقت! سيتم إرسال الاختبار تلقائياً.");
+                    // هنا يمكنك استدعاء دالة الإرسال الخاصة بك
+                    // document.getElementById('your-form-id').submit();
+                } else {
+                    timeInSeconds--;
+                }
+            }, 1000);
+        }
+        
+        // التايمر سيبدأ فور تحميل الصفحة
+        startTimer();
+    </script>
+</body>
+</html>
 </style>
 </head>
 <body>

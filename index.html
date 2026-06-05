@@ -261,34 +261,36 @@ header::after{
   .result-score{font-size:3rem}
   .welcome-box{padding:36px 24px}
 }
- <script>
-    let timeInSeconds = 40 * 60; // 40 دقيقة
-    const timerDisplay = document.getElementById('timer');
+function startQuiz(){
+  const n=document.getElementById('nameInput').value.trim();
+  if(!n){document.getElementById('nameInput').focus();return;}
+  userName=n;
+  isFemale=detectGender(n);
 
-    function startTimer() {
-        let timer = setInterval(function () {
-            let minutes = Math.floor(timeInSeconds / 60);
-            let seconds = timeInSeconds % 60;
+  // update owner badge
+  const ownerEl=document.getElementById('ownerNameDisplay');
+  const ideaEl=document.getElementById('ideaNameDisplay');
 
-            // تحديث النص داخل الـ span
-            timerDisplay.innerHTML = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  if(isFemale){
+    ownerEl.className='name-glow-red';
+    ideaEl.className='name-glow-gold';
+  } else {
+    ownerEl.className='name-glow-gold';
+    ideaEl.className='name-glow-red';
+  }
 
-            if (timeInSeconds <= 0) {
-                clearInterval(timer);
-                alert("انتهى الوقت! سيتم إنهاء الاختبار.");
-                // هنا يمكن توجيه الطالب لصفحة النتائج أو إنهاء الاختبار
-            } else {
-                timeInSeconds--;
-            }
-        }, 1000);
-    }
+  document.getElementById('welcomeName').innerHTML=`أهلاً <span>${userName}</span> 👋`;
+  userAnswers=new Array(Q.length).fill(null);
 
-    // تشغيل التايمر بمجرد الضغط على زر "ابدأ الاختبار"
-    // يمكنك تعديل دالة startQuiz الموجودة عندك لتبدأ التايمر
-    function startQuizWithTimer() {
-        startQuiz(); // دالتك الأصلية
-        startTimer(); // تشغيل التايمر
-    }
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('quizScreen').style.display='block';
+
+  // --- هذا السطر هو الذي يشغل التايمر ---
+  startTimer(); 
+  // -------------------------------------
+  
+  render();
+}
 </script>
 </body>
 </html>

@@ -1,648 +1,494 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VT17G1J5WL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-VT17G1J5WL');
-  </script>
-
-  <title>موقعي</title>
-</head>
-
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>اختبار علم النفس - 50 سؤال</title>
+<title>كويز MORA - علم السياسة</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0d0d1a;
-  --card:#13132b;
-  --card2:#1a1a3a;
-  --accent:#9b59b6;
-  --accent2:#8e44ad;
-  --silver:#c0c0d0;
-  --silver2:#a0a0c0;
-  --gold:#d4af37;
-  --correct:#00c49a;
-  --wrong:#e74c3c;
-  --glow:rgba(155,89,182,0.4);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Cairo',sans-serif;background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;
-  background-image:radial-gradient(ellipse at 20% 20%,rgba(155,89,182,0.08) 0%,transparent 60%),
-                   radial-gradient(ellipse at 80% 80%,rgba(192,192,208,0.05) 0%,transparent 60%)}
+:root{--red:#e8001d;--gold:#FFD700;--dark:#0a0a0f;--darker:#050508;--card:#111120;--border:#1e1e3a;--text:#eee;--accent:#00cfff;--correct:#00e676;--wrong:#ff1744;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Cairo',sans-serif;background:var(--dark);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 50%,#0d0d2b 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,#1a0505 0%,transparent 50%);pointer-events:none;z-index:0;}
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.stars span{position:absolute;border-radius:50%;background:#fff;animation:twinkle 3s infinite;}
+@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:1}}
+@keyframes luffyFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-12px) rotate(2deg)}}
+@keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
+@keyframes glowPulse{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes hatBounce{0%,100%{transform:translateX(-50%) rotate(-5deg)}50%{transform:translateX(-50%) rotate(5deg) translateY(-3px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes winnerPulse{0%,100%{box-shadow:0 0 20px var(--gold)}50%{box-shadow:0 0 40px var(--gold)}}
+@keyframes slideIn{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes rankShine{0%,100%{box-shadow:0 0 10px var(--gold)}50%{box-shadow:0 0 30px var(--gold),0 0 60px #ff6b0066}}
 
-/* ===== WELCOME SCREEN ===== */
-#welcome-screen{
-  position:fixed;inset:0;z-index:999;
-  background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  background-image:radial-gradient(ellipse at 30% 30%,rgba(155,89,182,0.12) 0%,transparent 60%);
-}
-.welcome-box{
-  background:var(--card);
-  border:1px solid rgba(155,89,182,0.4);
-  border-radius:24px;
-  padding:50px 40px;
-  max-width:420px;width:90%;
-  text-align:center;
-  box-shadow:0 0 60px rgba(155,89,182,0.2);
-  animation:fadeUp 0.5s ease;
-}
-.welcome-logo{font-size:3rem;margin-bottom:12px}
-.welcome-title{font-size:1.6rem;font-weight:900;color:#fff;margin-bottom:6px}
-.welcome-title span{color:var(--accent)}
-.welcome-sub{color:var(--silver2);font-size:0.9rem;margin-bottom:32px}
-.welcome-label{display:block;text-align:right;font-size:0.88rem;color:var(--silver);margin-bottom:8px;font-weight:600}
-.welcome-input{
-  width:100%;padding:14px 18px;border-radius:12px;
-  border:2px solid rgba(155,89,182,0.3);
-  background:rgba(155,89,182,0.08);
-  color:#fff;font-family:'Cairo',sans-serif;font-size:1rem;font-weight:600;
-  outline:none;transition:border 0.2s;text-align:right;margin-bottom:24px;
-}
-.welcome-input:focus{border-color:var(--accent)}
-.welcome-input::placeholder{color:#555}
-.start-btn{
-  width:100%;padding:15px;border-radius:12px;border:none;
-  background:linear-gradient(135deg,var(--accent),#6c3483);
-  color:#fff;font-family:'Cairo',sans-serif;font-size:1.05rem;font-weight:700;
-  cursor:pointer;transition:all 0.2s;
-  box-shadow:0 4px 20px rgba(155,89,182,0.4);
-}
-.start-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(155,89,182,0.5)}
-.welcome-err{color:var(--wrong);font-size:0.85rem;margin-top:-16px;margin-bottom:16px;display:none}
+/* HEADER */
+.header{position:relative;z-index:10;text-align:center;padding:28px 20px 18px;border-bottom:2px solid var(--border);background:linear-gradient(180deg,#0d0018 0%,rgba(10,10,15,0.9) 100%);}
+.mora-name{font-size:3.5rem;font-weight:900;background:linear-gradient(90deg,var(--gold),#ff6b00,var(--gold));background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 2s infinite;letter-spacing:4px;position:relative;}
+.straw-hat{font-size:2.2rem;position:absolute;top:-38px;left:50%;transform:translateX(-50%);animation:hatBounce 1.5s ease-in-out infinite;filter:drop-shadow(0 3px 6px rgba(0,0,0,.8));}
+.mora-glow{width:100%;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-top:4px;animation:glowPulse 1.5s ease-in-out infinite;}
+.owner-badge{font-size:.75rem;color:var(--accent);letter-spacing:3px;margin-top:2px;}
+.quiz-subtitle{font-size:1rem;color:#aaa;margin-top:10px;}
+.quiz-subtitle span{color:var(--gold);}
 
-/* ===== TIMER ===== */
-#timer-bar{
-  position:sticky;top:0;z-index:100;
-  display:none;
-  background:#0d0d1a;
-  padding:8px 16px;
-  border-bottom:1px solid rgba(155,89,182,0.3);
-  align-items:center;justify-content:center;gap:12px;
-  width:100%;
-}
-.timer-box{
-  display:flex;align-items:center;gap:10px;
-  background:rgba(155,89,182,0.12);
-  border:1.5px solid rgba(155,89,182,0.35);
-  border-radius:12px;padding:7px 20px;
-  transition:all 0.3s;
-}
-.timer-box.warning{background:rgba(231,76,60,0.12);border-color:var(--wrong);animation:pulse-warn 1s ease infinite}
-@keyframes pulse-warn{0%,100%{box-shadow:0 0 0 0 rgba(231,76,60,0)}50%{box-shadow:0 0 0 6px rgba(231,76,60,0.2)}}
-.timer-icon{font-size:1.1rem}
-.timer-text{font-size:1.05rem;font-weight:900;letter-spacing:2px;color:var(--silver)}
-.timer-box.warning .timer-text{color:var(--wrong)}
-.timer-progress{flex:1;max-width:200px;height:6px;background:#1a1a3a;border-radius:99px;overflow:hidden}
-.timer-progress-fill{height:100%;background:linear-gradient(90deg,var(--correct),var(--accent));border-radius:99px;transition:width 1s linear}
-.timer-box.warning .timer-progress-fill{background:linear-gradient(90deg,var(--wrong),#c0392b)}
+/* TIMER */
+.timer-bar{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.timer-display{font-size:1.6rem;font-weight:900;color:var(--gold);font-variant-numeric:tabular-nums;transition:color .3s;}
+.timer-display.warn{color:#ff6b00;animation:pulse .5s infinite;}
+.timer-display.danger{color:var(--wrong);animation:pulse .3s infinite;}
+.timer-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+.timer-fill{height:100%;background:linear-gradient(90deg,var(--correct),var(--gold));border-radius:4px;transition:width 1s linear,background 1s;}
+.progress-info{font-size:.85rem;color:#aaa;white-space:nowrap;}
 
-/* ===== HEADER ===== */
-header{
-  width:100%;
-  background:linear-gradient(135deg,#100f2a,#1a1a3a);
-  padding:24px 20px 18px;text-align:center;
-  border-bottom:2px solid rgba(155,89,182,0.5);
-  position:relative;overflow:hidden;
-}
-header::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--silver),transparent);
-}
-.header-top{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
-.owner-img{
-  width:52px;height:52px;border-radius:50%;
-  border:2px solid var(--accent);
-  object-fit:cover;
-  box-shadow:0 0 16px rgba(155,89,182,0.5);
-}
-.owner-img-placeholder{
-  width:52px;height:52px;border-radius:50%;
-  border:2px solid var(--accent);
-  background:linear-gradient(135deg,var(--accent),#6c3483);
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.4rem;flex-shrink:0;
-  box-shadow:0 0 16px rgba(155,89,182,0.5);
-}
-.header-name{font-size:1.8rem;font-weight:900;color:#fff}
-.header-name span{
-  background:linear-gradient(135deg,var(--accent),var(--silver));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.header-badge{
-  font-size:0.75rem;font-weight:700;color:var(--accent);
-  background:rgba(155,89,182,0.15);border:1px solid rgba(155,89,182,0.4);
-  border-radius:20px;padding:3px 12px;letter-spacing:1px;
-}
-.header-sub{font-size:0.85rem;color:var(--silver2);margin-top:8px}
-.header-sub span{color:var(--gold);font-weight:700}
-.user-greeting{font-size:0.85rem;color:var(--silver2);margin-top:4px;}
-.user-greeting span{color:var(--accent);font-weight:700}
+/* REGISTER */
+#screen-register{position:fixed;inset:0;z-index:999;background:var(--darker);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:20px;}
+.reg-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px 28px;max-width:420px;width:100%;text-align:center;box-shadow:0 0 40px rgba(232,0,29,.2);}
+.reg-card h2{font-size:1.8rem;color:var(--gold);margin-bottom:6px;}
+.reg-card p{color:#888;font-size:.85rem;margin-bottom:18px;}
+.reg-input{width:100%;padding:13px 16px;background:#1a1a2e;border:1px solid var(--border);border-radius:10px;color:#fff;font-family:'Cairo',sans-serif;font-size:1rem;text-align:right;margin-bottom:10px;transition:border-color .3s;}
+.reg-input:focus{outline:none;border-color:var(--gold);}
+.btn-start{width:100%;padding:14px;background:linear-gradient(135deg,var(--red),#800010);border:none;border-radius:12px;color:#fff;font-family:'Cairo',sans-serif;font-size:1.1rem;font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:6px;}
+.btn-start:hover{transform:scale(1.03);box-shadow:0 0 20px var(--red);}
+.reg-err{color:var(--wrong);font-size:.85rem;min-height:18px;}
 
-/* ===== CONTAINER ===== */
-.container{width:100%;max-width:750px;padding:28px 16px 50px}
+/* QUIZ */
+#screen-quiz{display:none;padding:0 0 50px;position:relative;z-index:5;}
+.question-card{max-width:750px;margin:24px auto;padding:0 16px;}
+.q-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.q-num{background:var(--red);color:#fff;font-weight:900;font-size:.85rem;padding:5px 12px;border-radius:20px;white-space:nowrap;}
+.q-progress-dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;padding:10px 0;}
+.dot{width:34px;height:34px;border-radius:50%;background:var(--card);border:1.5px solid var(--border);color:#888;font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-family:'Cairo',sans-serif;}
+.dot:hover{border-color:var(--accent);color:var(--accent);}
+.dot.answered{background:#003d1a;border-color:var(--correct);color:var(--correct);}
+.dot.current{border-color:var(--gold);color:var(--gold);box-shadow:0 0 10px var(--gold);transform:scale(1.15);}
+.dot.skipped-wrong{background:#3d0010;border-color:var(--wrong);color:var(--wrong);}
+.q-text{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 20px;font-size:1.1rem;line-height:1.8;margin-bottom:16px;border-right:4px solid var(--red);}
+.options{display:flex;flex-direction:column;gap:10px;}
+.opt-btn{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.95rem;text-align:right;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px;}
+.opt-btn:hover:not(:disabled){border-color:var(--accent);background:#111130;transform:translateX(-4px);}
+.opt-btn.correct{background:#003d1a;border-color:var(--correct);color:var(--correct);}
+.opt-btn.wrong{background:#3d0010;border-color:var(--wrong);color:var(--wrong);}
+.opt-btn:disabled{cursor:default;}
+.opt-icon{font-size:1.1rem;margin-left:auto;}
+.tf-options{display:flex;gap:12px;}
+.tf-btn{flex:1;padding:18px;border-radius:12px;border:2px solid var(--border);background:var(--card);color:var(--text);font-family:'Cairo',sans-serif;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;}
+.tf-btn:hover:not(:disabled){transform:scale(1.05);}
+.tf-btn.correct{background:#003d1a;border-color:var(--correct);color:var(--correct);}
+.tf-btn.wrong{background:#3d0010;border-color:var(--wrong);color:var(--wrong);}
+.feedback{margin-top:12px;padding:12px 16px;border-radius:10px;font-size:.9rem;display:none;}
+.feedback.show{display:block;}
+.feedback.correct-fb{background:#002210;border:1px solid var(--correct);color:var(--correct);}
+.feedback.wrong-fb{background:#2d0010;border:1px solid var(--wrong);color:var(--wrong);}
+.nav-btns{display:flex;gap:10px;margin-top:18px;justify-content:space-between;}
+.nav-btn{padding:12px 24px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font-family:'Cairo',sans-serif;font-size:.95rem;cursor:pointer;transition:all .2s;flex:1;}
+.nav-btn:hover{border-color:var(--accent);}
+.nav-btn.primary{background:linear-gradient(135deg,var(--red),#800010);border-color:var(--red);color:#fff;font-weight:700;}
 
-/* ===== PROGRESS ===== */
-.progress-wrap{margin-bottom:22px}
-.progress-info{display:flex;justify-content:space-between;font-size:0.88rem;color:var(--silver2);margin-bottom:8px}
-.progress-bar{width:100%;height:8px;background:#1a1a3a;border-radius:99px;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--silver));border-radius:99px;transition:width 0.4s ease}
+/* WELCOME BAR */
+#welcome-bar{background:linear-gradient(90deg,#0d0020,#1a0030,#0d0020);border-bottom:1px solid #3a1060;padding:10px 20px;display:flex;align-items:center;gap:10px;font-family:'Cairo',sans-serif;position:relative;z-index:99;}
 
-/* ===== QUESTION CARD ===== */
-.question-card{
-  background:var(--card);border-radius:20px;padding:30px 26px 24px;
-  border:1px solid rgba(155,89,182,0.2);
-  box-shadow:0 8px 40px rgba(0,0,0,0.5),0 0 0 1px rgba(192,192,208,0.05);
-  animation:fadeUp 0.35s ease;
-}
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.q-number{font-size:0.82rem;color:var(--accent);font-weight:700;margin-bottom:10px;letter-spacing:1px}
-.q-type-badge{
-  display:inline-block;font-size:0.72rem;padding:2px 10px;border-radius:99px;margin-bottom:14px;font-weight:700;
-}
-.badge-mcq{background:rgba(212,175,55,0.12);border:1px solid var(--gold);color:var(--gold)}
-.badge-tf{background:rgba(155,89,182,0.12);border:1px solid var(--accent);color:var(--accent)}
-.q-text{font-size:1.12rem;font-weight:600;line-height:1.75;color:#e8eaf0;margin-bottom:24px}
+/* RESULTS */
+#screen-results{display:none;padding:30px 16px;position:relative;z-index:5;min-height:100vh;}
+.results-card{max-width:700px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px 24px;text-align:center;}
+.score-big{font-size:5rem;font-weight:900;background:linear-gradient(135deg,var(--gold),#ff6b00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.winner-frame{display:none;margin:20px auto;padding:20px;border:3px solid var(--gold);border-radius:16px;background:#1a1400;animation:winnerPulse 1s infinite;}
+.winner-frame.show{display:block;}
+.wrong-list{margin-top:24px;text-align:right;}
+.wrong-list h3{color:var(--wrong);margin-bottom:12px;font-size:1rem;}
+.wrong-item{background:#1a0010;border:1px solid #3d0020;border-radius:10px;padding:12px 14px;margin-bottom:8px;font-size:.85rem;line-height:1.7;}
+.wrong-item .correct-ans{color:var(--correct);font-weight:700;}
+.wrong-item .your-ans{color:var(--wrong);}
+.btn-retry{margin-top:20px;padding:14px 30px;background:linear-gradient(135deg,var(--red),#800010);border:none;border-radius:12px;color:#fff;font-family:'Cairo',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;}
 
-.answers{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
-.ans-btn{
-  width:100%;padding:13px 18px;border-radius:12px;
-  border:1.5px solid rgba(155,89,182,0.2);
-  background:rgba(155,89,182,0.06);
-  color:#ccc;font-family:'Cairo',sans-serif;font-size:0.98rem;font-weight:600;
-  cursor:pointer;transition:all 0.2s;text-align:right;
-}
-.ans-btn:hover:not(:disabled){border-color:var(--silver);color:#fff;background:rgba(192,192,208,0.1);transform:translateX(-3px)}
-.ans-btn.selected-correct{background:rgba(0,196,154,0.15);border-color:var(--correct);color:var(--correct)}
-.ans-btn.selected-wrong{background:rgba(231,76,60,0.15);border-color:var(--wrong);color:var(--wrong)}
-.ans-btn.reveal-correct{background:rgba(0,196,154,0.08);border-color:rgba(0,196,154,0.5);color:rgba(0,196,154,0.8)}
-.ans-btn:disabled{cursor:default}
-
-.tf-answers{display:flex;gap:14px;margin-bottom:20px}
-.tf-btn{
-  flex:1;padding:16px;border-radius:12px;
-  border:1.5px solid rgba(155,89,182,0.2);
-  background:rgba(155,89,182,0.06);
-  color:#ccc;font-family:'Cairo',sans-serif;font-size:1.05rem;font-weight:700;
-  cursor:pointer;transition:all 0.2s;text-align:center;
-}
-.tf-btn:hover:not(:disabled){border-color:var(--silver);color:#fff;background:rgba(192,192,208,0.1);transform:translateY(-2px)}
-.tf-btn.selected-correct{background:rgba(0,196,154,0.15);border-color:var(--correct);color:var(--correct)}
-.tf-btn.selected-wrong{background:rgba(231,76,60,0.15);border-color:var(--wrong);color:var(--wrong)}
-.tf-btn.reveal-correct{background:rgba(0,196,154,0.08);border-color:rgba(0,196,154,0.5);color:rgba(0,196,154,0.8)}
-.tf-btn:disabled{cursor:default}
-
-.feedback{font-size:0.95rem;font-weight:700;min-height:22px;margin-bottom:16px;text-align:center}
-.feedback.correct{color:var(--correct)}
-.feedback.wrong{color:var(--wrong)}
-
-.nav-buttons{display:flex;gap:10px}
-.nav-btn{padding:11px 24px;border-radius:10px;border:none;font-family:'Cairo',sans-serif;font-size:0.93rem;font-weight:700;cursor:pointer;transition:all 0.2s}
-.nav-btn.prev{background:#1a1a3a;color:var(--silver2);border:1px solid rgba(155,89,182,0.2)}
-.nav-btn.prev:hover{background:#22224a;color:#fff}
-.nav-btn.next{background:linear-gradient(135deg,var(--accent),#6c3483);color:#fff;flex:1;box-shadow:0 4px 16px rgba(155,89,182,0.3)}
-.nav-btn.next:hover{box-shadow:0 6px 22px rgba(155,89,182,0.5);transform:translateY(-1px)}
-.nav-btn.finish{background:linear-gradient(135deg,var(--gold),#b8860b);color:#000;flex:1;font-weight:900}
-.nav-btn.finish:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(212,175,55,0.4)}
-
-.dots-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px;justify-content:center}
-.dot{
-  width:28px;height:28px;border-radius:50%;background:#13132b;
-  border:1.5px solid rgba(155,89,182,0.25);cursor:pointer;
-  font-size:0.65rem;font-weight:700;color:#666;
-  display:flex;align-items:center;justify-content:center;transition:all 0.15s;
-}
-.dot:hover{border-color:var(--silver);color:var(--silver)}
-.dot.answered-correct{background:rgba(0,196,154,0.2);border-color:var(--correct);color:var(--correct)}
-.dot.answered-wrong{background:rgba(231,76,60,0.2);border-color:var(--wrong);color:var(--wrong)}
-.dot.current{border-color:var(--accent);color:var(--accent);transform:scale(1.2);box-shadow:0 0 10px rgba(155,89,182,0.4)}
-
-/* ===== RESULTS ===== */
-.results{
-  background:var(--card);border-radius:20px;padding:40px 26px;text-align:center;
-  border:1px solid rgba(155,89,182,0.2);
-  box-shadow:0 8px 40px rgba(0,0,0,0.5);animation:fadeUp 0.4s ease;
-}
-.result-title{font-size:1.5rem;font-weight:900;color:var(--silver);margin-bottom:6px}
-.result-score{font-size:4rem;font-weight:900;margin:14px 0}
-.result-score span{
-  background:linear-gradient(135deg,var(--accent),var(--silver));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.result-grade{font-size:1.15rem;font-weight:700;margin-bottom:22px;color:var(--silver2)}
-.result-breakdown{display:flex;gap:14px;justify-content:center;margin-bottom:24px}
-.rb{flex:1;max-width:140px;padding:14px;border-radius:12px;font-weight:700}
-.rb.c{background:rgba(0,196,154,0.1);border:1px solid var(--correct);color:var(--correct)}
-.rb.w{background:rgba(231,76,60,0.1);border:1px solid var(--wrong);color:var(--wrong)}
-.rb-num{font-size:2rem;font-weight:900}
-.rb-lbl{font-size:0.82rem}
-
-.winner-frame{
-  margin:0 auto 28px;
-  padding:24px 20px;
-  border-radius:16px;
-  background:linear-gradient(135deg,rgba(212,175,55,0.1),rgba(155,89,182,0.1));
-  border:2px solid var(--gold);
-  box-shadow:0 0 30px rgba(212,175,55,0.25),inset 0 0 30px rgba(212,175,55,0.05);
-  position:relative;overflow:hidden;
-  animation:pulse-frame 2s ease infinite;
-}
-@keyframes pulse-frame{0%,100%{box-shadow:0 0 30px rgba(212,175,55,0.25)}50%{box-shadow:0 0 50px rgba(212,175,55,0.5)}}
-.winner-frame::before,.winner-frame::after{content:'✦';position:absolute;font-size:1.5rem;color:var(--gold);opacity:0.5;}
-.winner-frame::before{top:10px;right:14px}
-.winner-frame::after{bottom:10px;left:14px}
-.winner-crown{font-size:2.5rem;margin-bottom:8px}
-.winner-name{font-size:1.8rem;font-weight:900;color:var(--gold);margin-bottom:4px}
-.winner-msg{font-size:0.9rem;color:var(--silver2)}
-.confetti-row{font-size:1.4rem;margin-bottom:8px;letter-spacing:4px}
-
-.wrong-list{text-align:right;margin-top:16px}
-.wrong-item{
-  background:rgba(231,76,60,0.06);border:1px solid rgba(231,76,60,0.2);
-  border-radius:10px;padding:12px 16px;margin-bottom:10px;font-size:0.9rem;line-height:1.6;
-}
-.wrong-item .q-num-lbl{color:var(--gold);font-weight:700;font-size:0.8rem}
-.wrong-item .q-txt{color:#ddd;margin:4px 0}
-.wrong-item .correct-ans{color:var(--correct);font-weight:600;font-size:0.86rem}
-.wrong-item .your-ans{color:var(--wrong);font-size:0.86rem}
-.wrong-title{font-size:1rem;font-weight:700;color:#ddd;margin-bottom:14px;border-bottom:1px solid #1a1a3a;padding-bottom:10px}
-
-.retry-btn{
-  background:linear-gradient(135deg,var(--accent),#6c3483);
-  color:#fff;border:none;padding:13px 36px;border-radius:10px;
-  font-family:'Cairo',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;
-  transition:all 0.2s;margin-top:10px;
-  box-shadow:0 4px 18px rgba(155,89,182,0.35);
-}
-.retry-btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(155,89,182,0.5)}
-
-/* ===== TIMEOUT OVERLAY ===== */
-#timeout-overlay{
-  display:none;position:fixed;inset:0;z-index:500;
-  background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);
-  align-items:center;justify-content:center;
-}
-.timeout-box{
-  background:var(--card);border:2px solid var(--wrong);border-radius:20px;
-  padding:40px 32px;text-align:center;max-width:380px;width:90%;
-  box-shadow:0 0 60px rgba(231,76,60,0.3);animation:fadeUp 0.4s ease;
-}
-.timeout-icon{font-size:3rem;margin-bottom:12px}
-.timeout-title{font-size:1.4rem;font-weight:900;color:var(--wrong);margin-bottom:8px}
-.timeout-sub{font-size:0.9rem;color:var(--silver2);margin-bottom:24px}
-.timeout-btn{
-  background:linear-gradient(135deg,var(--wrong),#c0392b);
-  color:#fff;border:none;padding:13px 36px;border-radius:10px;
-  font-family:'Cairo',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;
-  box-shadow:0 4px 18px rgba(231,76,60,0.35);
-}
-
-@media(max-width:500px){
-  .header-name{font-size:1.35rem}
-  .q-text{font-size:1rem}
-  .dot{width:22px;height:22px;font-size:0.58rem}
-  .result-score{font-size:3rem}
-  .welcome-box{padding:36px 24px}
-}
+/* LEADERBOARD */
+#screen-leaderboard{display:none;padding:30px 16px 50px;position:relative;z-index:5;min-height:100vh;}
+.lb-card{max-width:680px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 20px;}
+.lb-title{color:var(--gold);font-size:1.6rem;font-weight:900;text-align:center;margin-bottom:6px;}
+.lb-sub{color:#888;font-size:.85rem;text-align:center;margin-bottom:24px;}
+.lb-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:12px;margin-bottom:8px;background:#0d0d1a;border:1px solid var(--border);animation:slideIn .3s ease;}
+.lb-row.top1{background:linear-gradient(135deg,#2a1f00,#1a1000);border-color:#FFD700;animation:rankShine 2s infinite;}
+.lb-row.top2{background:#1a1a2a;border-color:#C0C0C0;}
+.lb-row.top3{background:#1a1008;border-color:#CD7F32;}
+.lb-rank{font-size:1.4rem;width:36px;text-align:center;flex-shrink:0;}
+.lb-info{flex:1;}
+.lb-name{font-weight:700;font-size:1rem;}
+.lb-group{color:#888;font-size:.8rem;}
+.lb-score{font-weight:900;font-size:1.1rem;color:var(--gold);}
+.lb-loading{text-align:center;padding:30px;color:#888;}
+.luffy-corner{position:fixed;bottom:20px;left:20px;z-index:50;font-size:50px;animation:luffyFloat 2s infinite;cursor:pointer;filter:drop-shadow(0 0 10px #e8001d);}
 </style>
 </head>
 <body>
+<div class="stars" id="stars"></div>
 
-<!-- WELCOME SCREEN -->
-<div id="welcome-screen">
-  <div class="welcome-box">
-    <div class="welcome-logo">📝</div>
-    <div class="welcome-title">اختبار <span>علم النفس</span></div>
-    <div class="welcome-sub">50 سؤال — اختيار متعدد وصح وخطأ</div>
-
-    <div style="background:rgba(155,89,182,0.1);border:1px solid rgba(155,89,182,0.4);border-radius:12px;padding:12px 16px;margin-bottom:16px;font-size:0.85rem;color:var(--silver);text-align:right;line-height:1.7">
-      ⏱️ <strong style="color:#fff">وقت الاختبار: 30 دقيقة</strong><br>
-      <span style="color:#a0a0c0;font-size:0.8rem">ينتهي الاختبار تلقائياً عند انتهاء الوقت</span>
+<!-- REGISTER -->
+<div id="screen-register">
+  <div class="reg-card">
+    <div style="font-size:2.5rem;margin-bottom:8px">⚓</div>
+    <h2>🏴‍☠️ كويز MORA</h2>
+    <p>علم السياسة — سجل واكتشف مكانك بين الأوائل!</p>
+    <input class="reg-input" id="inp-name" placeholder="اسمك الكامل" />
+    <input class="reg-input" id="inp-group" placeholder="جروبك" />
+    <input class="reg-input" id="inp-pin" type="password" placeholder="كلمة سر خاصة بيك (PIN)" maxlength="20"/>
+    <div class="reg-err" id="reg-err"></div>
+    <button class="btn-start" onclick="startQuiz()">🚀 ابدأ الاختبار</button>
+    <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
+      <button onclick="showLeaderboard()" style="background:none;border:1px solid var(--gold);border-radius:10px;color:var(--gold);font-family:'Cairo',sans-serif;font-size:.9rem;padding:9px 20px;cursor:pointer;width:100%;">🏆 شوف الأوائل</button>
     </div>
-
-    <div style="background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.4);border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:0.85rem;color:#d4af37;text-align:right;line-height:1.7">
-      🎁 <strong>مكافأة خاصة</strong> لمن يحصل على <strong>45 من 50</strong> أو أكثر!<br>
-      <span style="color:#a0a0c0;font-size:0.8rem">اجتهد واكتشف المكافأة بنفسك 👀</span>
-    </div>
-
-    <div style="background:rgba(231,76,60,0.08);border:1px solid rgba(231,76,60,0.3);border-radius:12px;padding:10px 16px;margin-bottom:20px;font-size:0.82rem;color:#e74c3c;text-align:right;line-height:1.6">
-      ⚠️ <strong>تنبيه:</strong> لا يوجد أي تعديل على الأسئلة بعد بدء الاختبار
-    </div>
-
-    <label class="welcome-label">اسمك الكامل</label>
-    <input class="welcome-input" id="name-input" type="text" placeholder="الاسم الكامل..." maxlength="40">
-
-    <label class="welcome-label">جروبك</label>
-    <input class="welcome-input" id="group-input" type="text" placeholder="مثال: A — B — C ..." maxlength="20" style="margin-bottom:8px">
-
-    <div class="welcome-err" id="name-err">⚠️ من فضلك اكتب اسمك وجروبك</div>
-    <button class="start-btn" onclick="startQuiz()">ابدأ الاختبار ←</button>
   </div>
 </div>
 
-<!-- TIMER BAR -->
-<div id="timer-bar">
-  <div class="timer-box" id="timer-box">
-    <span class="timer-icon">⏱️</span>
-    <span class="timer-text" id="timer-text">30:00</span>
-    <div class="timer-progress"><div class="timer-progress-fill" id="timer-fill" style="width:100%"></div></div>
-  </div>
-</div>
-
-<!-- TIMEOUT OVERLAY -->
-<div id="timeout-overlay">
-  <div class="timeout-box">
-    <div class="timeout-icon">⏰</div>
-    <div class="timeout-title">انتهى الوقت!</div>
-    <div class="timeout-sub">انتهت الـ 30 دقيقة — سيتم عرض نتيجتك الآن</div>
-    <button class="timeout-btn" onclick="showResultsAfterTimeout()">عرض النتيجة</button>
-  </div>
-</div>
-
-<header>
-  <div class="header-top">
-    <img class="owner-img" id="owner-img" src="" alt="Naser" onerror="this.style.display='none';document.getElementById('owner-placeholder').style.display='flex'">
-    <div class="owner-img-placeholder" id="owner-placeholder" style="display:none">👤</div>
-    <div>
-      <div class="header-name">Naser <span>eldosoky</span></div>
-      <div class="header-badge">OWNER</div>
-    </div>
-  </div>
-  <div class="header-sub">فكرة <span>basant Tarek</span></div>
-  <div class="user-greeting" id="user-greeting"></div>
-</header>
-
-<div class="container" id="app"></div>
-
-<script>
-let userName='', userGroup='';
-const TOTAL_TIME = 30 * 60; // 30 minutes in seconds
-let timeLeft = TOTAL_TIME;
-let timerInterval = null;
-
-function startTimer(){
-  const bar = document.getElementById('timer-bar');
-  bar.style.display = 'flex';
-  timerInterval = setInterval(()=>{
-    timeLeft--;
-    updateTimerDisplay();
-    if(timeLeft <= 0){
-      clearInterval(timerInterval);
-      timerInterval = null;
-      triggerTimeout();
-    }
-  }, 1000);
-}
-
-function updateTimerDisplay(){
-  const m = Math.floor(timeLeft / 60);
-  const s = timeLeft % 60;
-  document.getElementById('timer-text').textContent =
-    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
-  const pct = (timeLeft / TOTAL_TIME) * 100;
-  document.getElementById('timer-fill').style.width = pct + '%';
-  const box = document.getElementById('timer-box');
-  if(timeLeft <= 300){ // last 5 minutes
-    box.classList.add('warning');
-  } else {
-    box.classList.remove('warning');
-  }
-}
-
-function triggerTimeout(){
-  document.getElementById('timeout-overlay').style.display = 'flex';
-}
-
-function showResultsAfterTimeout(){
-  document.getElementById('timeout-overlay').style.display = 'none';
-  finished = true;
-  render();
-}
-
-function startQuiz(){
-  const inp = document.getElementById('name-input');
-  const grp = document.getElementById('group-input');
-  const err = document.getElementById('name-err');
-  userName = inp.value.trim();
-  userGroup = grp.value.trim();
-  if(!userName || !userGroup){err.style.display='block';return;}
-  err.style.display='none';
-  document.getElementById('welcome-screen').style.display='none';
-  document.getElementById('user-greeting').innerHTML = `أهلاً <span>${userName}</span> — جروب <span>${userGroup}</span> 🎯`;
-  startTimer();
-  render();
-}
-document.getElementById('name-input').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('group-input').focus();});
-document.getElementById('group-input').addEventListener('keydown',e=>{if(e.key==='Enter')startQuiz();});
-
-const questions = [
-  {type:'mcq',q:"تعرف بأنه مجموعة العمليات الذهنية التي يتبعها الباحث للوصول إلى حقائق علمية",opts:["العلم","البحث العلمي","المنهج","لا شيء مما سبق"],a:2},
-  {type:'mcq',q:"جوهر النشاط العقلي للإنسان وهو ما يميزه عن سائر الكائنات الحية",opts:["الذكاء","المنهج","العلم","البحث العلمي"],a:0},
-  {type:'mcq',q:"عامل أو قدرة عامة تؤثر في جميع العمليات العقلية والمعرفية للإنسان",opts:["التفكير","التذكر","الذكاء","جميع ما سبق"],a:2},
-  {type:'mcq',q:"فرع من علم النفس يهتم بدراسة الشواذ والمنحرفين نفسياً",opts:["علم النفس الشخصية","علم النفس الفسيولوجي","علم النفس المرضي","لا شيء مما سبق"],a:2},
-  {type:'mcq',q:"من تصنيفات البحوث النفسية من حيث المنهج المستخدم",opts:["المنهج الفلسفي","المنهج التجريبي","المنهج التاريخي","الأنثروبولوجي"],a:1},
-  {type:'mcq',q:"الباحث يتدخل ويتحكم في المتغيرات لدراسة العلاقة السببية",opts:["الوصفي","المقارن","التجريبي","الإكلينيكي"],a:2},
-  {type:'mcq',q:"تمثل القدرات العامة والخاصة الكامنة في الفرد قبل تدريبه",opts:["بناء الجسم","الميول","الاتجاهات","الاستعدادات"],a:3},
-  {type:'mcq',q:"تغير دائم أو شبه دائم في السلوك ناتج عن الخبرة والممارسة",opts:["الذكاء","المنهج","العلم","التعلم"],a:3},
-  {type:'mcq',q:"أنشأ أول معمل تجريبي لعلم النفس عام 1879",opts:["أرسطو","سقراط","فونت","لا شيء"],a:2},
-  {type:'mcq',q:"طريقة لوصف الموضوع المراد دراسته وصفاً دقيقاً وتفسيره",opts:["التاريخي","الأنثروبولوجي","الوصفي","الإبداعي"],a:2},
-  {type:'mcq',q:"فرع علم النفس الذي يدرس العلاقة بين الفرد والجماعة",opts:["العام","الفارقي","الاجتماعي","النمو"],a:2},
-  {type:'mcq',q:"من أهداف العلم الأساسية",opts:["الاكتساب والوعي","الفهم والتفسير","التعلم","التعرف"],a:1},
-  {type:'mcq',q:"عملية عقلية تتضمن التأثير على الأعضاء الحسية بمنبهات من البيئة",opts:["الإحساس","الإدراك","الإدراك الحسي","لا شيء"],a:2},
-  {type:'mcq',q:"جهاز الشخصية عند فرويد الذي يحكمه مبدأ اللذة",opts:["الهو","الأنا","الأنا الأعلى","لا شيء"],a:0},
-  {type:'mcq',q:"استجابه كليه لمجموعات التنبيهات الحسيه الصادره عن الكائن الحي بكل ما له من ذكريات وخبرات واتجاهات وميول",opts:["الإحساس","الإدراك","الإدراك الحسي","المنبه"],a:2},
-  {type:'mcq',q:"حالة تنبه داخل الكائن العضوي تدفعه نحو سلوك معين",opts:["الإدراك","الدوافع","الانفعالات","النسيان"],a:1},
-  {type:'mcq',q:"فرع علم النفس الذي يدرس الجهاز العصبي ووظائفه وعلاقتها بالسلوك",opts:["الإكلينيكي","المرضي","الفسيولوجي","الصناعي"],a:2},
-  {type:'mcq',q:"العوامل التي تنشط السلوك وتوجهه نحو تحقيق هدف معين",opts:["الحاجة","الباعث","الدافع","الإشباع"],a:2},
-  {type:'mcq',q:"أبسط العمليات النفسية التي يقوم بها الإنسان في تفاعله مع البيئة",opts:["الإدراك","الدافع","الحاجة","الإحساس"],a:3},
-  {type:'mcq',q:"علم النفس مشتق لغوياً من كلمتين تعنيان",opts:["البيئة والفرد","النفس والفرد","الثقافة والعقل","الروح والعلم"],a:3},
-  {type:'mcq',q:"تنبيه الخلايا المستقبلة في أعضاء الحس يسمى التنبيهات",opts:["الرمزية","الحسية","الوجدانية","لا شيء"],a:1},
-  {type:'mcq',q:"الفيلسوف اليوناني القديم الذي اهتم بعالم الأفكار والمثل",opts:["أرسطو","سقراط","فونت","أفلاطون"],a:3},
-  {type:'mcq',q:"إحدى مراحل نمو الإدراك عند الطفل",opts:["التعميم","التمييز","التكامل","جميع ماسبق"],a:3},
-  {type:'mcq',q:"الدوافع التي يكتسبها الفرد من خلال احتكاكه بالمجتمع",opts:["الأولية","الثانوية","الفطرية","البدائية"],a:1},
-  {type:'mcq',q:"حكم الشخص على مشاعره وتفسيرها يُعد من مكونات الانفعال",opts:["سلوك ظاهر","تغير فسيولوجي","المشاعر والإدراكات الانفعالية","لا شيء"],a:2},
-  {type:'tf',q:"يعبر قانون السياق الإدراكي عن ميل الشخص إلى إدراك معنى المثير وفقاً للمثيرات الأخرى التي تسبقه أو تصاحبه أو تلحقه",a:true},
-  {type:'tf',q:"الإدراك هو تنظيم دينامي داخل الفرد لتلك الأجهزة النفسية الجسمية التي تحدد طابعه الخاص في توافقه مع بيئته",a:false},
-  {type:'tf',q:"تمثل الحاجة لتحقيق الذات قمة الهرم عند ماسلو",a:true},
-  {type:'tf',q:"تعد الفروق الفردية اختلافاً يوجد بين الأفراد في النواحي الجسمية أو العقلية أو الوجدانية",a:true},
-  {type:'tf',q:"تمثل الهو التكوين الثالث في بناء الشخصية، وتعمل على بلوغ الكمال وليس الواقع أو اللذة",a:false},
-  {type:'tf',q:"علم النفس هو دراسة الإنسان من حيث هو كتلة خاضعة لقانون الجاذبية",a:false},
-  {type:'tf',q:"تعتبر مرحلة التكامل عن انتظام المدركات في أنماط كلية ذات معنى في الحياة العملية للفرد وتتداخل هذه الأنماط مع المدركات الجديدة التي يكتسبها",a:true},
-  {type:'tf',q:"الأنا الأعلى عقلانية كالأنا",a:false},
-  {type:'tf',q:"لا تساعد معرفة دوافع العمال وميولهم في تحفيز طاقاتهم نحو النجاح في العمل",a:false},
-  {type:'tf',q:"تتمثل الدوافع الشعورية في الدوافع التي يشعر الفرد بوجودها",a:true},
-  {type:'tf',q:"المتغير المستقل هو المتغير الذي يعرف باسم المتغير التجريبي",a:true},
-  {type:'tf',q:"التجارب الميدانية يتم فيها وضع أفراد العينة في مناخ تجريبي أو اصطناعي يتناسب مع أغراض البحث",a:false},
-  {type:'tf',q:"الدوافع الاجتماعية هي دوافع أولية يولد الفرد بها",a:false},
-  {type:'tf',q:"يتمثل قانون المصير المشترك في ميل الإنسان وفطرته لتنظيم المدركات في شكل وخلفية",a:false},
-  {type:'tf',q:"الحاجات الجمالية هي الحاجة إلى النظام والتماثل وإتمام الفعل وتتمثل في تحقيق التوازن الانفعالي وعدم وجود اضطراب أو فوضى",a:true},
-  {type:'tf',q:"في قانون الإغلاق الإدراكي الأشياء الكاملة عادة تنقص وتترك كلها ناقصة",a:false},
-  {type:'tf',q:"السلوك الظاهر يمثل حكم الشخص على مشاعره وشدتها ونوعيتها",a:false},
-  {type:'tf',q:"الباعث هو موضوع أو شخص ندركه على أنه قادر على إشباع حاجة الفرد",a:true},
-  {type:'tf',q:"الاستجابة هي رد الفعل السابق للمنبه",a:false},
-  {type:'tf',q:"في قانون التقارب الإدراكي تتقارب التنبيهات الحسية في المكان أو الزمان كما تبدو في مجال إدراكنا وحدة مستقلة محددة",a:true},
-  {type:'tf',q:"من خطوات المنهج الوصفي جمع البيانات والمعلومات من المصادر المختلفة",a:true},
-  {type:'tf',q:"المتغير المستقل هو العامل الذي يريد الباحث قياس مدى تأثيره في الظاهرة المدروسة",a:true},
-  {type:'tf',q:"المنهج المقارن هو الذي يبرز أوجه الشبه والاختلاف فيما بين ظاهرتين أو أكثر",a:true},
-  {type:'tf',q:"إذا تعاونت أنظمة الشخصية يسرت لصاحبها التفاعل مع البيئة على نحو مرضٍ",a:true},
-  {type:'tf',q:"يعد تقدير الذات متغيراً مستقلاً في عنوان البحث التالي: (تقدير الذات وعلاقته بالسلوك العدواني)",a:true},
-];
-
-let userAnswers=new Array(questions.length).fill(null);
-let current=0,finished=false;
-
-function render(){
-  const app=document.getElementById('app');
-  if(finished){
-    if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
-    document.getElementById('timer-bar').style.display='none';
-    app.innerHTML=renderResults();
-    return;
-  }
-  app.innerHTML=renderQuiz();
-}
-
-function renderQuiz(){
-  const q=questions[current];
-  const answered=userAnswers[current]!==null;
-  const pct=Math.round((current/questions.length)*100);
-  const isMcq=q.type==='mcq';
-
-  let answersHtml='';
-  if(isMcq){
-    answersHtml='<div class="answers">';
-    q.opts.forEach((opt,j)=>{
-      let cls='ans-btn';
-      if(answered){
-        if(j===userAnswers[current]) cls+=j===q.a?' selected-correct':' selected-wrong';
-        else if(j===q.a) cls+=' reveal-correct';
-      }
-      answersHtml+=`<button class="${cls}" onclick="answer(${j})" ${answered?'disabled':''}>${opt}</button>`;
-    });
-    answersHtml+='</div>';
-  } else {
-    const tCls=answered?(userAnswers[current]===true?(q.a===true?'selected-correct':'selected-wrong'):(q.a===true?'reveal-correct':'')):'';
-    const fCls=answered?(userAnswers[current]===false?(q.a===false?'selected-correct':'selected-wrong'):(q.a===false?'reveal-correct':'')):'';
-    answersHtml=`<div class="tf-answers">
-      <button class="tf-btn ${tCls}" onclick="answer(true)" ${answered?'disabled':''}>✔ صح</button>
-      <button class="tf-btn ${fCls}" onclick="answer(false)" ${answered?'disabled':''}>✘ خطأ</button>
-    </div>`;
-  }
-
-  let feedbackHtml='<div class="feedback"></div>';
-  if(answered){
-    const ok=isMcq?userAnswers[current]===q.a:userAnswers[current]===q.a;
-    feedbackHtml=`<div class="feedback ${ok?'correct':'wrong'}">${ok?'✅ إجابة صحيحة!':'❌ إجابة خاطئة!'}</div>`;
-  }
-
-  const dots=questions.map((_,i)=>{
-    let cls='dot';
-    if(i===current) cls+=' current';
-    else if(userAnswers[i]!==null){
-      const q2=questions[i];
-      cls+=(q2.type==='mcq'?userAnswers[i]===q2.a:userAnswers[i]===q2.a)?' answered-correct':' answered-wrong';
-    }
-    return `<div class="${cls}" onclick="goTo(${i})">${i+1}</div>`;
-  }).join('');
-
-  const isLast=current===questions.length-1;
-  const nextBtn=isLast
-    ?`<button class="nav-btn finish" onclick="finish()">إنهاء الاختبار 🏁</button>`
-    :`<button class="nav-btn next" onclick="next()">التالي ←</button>`;
-
-  return `
-    <div class="progress-wrap">
-      <div class="progress-info"><span>السؤال ${current+1} من ${questions.length}</span><span>${pct}%</span></div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-    </div>
-    <div class="question-card">
-      <div class="q-number">سؤال رقم ${current+1}</div>
-      <span class="q-type-badge ${isMcq?'badge-mcq':'badge-tf'}">${isMcq?'اختيار متعدد':'صح أم خطأ'}</span>
-      <div class="q-text">${q.q}</div>
-      ${answersHtml}
-      ${feedbackHtml}
-      <div class="nav-buttons">
-        <button class="nav-btn prev" onclick="prev()" ${current===0?'disabled style="opacity:0.3"':''}>→ السابق</button>
-        ${nextBtn}
+<!-- QUIZ -->
+<div id="screen-quiz">
+  <div class="header">
+    <div style="display:flex;align-items:center;justify-content:center;">
+      <div style="text-align:center;">
+        <div class="mora-name" style="position:relative"><span class="straw-hat">🎩</span>MORA</div>
+        <div class="mora-glow"></div>
+        <div class="owner-badge">✦ OWNER ✦</div>
       </div>
     </div>
-    <div class="dots-wrap">${dots}</div>`;
-}
+    <div class="quiz-subtitle">كويز علم السياسة — <span id="q-count-label">السؤال الأول</span></div>
+  </div>
 
-function renderResults(){
-  const correctCount=userAnswers.filter((a,i)=>a===questions[i].a).length;
-  const wrong=questions.length-correctCount;
-  const pct=Math.round((correctCount/questions.length)*100);
-  const grade=pct>=90?'🏆 ممتاز':pct>=75?'✨ جيد جداً':pct>=60?'👍 جيد':pct>=50?'⚠️ مقبول':'❌ راجع المادة';
+  <div id="welcome-bar">
+    <span style="font-size:1.1rem;">🎯</span>
+    <span style="color:#aaa;font-size:.9rem;">أهلاً</span>
+    <span id="wb-name" style="color:#fff;font-weight:700;text-decoration:underline wavy #a855f7;text-underline-offset:3px;"></span>
+    <span style="color:#aaa;font-size:.9rem;">— جروب</span>
+    <span id="wb-group" style="color:#c084fc;font-weight:900;font-style:italic;"></span>
+  </div>
 
-  const isWinner=correctCount>=45;
-  const winnerHtml=isWinner?`
-    <div class="winner-frame">
-      <div class="confetti-row">🎊 🌟 🎊 🌟 🎊</div>
-      <div class="winner-crown">👑</div>
-      <div class="winner-name">${userName}</div>
-      <div class="winner-msg">حصلت على ${correctCount} من 50 — إنجاز رائع! أنت من المتميزين 🌟</div>
-    </div>` : '';
+  <div class="timer-bar">
+    <div class="timer-display" id="timer-display">45:00</div>
+    <div class="timer-track"><div class="timer-fill" id="timer-fill"></div></div>
+    <div class="progress-info" id="progress-info">1 / 35</div>
+  </div>
 
-  const wrongItems=questions.map((q,i)=>{
-    if(userAnswers[i]===null||userAnswers[i]===q.a) return '';
-    const cLabel=q.type==='mcq'?q.opts[q.a]:(q.a?'صح':'خطأ');
-    const yLabel=q.type==='mcq'?(userAnswers[i]!==null?q.opts[userAnswers[i]]:'لم يُجب'):(userAnswers[i]!==null?(userAnswers[i]?'صح':'خطأ'):'لم يُجب');
-    return `<div class="wrong-item">
-      <div class="q-num-lbl">سؤال ${i+1}</div>
-      <div class="q-txt">${q.q}</div>
-      <div class="correct-ans">✅ الإجابة الصحيحة: ${cLabel}</div>
-      <div class="your-ans">❌ إجابتك: ${yLabel}</div>
-    </div>`;
-  }).join('');
+  <div style="max-width:750px;margin:16px auto 0;padding:0 16px;">
+    <div id="dots" class="q-progress-dots"></div>
+  </div>
 
-  const unanswered=userAnswers.filter(a=>a===null).length;
-
-  const noEditNotice=`<div style="background:rgba(231,76,60,0.08);border:1px solid rgba(231,76,60,0.25);border-radius:10px;padding:10px 14px;margin-bottom:18px;font-size:0.82rem;color:#e74c3c;text-align:center">
-    ⚠️ لا يوجد أي تعديل على الأسئلة — النتيجة نهائية
-  </div>`;
-
-  return `<div class="results">
-    <div class="result-title">نتيجة ${userName}</div>
-    <div style="font-size:0.85rem;color:var(--accent);margin-bottom:6px;font-weight:700">جروب ${userGroup}</div>
-    <div class="result-score"><span>${correctCount}</span> / ${questions.length}</div>
-    <div class="result-grade">${grade} — ${pct}%</div>
-    <div class="result-breakdown">
-      <div class="rb c"><div class="rb-num">${correctCount}</div><div class="rb-lbl">صحيحة</div></div>
-      <div class="rb w"><div class="rb-num">${wrong}</div><div class="rb-lbl">خاطئة</div></div>
+  <div class="question-card">
+    <div class="q-header"><div class="q-num" id="q-num">س 1</div></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="options" id="options-container"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="nav-btns">
+      <button class="nav-btn primary" id="btn-next" onclick="nextQ()">التالي ←</button>
+      <button class="nav-btn" onclick="skipQ()">تخطي</button>
     </div>
-    ${noEditNotice}
-    ${winnerHtml}
-    ${unanswered>0?`<p style="color:#666;font-size:0.88rem;margin-bottom:16px;">⚠️ ${unanswered} سؤال لم تجب عليه</p>`:''}
-    ${wrongItems?`<div class="wrong-list"><div class="wrong-title">📋 الأسئلة التي أخطأت فيها:</div>${wrongItems}</div>`:'<p style="color:var(--correct);font-size:1.05rem;margin-bottom:20px;">🎉 أجبت على كل الأسئلة بشكل صحيح!</p>'}
-    <button class="retry-btn" onclick="retry()">🔄 إعادة الاختبار</button>
-  </div>`;
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="screen-results">
+  <div class="results-card">
+    <div style="font-size:3rem">🏴‍☠️</div>
+    <h2 style="color:var(--gold);margin:10px 0">نتيجتك يا <span id="res-name"></span>!</h2>
+    <div class="score-big" id="res-score"></div>
+    <div class="score-label" id="res-label"></div>
+    <div class="winner-frame" id="winner-frame">
+      <div style="font-size:2rem">🏆👑🎉</div>
+      <div style="color:var(--gold);font-weight:900;font-size:1.3rem;margin:8px 0">ممتاز! أنت من طاقم القبعة القش!</div>
+      <div style="color:#aaa;font-size:.9rem">Monkey D. Mora is proud of you!</div>
+      <div style="margin-top:12px;padding:10px;background:#0d0d00;border-radius:8px;color:var(--gold);font-size:.85rem;">🎁 مبروك! تواصل مع MORA لاستلام مكافأتك!</div>
+    </div>
+    <div style="margin:20px 0;padding:14px;background:#0d0d1a;border-radius:12px;border:1px solid var(--border);" id="saving-status"></div>
+    <div class="wrong-list" id="wrong-list"></div>
+    <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
+      <button class="btn-retry" onclick="location.reload()" style="flex:1;">🔄 إعادة الاختبار</button>
+      <button onclick="showLeaderboard()" style="flex:1;padding:14px;background:linear-gradient(135deg,#7c3aed,#4c1d95);border:none;border-radius:12px;color:#fff;font-family:'Cairo',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;">🏆 الأوائل</button>
+    </div>
+  </div>
+</div>
+
+<!-- LEADERBOARD -->
+<div id="screen-leaderboard">
+  <div class="lb-card">
+    <div class="lb-title">🏆 لوحة الأوائل</div>
+    <div class="lb-sub">أعلى 10 درجات — تحدى وتفوق!</div>
+    <div id="lb-content"><div class="lb-loading">⏳ جاري التحميل...</div></div>
+    <div style="margin-top:20px;text-align:center;">
+      <button onclick="goBack()" style="background:none;border:1px solid var(--border);border-radius:10px;color:#aaa;font-family:'Cairo',sans-serif;font-size:.9rem;padding:10px 24px;cursor:pointer;">← رجوع</button>
+    </div>
+  </div>
+</div>
+
+<div class="luffy-corner" onclick="luffyYell()">⛵</div>
+
+<script>
+// Stars
+(function(){const s=document.getElementById('stars');for(let i=0;i<60;i++){const el=document.createElement('span');const sz=Math.random()*2+1;el.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;s.appendChild(el);}})();
+
+// JSONBin config
+const BIN_ID = '684550698561e97a500e4be2';
+const API_KEY = '$2a$10$DOe0/DgjrfHug0CKwB9PV.1KB4e0TgulBFT6HXjURNmNXG/tKN4xq';
+const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+const HEADERS = {'Content-Type':'application/json','X-Master-Key':API_KEY,'X-Bin-Versioning':'false'};
+
+async function fetchResults(){
+  try{
+    const r=await fetch(BIN_URL,{headers:{'X-Master-Key':API_KEY}});
+    const d=await r.json();
+    return Array.isArray(d.record) ? d.record : [];
+  }catch(e){return [];}
 }
 
-function answer(val){if(userAnswers[current]!==null)return;userAnswers[current]=val;render();}
-function next(){if(current<questions.length-1){current++;render();}}
-function prev(){if(current>0){current--;render();}}
-function goTo(i){current=i;render();}
-function finish(){finished=true;render();}
-function retry(){
-  if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
-  timeLeft=TOTAL_TIME;
-  userAnswers=new Array(questions.length).fill(null);
-  current=0;finished=false;
-  updateTimerDisplay();
-  startTimer();
-  document.getElementById('timer-bar').style.display='flex';
-  render();
+async function saveResult(entry){
+  try{
+    const all=await fetchResults();
+    // تحديث لو موجود بنفس الاسم والـ PIN، أو أضف جديد
+    const idx=all.findIndex(r=>r.name===entry.name && r.pin===entry.pin);
+    if(idx>=0){
+      if(entry.score > all[idx].score) all[idx]=entry; // احتفظ بأعلى درجة
+    } else {
+      all.push(entry);
+    }
+    await fetch(BIN_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify(all)});
+    return true;
+  }catch(e){return false;}
+}
+
+// Questions
+const mcqQuestions = [
+  {q:"يُعتبر ........ أحد مزايا النظام شبه الرئاسي",opts:["خضوع رئيس الوزراء للبرلمان","أحقية الحكومة في إصدار قرارات لها قاطعية القوانين دون موافقة رئيس الجمهورية","وجود جهة حكم تنفيذية واحدة","غير ذلك"],ans:1},
+  {q:"يُعد ........ أحد خصائص النظام البرلماني",opts:["إمكانية حل البرلمان","تنفيذ السلطة التنفيذية للقوانين التي يشرعها البرلمان دون الحق في مناقشتها","دعوة البرلمان للانعقاد في الفترات التشريعية فقط","غير ذلك"],ans:0},
+  {q:"أي من الخيارات التالية هو أحد مزايا النظام شبه الرئاسي؟",opts:["تأكيد هيمنة الحزب الفائز على السلطة","وجود جهتان حكم تنفيذيتان","عدم وجود حكومة مسؤولة أمام البرلمان","أن رئيس الدولة ليس له أي صلاحيات"],ans:1},
+  {q:"يُعتبر ........ أحد مميزات الدساتير المكتوبة",opts:["أنه ضروري للدول الموحدة","البطء في إعداده","الوضوح والدقة","غير ذلك"],ans:2},
+  {q:"علم السياسة هو علم يدرس ...",opts:["السلطة","الدولة","المؤسسات السياسية والحكومية","جميع ما سبق"],ans:3},
+  {q:"يترتب على وجود ثنائية السلطة التنفيذية في النظام البرلماني",opts:["مسؤولية رئيس الدولة سياسياً","عدم مسؤولية رئيس الوزراء سياسياً","جواز انتقاد الملك جنائياً","جواز انتقاد رئيس الدولة"],ans:1},
+  {q:"تنظيمات تهدف إلى الوصول إلى الحكم من أجل تنفيذ برامجها",opts:["أحزاب","المجتمع المدني","جماعات مصالح أو ضغط","جميع ما سبق"],ans:0},
+  {q:"من موضوعات علم السياسة",opts:["النظرية السياسية","الأحزاب السياسية","العلاقات الدولية","جميع ما سبق"],ans:3},
+  {q:"النظام الأمريكي هو النظام الأمثل .....",opts:["للنظام الرئاسي","للنظام البرلماني","للنظام شبه الرئاسي","لنظام حكومة الجمعية"],ans:0},
+  {q:"النظام الذي يقوم على أساس التوازن بين السلطتين التشريعية والتنفيذية والتعاون المكثف بينهما، وذلك دون ترجيح أحدهما على الآخر هو.....",opts:["النظام الرئاسي","النظام البرلماني","النظام شبه الرئاسي","نظام حكومة الجمعية"],ans:2},
+  {q:"ماذا تعني السياسة كفن؟",opts:["قدرتها على التحليل فقط","مهارة استخدام السلطة بطريقة فعالة","تحليل العلاقات الدولية فقط","إدارة الأزمات السياسية فقط"],ans:1},
+  {q:"أي من الخيارات التالية ليس من العناصر الأساسية لقيام الدولة؟",opts:["الشعب","الإقليم","السلطة الحاكمة","اللغة"],ans:3},
+  {q:"دول لا تخضع في شؤونها الداخلية أو الخارجية لهيمنة دولة أخرى",opts:["دول تامة السيادة","دول ناقصة السيادة","دول مركبة","غير ذلك"],ans:0},
+  {q:"يركز الفكر .... في تعريفه للحزب على الجانب العملي والهدف النهائي من العملية السياسية",opts:["الليبرالي","الماركسي","العربي","الإسلامي"],ans:0},
+  {q:"ما هي الدولة التي تكون تحت الحماية الاختيارية؟",opts:["الدولة التابعة","الدولة التي تضعها دولة قوية تحت حماية قسرية","الدولة تحت الانتداب","الدولة التي تختار حماية دولة أخرى بموجب معاهدة"],ans:3},
+  {q:"من صور الدستور ... تعديل القانون العادي بالأغلبية العادية لأعضاء المجلس البرلماني، بينما يُشترط لتعديل الدستور أغلبية ثلثي هؤلاء الأعضاء",opts:["المرن","الجامد جموداً مطلقاً","الجامد جموداً نسبياً","جميع ما سبق"],ans:2},
+  {q:"يُعتبر ........... هو العنصر الإنساني اللازم لقيام الدولة",opts:["الشعب","الاعتراف","السلطة الحاكمة","جميع ما سبق"],ans:0},
+  {q:"تتميز العلوم السياسية بالعديد من الخصائص وهي",opts:["المرونة","علم قديم لا يحتاج إلى مزيد من الدراسات","الاتفاق على تحديد مضمونه","إنه علم ثابت وليس متغير"],ans:0},
+  {q:"ما هي الطريقة التي نشأت بها الأحزاب السياسية في البداية؟",opts:["من خلال التعاون مع الشركات","من خلال الحرب العالمية الأولى","من خلال انقسام البرلمان إلى كتل","من خلال تأسيسها في الكنائس"],ans:2},
+  {q:"دولة تربطها بدولة أخرى رابطة خضوع وولاء، وهو نظام تاريخي لم يعد له وجود في وقتنا الراهن",opts:["دولة محمية","دولة تابعة","دولة متبوعة","دولة تحت الانتداب"],ans:1},
+  {q:"الدستور الذي يتطلب موافقة الشعب في استفتاء لتعديله يُعتبر",opts:["مرن","جامد جموداً مطلقاً","جامد جموداً نسبياً","عرفي"],ans:1},
+  {q:"........ هو الشكل الوحيد من الدول المركبة الذي يجعل من الدول الداخلة فيه دولاً واحدة",opts:["الاتحاد الشخصي","الاتحاد التعاهدي","الاتحاد الاستقلالي","الاتحاد الفيدرالي"],ans:3},
+  {q:"تلك الجماعات التي لها أصل عرفي ثابت وتقاليد دينية ولغوية وصفات خاصة بهم وتدين بالولاء للدولة التي تتمتع بجنسيتها",opts:["الأقليات","المواطنين","السكان","غير ذلك"],ans:0},
+  {q:"أي حزب سياسي لابد أن يتوافر له",opts:["تنظيم","برنامج","هدف","جميع ما سبق"],ans:3},
+  {q:"الاعتراف الصريح هو ........",opts:["الذي يحصل عندما تدخل الدول في علاقات دولية مع الدولة أو الحكومة الجديدة","الإعلان المباشر الذي تعلنه الدول بصورة رسمية متضمناً الاعتراف بدولة معينة","الذي يحصل عند تبادل دبلوماسيين","غير ذلك"],ans:1},
+];
+const tfQuestions = [
+  {q:"الإقليم يتضمن اليابس، والمياه المحيطة به، وكذلك الفضاء الجوي.",ans:true},
+  {q:"علم السياسة لا يمتد إلا إلى المستقبل",ans:false},
+  {q:"الفكر الماركسي يعرف الحزب السياسي كتنظيم يوحد ممثلين من طبقات معينة في المجتمع",ans:false},
+  {q:"يقوم نظام حكومة الجمعية النيابية على فكرة مقتضاها أن البرلمان والسلطة التنفيذية على قدم المساواة",ans:false},
+  {q:"يجوز أن يصدر الاعتراف الجماعي من دولة واحدة",ans:true},
+  {q:"يُشترط تكوين الدستور في وثيقة واحدة بشرط أن تكون صادرة عن السلطة المختصة",ans:false},
+  {q:"إذا فقد الدولة إقليمها بصفة مؤقتة فإن ذلك لا يؤثر على وجودها كدولة",ans:true},
+  {q:"يمكن سحب الاعتراف من حيث الواقع بينما لا يجوز سحب الاعتراف القانوني",ans:true},
+  {q:"من أهم مميزات الدساتير العرفية سرعة إصدارها",ans:true},
+  {q:"يتكون الدستور الإنجليزي من قواعد دستورية عرفية وقواعد منصوص عليها في وثائق مستقلة",ans:true},
+  {q:"يرتبط علم السياسة دائماً بالقيم الدينية فقط",ans:false},
+  {q:"يُعتبر الاتحاد المركزي أو الفيدرالي هو الشكل الوحيد من الدول المركبة الذي يجعل من الدول الداخلة فيه دولة واحدة تسمى دولة اتحادية",ans:true},
+  {q:"النظام شبه الرئاسي يمنح البرلمان الحق في التصديق على المعاهدات والموازنة العامة للدولة",ans:false},
+  {q:"تكون مسؤولية الوزارة أمام البرلمان في ظل النظام البرلماني فردية أو تضامنية",ans:true},
+  {q:"تقع المسؤولية السياسية في النظام البرلماني على رئيس الجمهورية",ans:false},
+  {q:"الدولة التابعة هي الدولة التي تتبع دولة أخرى ويجمعها بها رابطة خضوع وولاء",ans:true},
+  {q:"الحكم على أن دستوراً معين مرن يتوقف على طريقة وضع الدستور",ans:false},
+  {q:"كان للبرلمان دوراً فاعلاً في نشأة ما يُعرف بأحزاب التكوين الخارجي",ans:false},
+  {q:"يُعد الدستور مكتوباً مادام قد تم تسجيله في وثيقة مكتوبة حتى لو لم يتم تسجيله في وثيقة رسمية",ans:false},
+  {q:"علم السياسة يقتصر فقط على دراسة النظام السياسي داخل الدولة",ans:false},
+  {q:"يجب أن يكون نائب رئيس الدولة في أمريكا من نفس الولاية التي ينتمي إليها الرئيس",ans:false},
+  {q:"يُعتبر جواز الجمع بين المنصب الوزاري والعضوية في البرلمان أحد مظاهر الفصل بين السلطات في النظام الرئاسي",ans:false},
+  {q:"ارتبطت نشأة الأحزاب السياسية بتطور النظام الديموقراطي الذي طبق الاقتراع العام",ans:true},
+  {q:"جميع الدساتير المكتوبة جامدة",ans:false},
+  {q:"الدساتير العرفية تقتصر على العرف ولا تستند إلى القضاء",ans:false},
+];
+const allQuestions=[
+  ...mcqQuestions.map(q=>({...q,type:'mcq'})),
+  ...tfQuestions.map(q=>({...q,type:'tf',opts:['صح ✓','خطأ ✗'],ans:q.ans?0:1}))
+];
+const TOTAL=allQuestions.length;
+const TIMER_SECS=45*60;
+
+let userName='',userGroup='',userPin='';
+let current=0;
+let answers=new Array(TOTAL).fill(null);
+let answered=new Array(TOTAL).fill(false);
+let timerInterval,secsLeft=TIMER_SECS;
+let prevScreen='register';
+
+async function startQuiz(){
+  const n=document.getElementById('inp-name').value.trim();
+  const g=document.getElementById('inp-group').value.trim();
+  const p=document.getElementById('inp-pin').value.trim();
+  const err=document.getElementById('reg-err');
+  if(!n||!g||!p){err.textContent='من فضلك اكتب اسمك وجروبك وكلمة السر';return;}
+  if(p.length<4){err.textContent='كلمة السر لازم 4 أرقام على الأقل';return;}
+  err.textContent='';
+  userName=n;userGroup=g;userPin=p;
+  document.getElementById('wb-name').textContent=n;
+  document.getElementById('wb-group').textContent=g;
+  document.getElementById('screen-register').style.display='none';
+  document.getElementById('screen-quiz').style.display='block';
+  prevScreen='quiz';
+  buildDots();renderQ();startTimer();
+}
+
+function buildDots(){
+  const d=document.getElementById('dots');d.innerHTML='';
+  allQuestions.forEach((_,i)=>{
+    const s=document.createElement('span');
+    s.className='dot'+(i===0?' current':'');
+    s.id=`dot-${i}`;s.textContent=i+1;
+    s.onclick=()=>{current=i;renderQ();window.scrollTo({top:140,behavior:'smooth'});};
+    d.appendChild(s);
+  });
+}
+function updateDots(){
+  allQuestions.forEach((_,i)=>{
+    const d=document.getElementById(`dot-${i}`);if(!d)return;
+    d.className='dot';
+    if(i===current)d.classList.add('current');
+    else if(answered[i])d.classList.add(answers[i]===allQuestions[i].ans?'answered':'skipped-wrong');
+  });
+}
+function renderQ(){
+  const q=allQuestions[current];
+  document.getElementById('q-num').textContent=`س ${current+1}`;
+  document.getElementById('q-count-label').textContent=`سؤال ${current+1} من ${TOTAL}`;
+  document.getElementById('progress-info').textContent=`${current+1} / ${TOTAL}`;
+  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('feedback').className='feedback';
+  const con=document.getElementById('options-container');
+  if(q.type==='tf'){
+    con.innerHTML='<div class="tf-options"></div>';
+    const tf=con.querySelector('.tf-options');
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');b.className='tf-btn';b.textContent=o;
+      b.onclick=()=>selectAns(i);
+      if(answered[current]){b.disabled=true;if(i===q.ans)b.classList.add('correct');else if(answers[current]===i)b.classList.add('wrong');}
+      tf.appendChild(b);
+    });
+  } else {
+    con.innerHTML='';
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');b.className='opt-btn';
+      b.innerHTML=`<span>${o}</span><span class="opt-icon">${['أ','ب','ج','د'][i]}</span>`;
+      b.onclick=()=>selectAns(i);
+      if(answered[current]){b.disabled=true;if(i===q.ans)b.classList.add('correct');else if(answers[current]===i)b.classList.add('wrong');}
+      con.appendChild(b);
+    });
+  }
+  if(answered[current])showFeedback(answers[current]===allQuestions[current].ans);
+  updateDots();
+  document.getElementById('btn-next').textContent=current===TOTAL-1?'إنهاء الاختبار ✓':'التالي ←';
+}
+function selectAns(idx){
+  if(answered[current])return;
+  answered[current]=true;answers[current]=idx;
+  const q=allQuestions[current];const correct=(idx===q.ans);
+  document.querySelectorAll('.opt-btn,.tf-btn').forEach((b,i)=>{
+    b.disabled=true;
+    if(i===q.ans)b.classList.add('correct');
+    else if(i===idx&&!correct)b.classList.add('wrong');
+  });
+  showFeedback(correct);updateDots();
+}
+function showFeedback(correct){
+  const f=document.getElementById('feedback');
+  f.className='feedback show '+(correct?'correct-fb':'wrong-fb');
+  f.textContent=correct?'✅ إجابة صحيحة! أحسنت!':`❌ إجابة خاطئة — الصحيح: ${allQuestions[current].opts[allQuestions[current].ans]}`;
+}
+function nextQ(){
+  if(!answered[current]&&!confirm('لم تجب على هذا السؤال، هل تريد تخطيه؟'))return;
+  if(current===TOTAL-1){endQuiz();return;}
+  current++;renderQ();window.scrollTo({top:80,behavior:'smooth'});
+}
+function skipQ(){
+  if(current===TOTAL-1){endQuiz();return;}
+  current++;renderQ();window.scrollTo({top:80,behavior:'smooth'});
+}
+function startTimer(){
+  const disp=document.getElementById('timer-display');
+  const fill=document.getElementById('timer-fill');
+  timerInterval=setInterval(()=>{
+    secsLeft--;
+    if(secsLeft<=0){clearInterval(timerInterval);endQuiz();return;}
+    const m=Math.floor(secsLeft/60),s=secsLeft%60;
+    disp.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    const pct=(secsLeft/TIMER_SECS)*100;
+    fill.style.width=pct+'%';
+    if(pct<20){fill.style.background='var(--wrong)';disp.className='timer-display danger';}
+    else if(pct<40){fill.style.background='linear-gradient(90deg,#ff6b00,var(--gold))';disp.className='timer-display warn';}
+  },1000);
+}
+async function endQuiz(){
+  clearInterval(timerInterval);
+  document.getElementById('screen-quiz').style.display='none';
+  document.getElementById('screen-results').style.display='block';
+  const score=answers.filter((a,i)=>a===allQuestions[i].ans).length;
+  document.getElementById('res-name').textContent=userName;
+  document.getElementById('res-score').textContent=`${score} / ${TOTAL}`;
+  let label='';
+  if(score>=45){label='🌟 ممتاز جداً — أنت من أفضل الطلاب!';document.getElementById('winner-frame').classList.add('show');}
+  else if(score>=35)label='👏 جيد جداً — استمر!';
+  else if(score>=25)label='💪 جيد — تحتاج مزيداً من المراجعة';
+  else label='📚 راجع المادة مرة أخرى';
+  document.getElementById('res-label').textContent=label;
+  // Save
+  const st=document.getElementById('saving-status');
+  st.textContent='⏳ جاري حفظ نتيجتك...';
+  const entry={name:userName,group:userGroup,pin:userPin,score,date:new Date().toLocaleDateString('ar-EG')};
+  const ok=await saveResult(entry);
+  st.textContent=ok?'✅ تم حفظ نتيجتك في لوحة الأوائل!':'⚠️ تعذر حفظ النتيجة، تحقق من الإنترنت';
+  st.style.color=ok?'var(--correct)':'#ff6b00';
+  // Wrong list
+  const wrongDiv=document.getElementById('wrong-list');
+  const wrongs=allQuestions.map((q,i)=>({q,i,a:answers[i]})).filter(({a},i)=>a!==allQuestions[i].ans);
+  if(wrongs.length){
+    wrongDiv.innerHTML=`<h3>❌ الأسئلة التي أخطأت فيها (${wrongs.length})</h3>`;
+    wrongs.forEach(({q,i,a})=>{
+      const d=document.createElement('div');d.className='wrong-item';
+      d.innerHTML=`<strong>س${i+1}:</strong> ${q.q}<br><span class="your-ans">إجابتك: ${a!==null?q.opts[a]:'لم تجب'}</span><br><span class="correct-ans">الصحيح: ${q.opts[q.ans]}</span>`;
+      wrongDiv.appendChild(d);
+    });
+  }
+  window.scrollTo({top:0});
+}
+
+// Leaderboard
+async function showLeaderboard(){
+  ['screen-register','screen-quiz','screen-results'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.style.display='none';
+  });
+  document.getElementById('screen-leaderboard').style.display='block';
+  document.getElementById('lb-content').innerHTML='<div class="lb-loading">⏳ جاري تحميل الأوائل...</div>';
+  window.scrollTo({top:0});
+  const all=await fetchResults();
+  if(!all.length){document.getElementById('lb-content').innerHTML='<div class="lb-loading">لا يوجد نتائج بعد — كن أول الأوائل! 🏆</div>';return;}
+  const top=all.sort((a,b)=>b.score-a.score).slice(0,10);
+  const medals=['🥇','🥈','🥉'];
+  let html='';
+  top.forEach((r,i)=>{
+    const cls=i<3?`top${i+1}`:'';
+    const medal=i<3?medals[i]:`${i+1}`;
+    html+=`<div class="lb-row ${cls}">
+      <div class="lb-rank">${medal}</div>
+      <div class="lb-info"><div class="lb-name">${r.name}</div><div class="lb-group">جروب ${r.group}</div></div>
+      <div class="lb-score">${r.score}/${TOTAL}</div>
+    </div>`;
+  });
+  document.getElementById('lb-content').innerHTML=html;
+}
+function goBack(){
+  document.getElementById('screen-leaderboard').style.display='none';
+  document.getElementById('screen-register').style.display='flex';
+}
+function luffyYell(){
+  const msgs=['🏴‍☠️ سأصبح ملك القراصنة!','⚓ ذهاب!','🍖 أريد لحم!','💪 أنا مطاطي!'];
+  alert(msgs[Math.floor(Math.random()*msgs.length)]);
 }
 </script>
 </body>

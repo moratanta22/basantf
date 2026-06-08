@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>كويز MORA - علم السياسة</title>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VT17G1J5WL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VT17G1J5WL');
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root{--red:#e8001d;--gold:#FFD700;--dark:#0a0a0f;--darker:#050508;--card:#111120;--border:#1e1e3a;--text:#eee;--accent:#00cfff;--correct:#00e676;--wrong:#ff1744;}
@@ -21,8 +29,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes winnerPulse{0%,100%{box-shadow:0 0 20px var(--gold)}50%{box-shadow:0 0 40px var(--gold)}}
 @keyframes slideIn{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
 @keyframes rankShine{0%,100%{box-shadow:0 0 10px var(--gold)}50%{box-shadow:0 0 30px var(--gold),0 0 60px #ff6b0066}}
-
-/* HEADER */
 .header{position:relative;z-index:10;text-align:center;padding:28px 20px 18px;border-bottom:2px solid var(--border);background:linear-gradient(180deg,#0d0018 0%,rgba(10,10,15,0.9) 100%);}
 .mora-name{font-size:3.5rem;font-weight:900;background:linear-gradient(90deg,var(--gold),#ff6b00,var(--gold));background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 2s infinite;letter-spacing:4px;position:relative;}
 .straw-hat{font-size:2.2rem;position:absolute;top:-38px;left:50%;transform:translateX(-50%);animation:hatBounce 1.5s ease-in-out infinite;filter:drop-shadow(0 3px 6px rgba(0,0,0,.8));}
@@ -30,8 +36,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .owner-badge{font-size:.75rem;color:var(--accent);letter-spacing:3px;margin-top:2px;}
 .quiz-subtitle{font-size:1rem;color:#aaa;margin-top:10px;}
 .quiz-subtitle span{color:var(--gold);}
-
-/* TIMER */
 .timer-bar{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
 .timer-display{font-size:1.6rem;font-weight:900;color:var(--gold);font-variant-numeric:tabular-nums;transition:color .3s;}
 .timer-display.warn{color:#ff6b00;animation:pulse .5s infinite;}
@@ -39,8 +43,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .timer-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
 .timer-fill{height:100%;background:linear-gradient(90deg,var(--correct),var(--gold));border-radius:4px;transition:width 1s linear,background 1s;}
 .progress-info{font-size:.85rem;color:#aaa;white-space:nowrap;}
-
-/* REGISTER */
 #screen-register{position:fixed;inset:0;z-index:999;background:var(--darker);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:20px;}
 .reg-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px 28px;max-width:420px;width:100%;text-align:center;box-shadow:0 0 40px rgba(232,0,29,.2);}
 .reg-card h2{font-size:1.8rem;color:var(--gold);margin-bottom:6px;}
@@ -50,8 +52,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-start{width:100%;padding:14px;background:linear-gradient(135deg,var(--red),#800010);border:none;border-radius:12px;color:#fff;font-family:'Cairo',sans-serif;font-size:1.1rem;font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:6px;}
 .btn-start:hover{transform:scale(1.03);box-shadow:0 0 20px var(--red);}
 .reg-err{color:var(--wrong);font-size:.85rem;min-height:18px;}
-
-/* QUIZ */
 #screen-quiz{display:none;padding:0 0 50px;position:relative;z-index:5;}
 .question-card{max-width:750px;margin:24px auto;padding:0 16px;}
 .q-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
@@ -83,11 +83,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .nav-btn{padding:12px 24px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font-family:'Cairo',sans-serif;font-size:.95rem;cursor:pointer;transition:all .2s;flex:1;}
 .nav-btn:hover{border-color:var(--accent);}
 .nav-btn.primary{background:linear-gradient(135deg,var(--red),#800010);border-color:var(--red);color:#fff;font-weight:700;}
-
-/* WELCOME BAR */
 #welcome-bar{background:linear-gradient(90deg,#0d0020,#1a0030,#0d0020);border-bottom:1px solid #3a1060;padding:10px 20px;display:flex;align-items:center;gap:10px;font-family:'Cairo',sans-serif;position:relative;z-index:99;}
-
-/* RESULTS */
 #screen-results{display:none;padding:30px 16px;position:relative;z-index:5;min-height:100vh;}
 .results-card{max-width:700px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px 24px;text-align:center;}
 .score-big{font-size:5rem;font-weight:900;background:linear-gradient(135deg,var(--gold),#ff6b00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
@@ -99,8 +95,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .wrong-item .correct-ans{color:var(--correct);font-weight:700;}
 .wrong-item .your-ans{color:var(--wrong);}
 .btn-retry{margin-top:20px;padding:14px 30px;background:linear-gradient(135deg,var(--red),#800010);border:none;border-radius:12px;color:#fff;font-family:'Cairo',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;}
-
-/* LEADERBOARD */
 #screen-leaderboard{display:none;padding:30px 16px 50px;position:relative;z-index:5;min-height:100vh;}
 .lb-card{max-width:680px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 20px;}
 .lb-title{color:var(--gold);font-size:1.6rem;font-weight:900;text-align:center;margin-bottom:6px;}
@@ -115,18 +109,45 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .lb-group{color:#888;font-size:.8rem;}
 .lb-score{font-weight:900;font-size:1.1rem;color:var(--gold);}
 .lb-loading{text-align:center;padding:30px;color:#888;}
-.luffy-corner{position:fixed;bottom:20px;left:20px;z-index:50;font-size:50px;animation:luffyFloat 2s infinite;cursor:pointer;filter:drop-shadow(0 0 10px #e8001d);}
+
+
+/* OWNER */
+#screen-owner{display:none;position:fixed;inset:0;z-index:9999;background:#050508;overflow-y:auto;padding:20px 16px 60px;}
+.owner-wrap{max-width:900px;margin:0 auto;}
+.owner-header{text-align:center;padding:24px 0 20px;border-bottom:2px solid #2a0040;margin-bottom:24px;}
+.owner-title{font-size:2rem;font-weight:900;background:linear-gradient(90deg,#a855f7,#ec4899,#a855f7);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 2s infinite;}
+.owner-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.owner-tab{padding:10px 18px;border-radius:10px;border:1px solid #3a1060;background:#0d0020;color:#c084fc;font-family:'Cairo',sans-serif;font-size:.9rem;cursor:pointer;transition:all .2s;}
+.owner-tab.active,.owner-tab:hover{background:#4c1d95;border-color:#a855f7;color:#fff;}
+.owner-section{display:none;}
+.owner-section.active{display:block;}
+.owner-card{background:#0d0020;border:1px solid #2a0040;border-radius:16px;padding:20px;margin-bottom:16px;}
+.owner-card h3{color:#a855f7;font-size:1rem;margin-bottom:14px;}
+.owner-input{width:100%;padding:11px 14px;background:#1a0030;border:1px solid #3a1060;border-radius:8px;color:#fff;font-family:'Cairo',sans-serif;font-size:.9rem;text-align:right;margin-bottom:8px;}
+.owner-input:focus{outline:none;border-color:#a855f7;}
+.owner-btn{padding:10px 20px;border-radius:8px;border:none;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;}
+.owner-btn.purple{background:linear-gradient(135deg,#7c3aed,#4c1d95);color:#fff;}
+.owner-btn.red{background:linear-gradient(135deg,#e8001d,#800010);color:#fff;}
+.owner-btn.green{background:linear-gradient(135deg,#00c853,#007c33);color:#fff;}
+.owner-btn:hover{transform:scale(1.03);}
+.q-edit-item{background:#1a0030;border:1px solid #2a0040;border-radius:10px;padding:14px;margin-bottom:10px;}
+.q-edit-item .q-text-preview{color:#ddd;font-size:.85rem;margin-bottom:8px;line-height:1.6;}
+.students-table{width:100%;border-collapse:collapse;}
+.students-table th{color:#a855f7;font-size:.8rem;padding:8px;border-bottom:1px solid #2a0040;text-align:right;}
+.students-table td{padding:10px 8px;border-bottom:1px solid #1a0030;font-size:.85rem;}
+.students-table tr:hover td{background:#1a0030;}
+.owner-login{position:fixed;inset:0;z-index:10000;background:#050508;display:flex;align-items:center;justify-content:center;}
+.owner-login-card{background:#0d0020;border:1px solid #3a1060;border-radius:20px;padding:36px 28px;max-width:380px;width:100%;text-align:center;}
+.glow-purple{color:#a855f7;font-size:1.8rem;font-weight:900;margin-bottom:6px;}
 </style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
-
-<!-- REGISTER -->
 <div id="screen-register">
   <div class="reg-card">
     <div style="font-size:2.5rem;margin-bottom:8px">⚓</div>
     <h2>🏴‍☠️ كويز MORA</h2>
-    <p>علم السياسة — سجل واكتشف مكانك بين الأوائل!</p>
+    <p>علم السياسة — سجل واكتشف مكانك بين الأوائل!<br><span style="color:var(--gold);font-size:.8rem;">🏆 لو جبت أعلى من 42 هيتسجل اسمك في لوحة الأوائل</span></p>
     <input class="reg-input" id="inp-name" placeholder="اسمك الكامل" />
     <input class="reg-input" id="inp-group" placeholder="جروبك" />
     <input class="reg-input" id="inp-pin" type="password" placeholder="كلمة سر خاصة بيك (PIN)" maxlength="20"/>
@@ -137,8 +158,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
   </div>
 </div>
-
-<!-- QUIZ -->
 <div id="screen-quiz">
   <div class="header">
     <div style="display:flex;align-items:center;justify-content:center;">
@@ -149,8 +168,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
     </div>
     <div class="quiz-subtitle">كويز علم السياسة — <span id="q-count-label">السؤال الأول</span></div>
+    <button onclick="document.getElementById('owner-login-screen').style.display='flex'" style="position:absolute;top:16px;left:16px;background:none;border:1px solid #3a1060;border-radius:8px;color:#a855f7;font-family:'Cairo',sans-serif;font-size:.8rem;padding:6px 12px;cursor:pointer;">👑 Owner</button>
   </div>
-
   <div id="welcome-bar">
     <span style="font-size:1.1rem;">🎯</span>
     <span style="color:#aaa;font-size:.9rem;">أهلاً</span>
@@ -158,30 +177,26 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <span style="color:#aaa;font-size:.9rem;">— جروب</span>
     <span id="wb-group" style="color:#c084fc;font-weight:900;font-style:italic;"></span>
   </div>
-
   <div class="timer-bar">
     <div class="timer-display" id="timer-display">45:00</div>
     <div class="timer-track"><div class="timer-fill" id="timer-fill"></div></div>
     <div class="progress-info" id="progress-info">1 / 35</div>
   </div>
-
   <div style="max-width:750px;margin:16px auto 0;padding:0 16px;">
     <div id="dots" class="q-progress-dots"></div>
   </div>
-
   <div class="question-card">
     <div class="q-header"><div class="q-num" id="q-num">س 1</div></div>
     <div class="q-text" id="q-text"></div>
     <div class="options" id="options-container"></div>
     <div class="feedback" id="feedback"></div>
     <div class="nav-btns">
+      <button class="nav-btn" onclick="prevQ()" id="btn-prev">→ السابق</button>
       <button class="nav-btn primary" id="btn-next" onclick="nextQ()">التالي ←</button>
       <button class="nav-btn" onclick="skipQ()">تخطي</button>
     </div>
   </div>
 </div>
-
-<!-- RESULTS -->
 <div id="screen-results">
   <div class="results-card">
     <div style="font-size:3rem">🏴‍☠️</div>
@@ -202,12 +217,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
   </div>
 </div>
-
-<!-- LEADERBOARD -->
 <div id="screen-leaderboard">
   <div class="lb-card">
     <div class="lb-title">🏆 لوحة الأوائل</div>
-    <div class="lb-sub">أعلى 10 درجات — تحدى وتفوق!</div>
+    <div class="lb-sub">أعلى 8 درجات — تحدى وتفوق!</div>
     <div id="lb-content"><div class="lb-loading">⏳ جاري التحميل...</div></div>
     <div style="margin-top:20px;text-align:center;">
       <button onclick="goBack()" style="background:none;border:1px solid var(--border);border-radius:10px;color:#aaa;font-family:'Cairo',sans-serif;font-size:.9rem;padding:10px 24px;cursor:pointer;">← رجوع</button>
@@ -215,43 +228,15 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 </div>
 
-<div class="luffy-corner" onclick="luffyYell()">⛵</div>
-
 <script>
-// Stars
 (function(){const s=document.getElementById('stars');for(let i=0;i<60;i++){const el=document.createElement('span');const sz=Math.random()*2+1;el.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;s.appendChild(el);}})();
-
-// JSONBin config
-const BIN_ID = '684550698561e97a500e4be2';
-const API_KEY = '$2a$10$DOe0/DgjrfHug0CKwB9PV.1KB4e0TgulBFT6HXjURNmNXG/tKN4xq';
-const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-const HEADERS = {'Content-Type':'application/json','X-Master-Key':API_KEY,'X-Bin-Versioning':'false'};
-
-async function fetchResults(){
-  try{
-    const r=await fetch(BIN_URL,{headers:{'X-Master-Key':API_KEY}});
-    const d=await r.json();
-    return Array.isArray(d.record) ? d.record : [];
-  }catch(e){return [];}
-}
-
-async function saveResult(entry){
-  try{
-    const all=await fetchResults();
-    // تحديث لو موجود بنفس الاسم والـ PIN، أو أضف جديد
-    const idx=all.findIndex(r=>r.name===entry.name && r.pin===entry.pin);
-    if(idx>=0){
-      if(entry.score > all[idx].score) all[idx]=entry; // احتفظ بأعلى درجة
-    } else {
-      all.push(entry);
-    }
-    await fetch(BIN_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify(all)});
-    return true;
-  }catch(e){return false;}
-}
-
-// Questions
-const mcqQuestions = [
+const BIN_ID='684550698561e97a500e4be2';
+const API_KEY='$2a$10$DOe0/DgjrfHug0CKwB9PV.1KB4e0TgulBFT6HXjURNmNXG/tKN4xq';
+const BIN_URL=`https://api.jsonbin.io/v3/b/${BIN_ID}`;
+const HEADERS={'Content-Type':'application/json','X-Master-Key':API_KEY,'X-Bin-Versioning':'false'};
+async function fetchResults(){try{const r=await fetch(BIN_URL,{headers:{'X-Master-Key':API_KEY}});const d=await r.json();return Array.isArray(d.record)?d.record:[];}catch(e){return[];}}
+async function saveResult(entry){try{const all=await fetchResults();const idx=all.findIndex(r=>r.name===entry.name&&r.pin===entry.pin);if(idx>=0){if(entry.score>all[idx].score)all[idx]=entry;}else{all.push(entry);}await fetch(BIN_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify(all)});return true;}catch(e){return false;}}
+const mcqQuestions=[
   {q:"يُعتبر ........ أحد مزايا النظام شبه الرئاسي",opts:["خضوع رئيس الوزراء للبرلمان","أحقية الحكومة في إصدار قرارات لها قاطعية القوانين دون موافقة رئيس الجمهورية","وجود جهة حكم تنفيذية واحدة","غير ذلك"],ans:1},
   {q:"يُعد ........ أحد خصائص النظام البرلماني",opts:["إمكانية حل البرلمان","تنفيذ السلطة التنفيذية للقوانين التي يشرعها البرلمان دون الحق في مناقشتها","دعوة البرلمان للانعقاد في الفترات التشريعية فقط","غير ذلك"],ans:0},
   {q:"أي من الخيارات التالية هو أحد مزايا النظام شبه الرئاسي؟",opts:["تأكيد هيمنة الحزب الفائز على السلطة","وجود جهتان حكم تنفيذيتان","عدم وجود حكومة مسؤولة أمام البرلمان","أن رئيس الدولة ليس له أي صلاحيات"],ans:1},
@@ -278,7 +263,7 @@ const mcqQuestions = [
   {q:"أي حزب سياسي لابد أن يتوافر له",opts:["تنظيم","برنامج","هدف","جميع ما سبق"],ans:3},
   {q:"الاعتراف الصريح هو ........",opts:["الذي يحصل عندما تدخل الدول في علاقات دولية مع الدولة أو الحكومة الجديدة","الإعلان المباشر الذي تعلنه الدول بصورة رسمية متضمناً الاعتراف بدولة معينة","الذي يحصل عند تبادل دبلوماسيين","غير ذلك"],ans:1},
 ];
-const tfQuestions = [
+const tfQuestions=[
   {q:"الإقليم يتضمن اليابس، والمياه المحيطة به، وكذلك الفضاء الجوي.",ans:true},
   {q:"علم السياسة لا يمتد إلا إلى المستقبل",ans:false},
   {q:"الفكر الماركسي يعرف الحزب السياسي كتنظيم يوحد ممثلين من طبقات معينة في المجتمع",ans:false},
@@ -305,20 +290,14 @@ const tfQuestions = [
   {q:"جميع الدساتير المكتوبة جامدة",ans:false},
   {q:"الدساتير العرفية تقتصر على العرف ولا تستند إلى القضاء",ans:false},
 ];
-const allQuestions=[
-  ...mcqQuestions.map(q=>({...q,type:'mcq'})),
-  ...tfQuestions.map(q=>({...q,type:'tf',opts:['صح ✓','خطأ ✗'],ans:q.ans?0:1}))
-];
+const allQuestions=[...mcqQuestions.map(q=>({...q,type:'mcq'})),...tfQuestions.map(q=>({...q,type:'tf',opts:['صح ✓','خطأ ✗'],ans:q.ans?0:1}))];
 const TOTAL=allQuestions.length;
 const TIMER_SECS=45*60;
-
 let userName='',userGroup='',userPin='';
 let current=0;
 let answers=new Array(TOTAL).fill(null);
 let answered=new Array(TOTAL).fill(false);
 let timerInterval,secsLeft=TIMER_SECS;
-let prevScreen='register';
-
 async function startQuiz(){
   const n=document.getElementById('inp-name').value.trim();
   const g=document.getElementById('inp-group').value.trim();
@@ -332,17 +311,15 @@ async function startQuiz(){
   document.getElementById('wb-group').textContent=g;
   document.getElementById('screen-register').style.display='none';
   document.getElementById('screen-quiz').style.display='block';
-  prevScreen='quiz';
   buildDots();renderQ();startTimer();
 }
-
 function buildDots(){
   const d=document.getElementById('dots');d.innerHTML='';
   allQuestions.forEach((_,i)=>{
     const s=document.createElement('span');
     s.className='dot'+(i===0?' current':'');
     s.id=`dot-${i}`;s.textContent=i+1;
-    s.onclick=()=>{current=i;renderQ();window.scrollTo({top:140,behavior:'smooth'});};
+    s.onclick=()=>{current=i;renderQ();};
     d.appendChild(s);
   });
 }
@@ -371,7 +348,7 @@ function renderQ(){
       if(answered[current]){b.disabled=true;if(i===q.ans)b.classList.add('correct');else if(answers[current]===i)b.classList.add('wrong');}
       tf.appendChild(b);
     });
-  } else {
+  }else{
     con.innerHTML='';
     q.opts.forEach((o,i)=>{
       const b=document.createElement('button');b.className='opt-btn';
@@ -384,6 +361,7 @@ function renderQ(){
   if(answered[current])showFeedback(answers[current]===allQuestions[current].ans);
   updateDots();
   document.getElementById('btn-next').textContent=current===TOTAL-1?'إنهاء الاختبار ✓':'التالي ←';
+  const pb=document.getElementById('btn-prev');if(pb)pb.style.visibility=current===0?'hidden':'visible';
 }
 function selectAns(idx){
   if(answered[current])return;
@@ -401,14 +379,15 @@ function showFeedback(correct){
   f.className='feedback show '+(correct?'correct-fb':'wrong-fb');
   f.textContent=correct?'✅ إجابة صحيحة! أحسنت!':`❌ إجابة خاطئة — الصحيح: ${allQuestions[current].opts[allQuestions[current].ans]}`;
 }
+function prevQ(){if(current===0)return;current--;renderQ();}
 function nextQ(){
   if(!answered[current]&&!confirm('لم تجب على هذا السؤال، هل تريد تخطيه؟'))return;
   if(current===TOTAL-1){endQuiz();return;}
-  current++;renderQ();window.scrollTo({top:80,behavior:'smooth'});
+  current++;renderQ();
 }
 function skipQ(){
   if(current===TOTAL-1){endQuiz();return;}
-  current++;renderQ();window.scrollTo({top:80,behavior:'smooth'});
+  current++;renderQ();
 }
 function startTimer(){
   const disp=document.getElementById('timer-display');
@@ -432,19 +411,17 @@ async function endQuiz(){
   document.getElementById('res-name').textContent=userName;
   document.getElementById('res-score').textContent=`${score} / ${TOTAL}`;
   let label='';
-  if(score>=45){label='🌟 ممتاز جداً — أنت من أفضل الطلاب!';document.getElementById('winner-frame').classList.add('show');}
+  if(score>=42){label='🌟 ممتاز جداً — أنت من أفضل الطلاب!';document.getElementById('winner-frame').classList.add('show');}
   else if(score>=35)label='👏 جيد جداً — استمر!';
   else if(score>=25)label='💪 جيد — تحتاج مزيداً من المراجعة';
   else label='📚 راجع المادة مرة أخرى';
   document.getElementById('res-label').textContent=label;
-  // Save
   const st=document.getElementById('saving-status');
   st.textContent='⏳ جاري حفظ نتيجتك...';
   const entry={name:userName,group:userGroup,pin:userPin,score,date:new Date().toLocaleDateString('ar-EG')};
   const ok=await saveResult(entry);
   st.textContent=ok?'✅ تم حفظ نتيجتك في لوحة الأوائل!':'⚠️ تعذر حفظ النتيجة، تحقق من الإنترنت';
   st.style.color=ok?'var(--correct)':'#ff6b00';
-  // Wrong list
   const wrongDiv=document.getElementById('wrong-list');
   const wrongs=allQuestions.map((q,i)=>({q,i,a:answers[i]})).filter(({a},i)=>a!==allQuestions[i].ans);
   if(wrongs.length){
@@ -457,8 +434,6 @@ async function endQuiz(){
   }
   window.scrollTo({top:0});
 }
-
-// Leaderboard
 async function showLeaderboard(){
   ['screen-register','screen-quiz','screen-results'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.style.display='none';
@@ -468,17 +443,13 @@ async function showLeaderboard(){
   window.scrollTo({top:0});
   const all=await fetchResults();
   if(!all.length){document.getElementById('lb-content').innerHTML='<div class="lb-loading">لا يوجد نتائج بعد — كن أول الأوائل! 🏆</div>';return;}
-  const top=all.sort((a,b)=>b.score-a.score).slice(0,10);
+  const top=all.sort((a,b)=>b.score-a.score).slice(0,8);
   const medals=['🥇','🥈','🥉'];
   let html='';
   top.forEach((r,i)=>{
     const cls=i<3?`top${i+1}`:'';
     const medal=i<3?medals[i]:`${i+1}`;
-    html+=`<div class="lb-row ${cls}">
-      <div class="lb-rank">${medal}</div>
-      <div class="lb-info"><div class="lb-name">${r.name}</div><div class="lb-group">جروب ${r.group}</div></div>
-      <div class="lb-score">${r.score}/${TOTAL}</div>
-    </div>`;
+    const isOwn=r.name===OWNER_USER;html+=`<div class="lb-row ${cls}" style="${isOwn?'border-color:#a855f7;':''}"><div class="lb-rank">${medal}</div><div class="lb-info"><div class="lb-name" style="${isOwn?'color:#a855f7;text-shadow:0 0 8px #a855f7;':''} ">${isOwn?'👑 ':''}${r.name}</div><div class="lb-group">جروب ${r.group}</div></div><div class="lb-score">${r.score}/${TOTAL}</div></div>`;
   });
   document.getElementById('lb-content').innerHTML=html;
 }
@@ -486,10 +457,280 @@ function goBack(){
   document.getElementById('screen-leaderboard').style.display='none';
   document.getElementById('screen-register').style.display='flex';
 }
-function luffyYell(){
-  const msgs=['🏴‍☠️ سأصبح ملك القراصنة!','⚓ ذهاب!','🍖 أريد لحم!','💪 أنا مطاطي!'];
-  alert(msgs[Math.floor(Math.random()*msgs.length)]);
+
+
+// ========== OWNER SYSTEM ==========
+const OWNER_USER = 'MORA';
+const OWNER_PASS = 'MORA@2026';
+const Q_BIN_URL = 'https://api.jsonbin.io/v3/b/6a260828f5f4af5e29c875ab';
+let ownerLoggedIn = false;
+let dynamicQuestions = null; // loaded from bin
+let ownerTimerMins = 45;
+let ownerWinScore = 42;
+
+function ownerLogin(){
+  const u=document.getElementById('owner-user-inp').value.trim();
+  const p=document.getElementById('owner-pass-inp').value.trim();
+  if(u===OWNER_USER && p===OWNER_PASS){
+    ownerLoggedIn=true;
+    document.getElementById('owner-login-screen').style.display='none';
+    document.getElementById('screen-register').style.display='none';
+    document.getElementById('screen-owner').style.display='block';
+    loadOwnerData();
+  } else {
+    document.getElementById('owner-login-err').textContent='بيانات خاطئة!';
+  }
 }
+
+function exitOwner(){
+  document.getElementById('screen-owner').style.display='none';
+  document.getElementById('screen-register').style.display='flex';
+}
+
+function ownerTab(name){
+  document.querySelectorAll('.owner-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.owner-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+  if(name==='students') loadStudents();
+  if(name==='questions') loadQuestionsPanel();
+  if(name==='leaderboard') loadOwnerLB();
+}
+
+async function loadOwnerData(){
+  loadStudents();
+  loadQuestionsPanel();
+}
+
+async function loadStudents(){
+  const el=document.getElementById('students-list');
+  el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div>';
+  const all=await fetchResults();
+  if(!all.length){el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">لا يوجد طلاب بعد</div>';return;}
+  const sorted=all.sort((a,b)=>b.score-a.score);
+  let html=`<table class="students-table"><thead><tr><th>#</th><th>الاسم</th><th>الجروب</th><th>الدرجة</th><th>التاريخ</th></tr></thead><tbody>`;
+  sorted.forEach((s,i)=>{
+    html+=`<tr><td style="color:#a855f7">${i+1}</td><td style="color:#fff">${s.name}</td><td style="color:#c084fc">${s.group}</td><td style="color:var(--gold);font-weight:700">${s.score}/${TOTAL}</td><td style="color:#888">${s.date||'-'}</td></tr>`;
+  });
+  html+=`</tbody></table>`;
+  el.innerHTML=html;
+setupQTypeListener();
+}
+
+async function fetchQuestionsFromBin(){
+  try{
+    const r=await fetch(Q_BIN_URL,{headers:{'X-Master-Key':API_KEY}});
+    const d=await r.json();
+    return d.record && Array.isArray(d.record.questions) ? d.record.questions : null;
+  }catch(e){return null;}
+}
+
+async function saveQuestionsToBin(qs){
+  try{
+    await fetch(Q_BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY,'X-Bin-Versioning':'false'},body:JSON.stringify({questions:qs})});
+    return true;
+  }catch(e){return false;}
+}
+
+async function loadQuestionsPanel(){
+  const el=document.getElementById('questions-list');
+  el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div>';
+  const qs=await fetchQuestionsFromBin();
+  const list = qs || allQuestions;
+  if(!list.length){el.innerHTML='<div style="color:#888;text-align:center;">لا توجد أسئلة</div>';return;}
+  let html='';
+  list.forEach((q,i)=>{
+    const typeLabel=q.type==='tf'?'صح/خطأ':'اختيار متعدد';
+    html+=`<div class="q-edit-item">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+        <div style="flex:1;">
+          <span style="color:#a855f7;font-size:.75rem;margin-bottom:4px;display:block;">س${i+1} — ${typeLabel}</span>
+          <div class="q-text-preview">${q.q}</div>
+          <div style="color:#00e676;font-size:.8rem;">✓ ${q.opts[q.ans]}</div>
+        </div>
+        <button class="owner-btn red" style="padding:6px 12px;font-size:.8rem;flex-shrink:0;" onclick="deleteQuestion(${i})">🗑️ حذف</button>
+      </div>
+    </div>`;
+  });
+  el.innerHTML=html;
+}
+
+function setupQTypeListener(){const el=document.getElementById('new-q-type');if(!el)return;el.addEventListener('change',function(){
+  document.getElementById('new-q-opts').style.display=this.value==='tf'?'none':'block';
+  document.getElementById('new-q-tf').style.display=this.value==='tf'?'block':'none';
+});}
+
+
+async function addQuestion(){
+  const type=document.getElementById('new-q-type').value;
+  const text=document.getElementById('new-q-text').value.trim();
+  const status=document.getElementById('add-q-status');
+  if(!text){status.textContent='اكتب نص السؤال';status.style.color='#ff1744';return;}
+  let newQ;
+  if(type==='tf'){
+    const ans=document.getElementById('new-q-tf-ans').value==='true';
+    newQ={q:text,type:'tf',opts:['صح ✓','خطأ ✗'],ans:ans?0:1};
+  } else {
+    const opts=[0,1,2,3].map(i=>document.getElementById('opt'+i).value.trim());
+    if(opts.some(o=>!o)){status.textContent='اكتب كل الاختيارات';status.style.color='#ff1744';return;}
+    const ans=parseInt(document.getElementById('new-q-ans').value);
+    newQ={q:text,type:'mcq',opts,ans};
+  }
+  const existing=await fetchQuestionsFromBin();
+  const list=existing||[...allQuestions];
+  list.push(newQ);
+  const ok=await saveQuestionsToBin(list);
+  if(ok){status.textContent='✅ تم إضافة السؤال!';status.style.color='#00e676';document.getElementById('new-q-text').value='';loadQuestionsPanel();}
+  else{status.textContent='❌ فشل الحفظ';status.style.color='#ff1744';}
+}
+
+async function deleteQuestion(idx){
+  if(!confirm('هتحذف السؤال ده؟'))return;
+  const existing=await fetchQuestionsFromBin();
+  const list=existing||[...allQuestions];
+  list.splice(idx,1);
+  await saveQuestionsToBin(list);
+  loadQuestionsPanel();
+}
+
+function saveTimerSetting(){
+  const v=parseInt(document.getElementById('timer-setting').value);
+  if(!v||v<5)return;
+  ownerTimerMins=v;
+  document.getElementById('timer-status').textContent=`✅ الوقت هيكون ${v} دقيقة في الاختبار القادم`;
+}
+
+function saveWinSetting(){
+  const v=parseInt(document.getElementById('win-setting').value);
+  if(!v||v<1)return;
+  ownerWinScore=v;
+  document.getElementById('win-status').textContent=`✅ حد الفوز هيكون ${v} درجة`;
+}
+
+async function loadOwnerLB(){
+  const el=document.getElementById('owner-lb-list');
+  const all=await fetchResults();
+  if(!all.length){el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">لا يوجد نتائج</div>';return;}
+  const sorted=all.sort((a,b)=>b.score-a.score);
+  const medals=['🥇','🥈','🥉'];
+  let html='';
+  sorted.forEach((r,i)=>{
+    const isOwner=r.name===OWNER_USER;
+    const medal=i<3?medals[i]:`${i+1}`;
+    html+=`<div class="lb-row ${i===0?'top1':i===1?'top2':i===2?'top3':''}" style="${isOwner?'border-color:#a855f7;background:linear-gradient(135deg,#1a0030,#0d0020);':''}">
+      <div class="lb-rank">${medal}</div>
+      <div class="lb-info">
+        <div class="lb-name" style="${isOwner?'color:#a855f7;text-shadow:0 0 10px #a855f7;':''}">
+          ${isOwner?'👑 ':''}${r.name}
+        </div>
+        <div class="lb-group">جروب ${r.group}</div>
+      </div>
+      <div class="lb-score">${r.score}/${TOTAL}</div>
+    </div>`;
+  });
+  el.innerHTML=html;
+}
+// ========== END OWNER ==========
+
 </script>
+
+<!-- OWNER LOGIN -->
+<div id="owner-login-screen" class="owner-login" style="display:none;">
+  <div class="owner-login-card">
+    <div style="font-size:2.5rem">👑</div>
+    <div class="glow-purple">MORA Owner Panel</div>
+    <p style="color:#888;font-size:.85rem;margin:8px 0 20px;">ادخل بيانات الدخول</p>
+    <input class="owner-input" id="owner-user-inp" placeholder="اسم المستخدم" />
+    <input class="owner-input" id="owner-pass-inp" type="password" placeholder="كلمة المرور" />
+    <div id="owner-login-err" style="color:#ff1744;font-size:.85rem;min-height:18px;margin-bottom:8px;"></div>
+    <button class="owner-btn purple" style="width:100%;" onclick="ownerLogin()">🔐 دخول</button>
+    <button onclick="document.getElementById('owner-login-screen').style.display='none'" style="margin-top:12px;background:none;border:none;color:#888;font-family:'Cairo',sans-serif;cursor:pointer;font-size:.85rem;">← رجوع</button>
+  </div>
+</div>
+
+<!-- OWNER PANEL -->
+<div id="screen-owner">
+  <div class="owner-wrap">
+    <div class="owner-header">
+      <div class="owner-title">👑 MORA — لوحة التحكم</div>
+      <div style="color:#888;font-size:.8rem;margin-top:4px;">Owner Panel</div>
+    </div>
+    <div class="owner-tabs">
+      <button class="owner-tab active" onclick="ownerTab('students')">👥 الطلاب</button>
+      <button class="owner-tab" onclick="ownerTab('questions')">📝 الأسئلة</button>
+      <button class="owner-tab" onclick="ownerTab('settings')">⚙️ الإعدادات</button>
+      <button class="owner-tab" onclick="ownerTab('leaderboard')">🏆 الأوائل</button>
+      <button class="owner-tab" onclick="exitOwner()" style="margin-right:auto;border-color:#e8001d;color:#ff4444;">🚪 خروج</button>
+    </div>
+
+    <!-- STUDENTS -->
+    <div class="owner-section active" id="tab-students">
+      <div class="owner-card">
+        <h3>👥 كل الطلاب اللي امتحنوا</h3>
+        <div id="students-list"><div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div></div>
+      </div>
+    </div>
+
+    <!-- QUESTIONS -->
+    <div class="owner-section" id="tab-questions">
+      <div class="owner-card">
+        <h3>➕ إضافة سؤال جديد</h3>
+        <select class="owner-input" id="new-q-type">
+          <option value="mcq">اختيار من متعدد</option>
+          <option value="tf">صح أو خطأ</option>
+        </select>
+        <textarea class="owner-input" id="new-q-text" placeholder="نص السؤال" rows="3"></textarea>
+        <div id="new-q-opts">
+          <input class="owner-input" id="opt0" placeholder="الاختيار الأول (أ)" />
+          <input class="owner-input" id="opt1" placeholder="الاختيار الثاني (ب)" />
+          <input class="owner-input" id="opt2" placeholder="الاختيار الثالث (ج)" />
+          <input class="owner-input" id="opt3" placeholder="الاختيار الرابع (د)" />
+          <select class="owner-input" id="new-q-ans">
+            <option value="0">الإجابة الصحيحة: أ</option>
+            <option value="1">الإجابة الصحيحة: ب</option>
+            <option value="2">الإجابة الصحيحة: ج</option>
+            <option value="3">الإجابة الصحيحة: د</option>
+          </select>
+        </div>
+        <div id="new-q-tf" style="display:none;">
+          <select class="owner-input" id="new-q-tf-ans">
+            <option value="true">الإجابة الصحيحة: صح</option>
+            <option value="false">الإجابة الصحيحة: خطأ</option>
+          </select>
+        </div>
+        <button class="owner-btn green" onclick="addQuestion()">➕ إضافة السؤال</button>
+        <span id="add-q-status" style="color:#00e676;font-size:.85rem;margin-right:10px;"></span>
+      </div>
+      <div class="owner-card">
+        <h3>📋 الأسئلة الحالية</h3>
+        <div id="questions-list"><div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="owner-section" id="tab-settings">
+      <div class="owner-card">
+        <h3>⏱️ تعديل وقت الاختبار</h3>
+        <input class="owner-input" id="timer-setting" type="number" placeholder="الوقت بالدقائق (الحالي: 45)" min="5" max="180" />
+        <button class="owner-btn purple" onclick="saveTimerSetting()">💾 حفظ الوقت</button>
+        <span id="timer-status" style="color:#00e676;font-size:.85rem;margin-right:10px;"></span>
+      </div>
+      <div class="owner-card">
+        <h3>🎯 تعديل حد الفوز</h3>
+        <input class="owner-input" id="win-setting" type="number" placeholder="الدرجة المطلوبة للفوز (الحالي: 42)" min="1" />
+        <button class="owner-btn purple" onclick="saveWinSetting()">💾 حفظ</button>
+        <span id="win-status" style="color:#00e676;font-size:.85rem;margin-right:10px;"></span>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD -->
+    <div class="owner-section" id="tab-leaderboard">
+      <div class="owner-card">
+        <h3>🏆 لوحة الأوائل الكاملة</h3>
+        <div id="owner-lb-list"><div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div></div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

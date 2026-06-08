@@ -168,7 +168,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
     </div>
     <div class="quiz-subtitle">كويز علم السياسة — <span id="q-count-label">السؤال الأول</span></div>
-    <button onclick="document.getElementById('owner-login-screen').style.display='flex'" style="position:absolute;top:16px;left:16px;background:none;border:1px solid #3a1060;border-radius:8px;color:#a855f7;font-family:'Cairo',sans-serif;font-size:.8rem;padding:6px 12px;cursor:pointer;">👑 Owner</button>
+    <div style="position:absolute;top:16px;left:16px;display:flex;gap:8px;">
+      <button onclick="showLeaderboard()" style="background:none;border:1px solid var(--gold);border-radius:8px;color:var(--gold);font-family:'Cairo',sans-serif;font-size:.8rem;padding:6px 12px;cursor:pointer;">🏆 الأوائل</button>
+      <button onclick="document.getElementById('owner-login-screen').style.display='flex'" style="background:none;border:1px solid #3a1060;border-radius:8px;color:#a855f7;font-family:'Cairo',sans-serif;font-size:.8rem;padding:6px 12px;cursor:pointer;">👑 Owner</button>
+    </div>
   </div>
   <div id="welcome-bar">
     <span style="font-size:1.1rem;">🎯</span>
@@ -298,6 +301,7 @@ let current=0;
 let answers=new Array(TOTAL).fill(null);
 let answered=new Array(TOTAL).fill(false);
 let timerInterval,secsLeft=TIMER_SECS;
+let quizStarted=false;
 async function startQuiz(){
   const n=document.getElementById('inp-name').value.trim();
   const g=document.getElementById('inp-group').value.trim();
@@ -311,6 +315,7 @@ async function startQuiz(){
   document.getElementById('wb-group').textContent=g;
   document.getElementById('screen-register').style.display='none';
   document.getElementById('screen-quiz').style.display='block';
+  quizStarted=true;
   buildDots();renderQ();startTimer();
 }
 function buildDots(){
@@ -418,7 +423,7 @@ async function endQuiz(){
   document.getElementById('res-label').textContent=label;
   const st=document.getElementById('saving-status');
   st.textContent='⏳ جاري حفظ نتيجتك...';
-  const entry={name:userName,group:userGroup,pin:userPin,score,date:new Date().toLocaleDateString('ar-EG')};
+  const timeTaken=TIMER_SECS-secsLeft;const mins=Math.floor(timeTaken/60);const secs=timeTaken%60;const timeStr=`${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;const entry={name:userName,group:userGroup,pin:userPin,score,date:new Date().toLocaleDateString('ar-EG'),time:timeStr};
   const ok=await saveResult(entry);
   st.textContent=ok?'✅ تم حفظ نتيجتك في لوحة الأوائل!':'⚠️ تعذر حفظ النتيجة، تحقق من الإنترنت';
   st.style.color=ok?'var(--correct)':'#ff6b00';
@@ -449,13 +454,19 @@ async function showLeaderboard(){
   top.forEach((r,i)=>{
     const cls=i<3?`top${i+1}`:'';
     const medal=i<3?medals[i]:`${i+1}`;
-    const isOwn=r.name===OWNER_USER;html+=`<div class="lb-row ${cls}" style="${isOwn?'border-color:#a855f7;':''}"><div class="lb-rank">${medal}</div><div class="lb-info"><div class="lb-name" style="${isOwn?'color:#a855f7;text-shadow:0 0 8px #a855f7;':''} ">${isOwn?'👑 ':''}${r.name}</div><div class="lb-group">جروب ${r.group}</div></div><div class="lb-score">${r.score}/${TOTAL}</div></div>`;
+    const isOwn=r.name===OWNER_USER;html+=`<div class="lb-row ${cls}" style="${isOwn?'border-color:#a855f7;':''}"><div class="lb-rank">${medal}</div><div class="lb-info"><div class="lb-name" style="${isOwn?'color:#a855f7;text-shadow:0 0 8px #a855f7;':''} ">${isOwn?'👑 ':''}${r.name}</div><div class="lb-group">جروب ${r.group}</div></div><div style="text-align:left"><div class="lb-score">${r.score}/${TOTAL}</div>${r.time?`<div style="color:#888;font-size:.75rem">⏱️ ${r.time}</div>`:''}</div></div>`;
   });
   document.getElementById('lb-content').innerHTML=html;
 }
 function goBack(){
   document.getElementById('screen-leaderboard').style.display='none';
-  document.getElementById('screen-register').style.display='flex';
+  if(quizStarted){
+    document.getElementById('screen-quiz').style.display='block';
+    renderQ();
+    window.scrollTo({top:0});
+  } else {
+    document.getElementById('screen-register').style.display='flex';
+  }
 }
 
 
@@ -464,7 +475,7 @@ const OWNER_USER = 'MORA';
 const OWNER_PASS = 'MORA@2026';
 const Q_BIN_URL = 'https://api.jsonbin.io/v3/b/6a260828f5f4af5e29c875ab';
 let ownerLoggedIn = false;
-let dynamicQuestions = null; // loaded from bin
+let dynamicQuestions = null;
 let ownerTimerMins = 45;
 let ownerWinScore = 42;
 
@@ -508,7 +519,7 @@ async function loadStudents(){
   const all=await fetchResults();
   if(!all.length){el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">لا يوجد طلاب بعد</div>';return;}
   const sorted=all.sort((a,b)=>b.score-a.score);
-  let html=`<table class="students-table"><thead><tr><th>#</th><th>الاسم</th><th>الجروب</th><th>الدرجة</th><th>التاريخ</th></tr></thead><tbody>`;
+  let html=`<table class="students-table"><thead><tr><th>#</th><th>الاسم</th><th>الجروب</th><th>الدرجة</th><th>الوقت</th><th>التاريخ</th></tr></thead><tbody>`;
   sorted.forEach((s,i)=>{
     html+=`<tr><td style="color:#a855f7">${i+1}</td><td style="color:#fff">${s.name}</td><td style="color:#c084fc">${s.group}</td><td style="color:var(--gold);font-weight:700">${s.score}/${TOTAL}</td><td style="color:#888">${s.date||'-'}</td></tr>`;
   });

@@ -5,13 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>كويز MORA - علم السياسة</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VT17G1J5WL"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-VT17G1J5WL');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-VT17G1J5WL');</script>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<!-- Firebase -->
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import{getFirestore,collection,addDoc,onSnapshot,query,orderBy,serverTimestamp,doc,setDoc,getDoc,getDocs,updateDoc,deleteDoc,where}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig={
+  apiKey:"AIzaSyBtC4FEcPBw_6usYtfqxFxa8lqvA8B4i9Y",
+  authDomain:"mora-quiz.firebaseapp.com",
+  projectId:"mora-quiz",
+  storageBucket:"mora-quiz.firebasestorage.app",
+  messagingSenderId:"1026652790155",
+  appId:"1:1026652790155:web:eaace6be5dd12ad608e38e",
+  measurementId:"G-KNWRZBGN8Q"
+};
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+window._db=db;
+window._fb={collection,addDoc,onSnapshot,query,orderBy,serverTimestamp,doc,setDoc,getDoc,getDocs,updateDoc,deleteDoc,where};
+window._fbReady=true;
+window.dispatchEvent(new Event('fb-ready'));
+</script>
 <style>
 :root{--red:#e8001d;--gold:#FFD700;--dark:#0a0a0f;--darker:#050508;--card:#111120;--border:#1e1e3a;--text:#eee;--accent:#00cfff;--correct:#00e676;--wrong:#ff1744;}
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -29,15 +45,25 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes rankShine{0%,100%{box-shadow:0 0 10px var(--gold)}50%{box-shadow:0 0 30px var(--gold),0 0 60px #ff6b0066}}
 @keyframes first-glow{0%,100%{text-shadow:0 0 8px #FFD700,0 0 20px #FFD700,0 0 40px #ff6b00;}50%{text-shadow:0 0 16px #FFD700,0 0 40px #FFD700,0 0 80px #ff6b00;}}
 @keyframes second-glow{0%,100%{text-shadow:0 0 6px #C0C0C0,0 0 15px #C0C0C0;}50%{text-shadow:0 0 12px #fff,0 0 30px #C0C0C0;}}
-@keyframes ownerGlow{0%,100%{text-shadow:0 0 8px #a855f7,0 0 20px #a855f7,0 0 40px #ec4899,0 0 60px #a855f7;}50%{text-shadow:0 0 16px #a855f7,0 0 40px #ec4899,0 0 80px #a855f7,0 0 100px #ec4899;}}
-@keyframes ownerBorder{0%,100%{box-shadow:0 0 10px #a855f7,0 0 20px #a855f7,inset 0 0 10px rgba(168,85,247,.1);}50%{box-shadow:0 0 25px #a855f7,0 0 50px #ec4899,inset 0 0 20px rgba(168,85,247,.2);}}
+@keyframes ownerGlow{0%,100%{text-shadow:0 0 8px #a855f7,0 0 20px #a855f7,0 0 40px #ec4899;}50%{text-shadow:0 0 20px #a855f7,0 0 50px #ec4899,0 0 80px #a855f7;}}
+@keyframes leaderGlow{0%,100%{text-shadow:0 0 8px #00cfff,0 0 20px #00cfff,0 0 40px #0066ff;}50%{text-shadow:0 0 20px #00cfff,0 0 50px #0066ff,0 0 80px #00cfff;}}
+@keyframes ownerBorder{0%,100%{box-shadow:0 0 10px #a855f7,0 0 20px #a855f7;}50%{box-shadow:0 0 25px #a855f7,0 0 50px #ec4899;}}
+@keyframes leaderBorder{0%,100%{box-shadow:0 0 10px #00cfff,0 0 20px #00cfff;}50%{box-shadow:0 0 25px #00cfff,0 0 50px #0066ff;}}
+@keyframes notifPop{0%{transform:scale(0.5);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+/* HEADER */
 .header{position:relative;z-index:10;text-align:center;padding:28px 20px 18px;border-bottom:2px solid var(--border);background:linear-gradient(180deg,#0d0018 0%,rgba(10,10,15,0.9) 100%);}
 .mora-name{font-size:3.5rem;font-weight:900;background:linear-gradient(90deg,var(--gold),#ff6b00,var(--gold));background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 2s infinite;letter-spacing:4px;position:relative;}
 .straw-hat{font-size:2.2rem;position:absolute;top:-38px;left:50%;transform:translateX(-50%);animation:hatBounce 1.5s ease-in-out infinite;filter:drop-shadow(0 3px 6px rgba(0,0,0,.8));}
 .mora-glow{width:100%;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-top:4px;animation:glowPulse 1.5s ease-in-out infinite;}
 .owner-badge{font-size:.75rem;color:var(--accent);letter-spacing:3px;margin-top:2px;}
 .quiz-subtitle{font-size:1rem;color:#aaa;margin-top:10px;}
-.quiz-subtitle span{color:var(--gold);}
+/* FLOATING BTNS */
+.floating-btns{position:fixed;top:16px;left:16px;z-index:1001;display:flex;flex-direction:column;gap:6px;}
+.float-btn{border-radius:10px;color:#fff;font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:700;padding:7px 14px;cursor:pointer;border:1px solid;transition:transform .2s;}
+.float-btn:hover{transform:scale(1.05);}
+.float-btn.owner{background:linear-gradient(135deg,#4c1d95,#7c3aed);border-color:#a855f7;animation:ownerBorder 2s infinite;}
+.float-btn.leader{background:linear-gradient(135deg,#003366,#0066ff);border-color:#00cfff;animation:leaderBorder 2s infinite;}
+/* TIMER */
 .timer-bar{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
 .timer-display{font-size:1.6rem;font-weight:900;color:var(--gold);font-variant-numeric:tabular-nums;transition:color .3s;}
 .timer-display.warn{color:#ff6b00;animation:pulse .5s infinite;}
@@ -45,10 +71,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .timer-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
 .timer-fill{height:100%;background:linear-gradient(90deg,var(--correct),var(--gold));border-radius:4px;transition:width 1s linear,background 1s;}
 .progress-info{font-size:.85rem;color:#aaa;white-space:nowrap;}
+/* REGISTER */
 #screen-register{position:fixed;inset:0;z-index:999;background:var(--darker);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:20px;}
-/* زرار Owner فوق على اليسار في صفحة التسجيل */
-.reg-owner-btn{position:fixed;top:16px;left:16px;z-index:1000;background:linear-gradient(135deg,#4c1d95,#7c3aed);border:1px solid #a855f7;border-radius:10px;color:#fff;font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;padding:8px 16px;cursor:pointer;animation:ownerBorder 2s infinite;transition:transform .2s;}
-.reg-owner-btn:hover{transform:scale(1.05);}
 .reg-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px 28px;max-width:420px;width:100%;text-align:center;box-shadow:0 0 40px rgba(232,0,29,.2);}
 .reg-card h2{font-size:1.8rem;color:var(--gold);margin-bottom:6px;}
 .reg-card p{color:#888;font-size:.85rem;margin-bottom:18px;}
@@ -57,6 +81,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-start{width:100%;padding:14px;background:linear-gradient(135deg,var(--red),#800010);border:none;border-radius:12px;color:#fff;font-family:'Cairo',sans-serif;font-size:1.1rem;font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:6px;}
 .btn-start:hover{transform:scale(1.03);box-shadow:0 0 20px var(--red);}
 .reg-err{color:var(--wrong);font-size:.85rem;min-height:18px;}
+/* QUIZ */
 #screen-quiz{display:none;padding:0 0 50px;position:relative;z-index:5;}
 .question-card{max-width:750px;margin:24px auto;padding:0 16px;}
 .q-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
@@ -88,7 +113,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .nav-btn{padding:12px 24px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font-family:'Cairo',sans-serif;font-size:.95rem;cursor:pointer;transition:all .2s;flex:1;}
 .nav-btn:hover{border-color:var(--accent);}
 .nav-btn.primary{background:linear-gradient(135deg,var(--red),#800010);border-color:var(--red);color:#fff;font-weight:700;}
-#welcome-bar{background:linear-gradient(90deg,#0d0020,#1a0030,#0d0020);border-bottom:1px solid #3a1060;padding:10px 20px;display:flex;align-items:center;gap:10px;font-family:'Cairo',sans-serif;position:relative;z-index:99;}
+#welcome-bar{background:linear-gradient(90deg,#0d0020,#1a0030,#0d0020);border-bottom:1px solid #3a1060;padding:10px 20px;display:flex;align-items:center;gap:10px;font-family:'Cairo',sans-serif;flex-wrap:wrap;}
+/* RESULTS */
 #screen-results{display:none;padding:30px 16px;position:relative;z-index:5;min-height:100vh;}
 .results-card{max-width:700px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px 24px;text-align:center;}
 .score-big{font-size:5rem;font-weight:900;background:linear-gradient(135deg,var(--gold),#ff6b00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
@@ -100,6 +126,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .wrong-item .correct-ans{color:var(--correct);font-weight:700;}
 .wrong-item .your-ans{color:var(--wrong);}
 .btn-retry{margin-top:20px;padding:14px 30px;background:linear-gradient(135deg,var(--red),#800010);border:none;border-radius:12px;color:#fff;font-family:'Cairo',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;}
+/* LEADERBOARD */
 #screen-leaderboard{display:none;padding:30px 16px 50px;position:relative;z-index:5;min-height:100vh;}
 .lb-card{max-width:680px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 20px;}
 .lb-title{color:var(--gold);font-size:1.6rem;font-weight:900;text-align:center;margin-bottom:6px;}
@@ -108,61 +135,110 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .lb-row.top1{background:linear-gradient(135deg,#2a1f00,#1a1000);border-color:#FFD700;animation:rankShine 2s infinite;}
 .lb-row.top2{background:#1a1a2a;border-color:#C0C0C0;}
 .lb-row.top3{background:#1a1008;border-color:#CD7F32;}
-/* صف الأونر — بينور بغض النظر عن ترتيبه */
-.lb-row.owner-row{background:linear-gradient(135deg,#1a0030,#0d0020,#1a0030)!important;border-color:#a855f7!important;animation:ownerBorder 1.5s infinite!important;}
+.lb-row.owner-row{background:linear-gradient(135deg,#1a0030,#0d0020)!important;border-color:#a855f7!important;animation:ownerBorder 1.5s infinite!important;}
+.lb-row.leader-row{background:linear-gradient(135deg,#001a33,#000d1a)!important;border-color:#00cfff!important;animation:leaderBorder 1.5s infinite!important;}
 .lb-rank{font-size:1.4rem;width:36px;text-align:center;flex-shrink:0;}
 .lb-info{flex:1;}
 .lb-name{font-weight:700;font-size:1rem;}
 .lb-name.rank1{color:#FFD700;animation:first-glow 1.5s ease-in-out infinite;}
 .lb-name.rank2{color:#C0C0C0;animation:second-glow 2s ease-in-out infinite;}
 .lb-name.rank3{background:linear-gradient(90deg,#ff1744,#00cfff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-/* اسم الأونر — بينور بجنون */
-.lb-name.owner-name{background:linear-gradient(90deg,#a855f7,#ec4899,#fff,#a855f7)!important;background-size:200%!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;animation:shimmer 1.5s infinite,ownerGlow 1.5s ease-in-out infinite!important;font-size:1.1rem!important;}
+.lb-name.owner-name{background:linear-gradient(90deg,#a855f7,#ec4899,#fff,#a855f7)!important;background-size:200%!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;animation:shimmer 1.5s infinite!important;font-size:1.05rem!important;}
+.lb-name.leader-name{background:linear-gradient(90deg,#00cfff,#0066ff,#fff,#00cfff)!important;background-size:200%!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;animation:shimmer 1.5s infinite!important;font-size:1.05rem!important;}
 .lb-group{color:#888;font-size:.8rem;}
 .lb-score{font-weight:900;font-size:1.1rem;color:var(--gold);}
 .lb-loading{text-align:center;padding:30px;color:#888;}
-#screen-owner{display:none;position:fixed;inset:0;z-index:9999;background:#050508;overflow-y:auto;padding:20px 16px 60px;}
-.owner-wrap{max-width:900px;margin:0 auto;}
-.owner-header{text-align:center;padding:24px 0 20px;border-bottom:2px solid #2a0040;margin-bottom:24px;}
+/* OWNER / LEADER PANELS */
+#screen-owner,#screen-leader{display:none;position:fixed;inset:0;z-index:9999;background:#050508;overflow-y:auto;padding:20px 16px 60px;}
+.panel-wrap{max-width:900px;margin:0 auto;}
+.panel-header{text-align:center;padding:24px 0 20px;border-bottom:2px solid #2a0040;margin-bottom:24px;}
 .owner-title{font-size:2rem;font-weight:900;background:linear-gradient(90deg,#a855f7,#ec4899,#a855f7);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 2s infinite;}
+.leader-title{font-size:2rem;font-weight:900;background:linear-gradient(90deg,#00cfff,#0066ff,#00cfff);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 2s infinite;}
 .owner-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
 .owner-tab{padding:10px 18px;border-radius:10px;border:1px solid #3a1060;background:#0d0020;color:#c084fc;font-family:'Cairo',sans-serif;font-size:.9rem;cursor:pointer;transition:all .2s;}
 .owner-tab.active,.owner-tab:hover{background:#4c1d95;border-color:#a855f7;color:#fff;}
+.leader-tab{padding:10px 18px;border-radius:10px;border:1px solid #003366;background:#000d1a;color:#00cfff;font-family:'Cairo',sans-serif;font-size:.9rem;cursor:pointer;transition:all .2s;}
+.leader-tab.active,.leader-tab:hover{background:#003399;border-color:#00cfff;color:#fff;}
 .owner-section{display:none;}
 .owner-section.active{display:block;}
 .owner-card{background:#0d0020;border:1px solid #2a0040;border-radius:16px;padding:20px;margin-bottom:16px;}
 .owner-card h3{color:#a855f7;font-size:1rem;margin-bottom:14px;}
+.leader-card{background:#000d1a;border:1px solid #003366;border-radius:16px;padding:20px;margin-bottom:16px;}
+.leader-card h3{color:#00cfff;font-size:1rem;margin-bottom:14px;}
 .owner-input{width:100%;padding:11px 14px;background:#1a0030;border:1px solid #3a1060;border-radius:8px;color:#fff;font-family:'Cairo',sans-serif;font-size:.9rem;text-align:right;margin-bottom:8px;}
 .owner-input:focus{outline:none;border-color:#a855f7;}
+.leader-input{width:100%;padding:11px 14px;background:#001a33;border:1px solid #003366;border-radius:8px;color:#fff;font-family:'Cairo',sans-serif;font-size:.9rem;text-align:right;margin-bottom:8px;}
+.leader-input:focus{outline:none;border-color:#00cfff;}
 .owner-btn{padding:10px 20px;border-radius:8px;border:none;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;}
 .owner-btn.purple{background:linear-gradient(135deg,#7c3aed,#4c1d95);color:#fff;}
 .owner-btn.red{background:linear-gradient(135deg,#e8001d,#800010);color:#fff;}
 .owner-btn.green{background:linear-gradient(135deg,#00c853,#007c33);color:#fff;}
 .owner-btn.blue{background:linear-gradient(135deg,#0066ff,#003399);color:#fff;}
+.owner-btn.cyan{background:linear-gradient(135deg,#00cfff,#0066ff);color:#000;}
+.owner-btn.orange{background:linear-gradient(135deg,#ff6b00,#cc4400);color:#fff;}
 .owner-btn:hover{transform:scale(1.03);}
 .q-edit-item{background:#1a0030;border:1px solid #2a0040;border-radius:10px;padding:14px;margin-bottom:10px;}
 .q-edit-item .q-text-preview{color:#ddd;font-size:.85rem;margin-bottom:8px;line-height:1.6;}
-/* modal تعديل السؤال */
-.edit-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;}
-.edit-modal{background:#0d0020;border:1px solid #a855f7;border-radius:16px;padding:24px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;}
-.edit-modal h3{color:#a855f7;margin-bottom:14px;}
 .students-table{width:100%;border-collapse:collapse;}
 .students-table th{color:#a855f7;font-size:.8rem;padding:8px;border-bottom:1px solid #2a0040;text-align:right;}
 .students-table td{padding:10px 8px;border-bottom:1px solid #1a0030;font-size:.85rem;}
 .students-table tr:hover td{background:#1a0030;}
-.owner-login{position:fixed;inset:0;z-index:10000;background:#050508;display:flex;align-items:center;justify-content:center;}
-.owner-login-card{background:#0d0020;border:1px solid #3a1060;border-radius:20px;padding:36px 28px;max-width:380px;width:100%;text-align:center;}
+/* LOGIN */
+.panel-login{position:fixed;inset:0;z-index:10000;background:#050508;display:flex;align-items:center;justify-content:center;}
+.panel-login-card{background:#0d0020;border:1px solid #3a1060;border-radius:20px;padding:36px 28px;max-width:380px;width:100%;text-align:center;}
 .glow-purple{color:#a855f7;font-size:1.8rem;font-weight:900;margin-bottom:6px;}
-/* بادج الأونر في الاختبار */
-.owner-playing-badge{display:inline-block;background:linear-gradient(135deg,#4c1d95,#7c3aed);border:1px solid #a855f7;border-radius:8px;color:#fff;font-size:.75rem;padding:2px 8px;margin-right:6px;animation:ownerBorder 2s infinite;}
+.glow-cyan{color:#00cfff;font-size:1.8rem;font-weight:900;margin-bottom:6px;}
+/* CHAT */
+.chat-box{background:#050510;border:1px solid #1e1e3a;border-radius:12px;height:340px;overflow-y:auto;padding:12px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px;}
+.chat-msg{max-width:80%;padding:9px 13px;border-radius:12px;font-size:.85rem;line-height:1.5;word-break:break-word;}
+.chat-msg.sent{align-self:flex-end;background:linear-gradient(135deg,#4c1d95,#7c3aed);color:#fff;border-radius:12px 12px 4px 12px;}
+.chat-msg.received{align-self:flex-start;background:#1a1a2e;color:#eee;border:1px solid #2a2a4a;border-radius:12px 12px 12px 4px;}
+.chat-msg.system{align-self:center;background:#1a1000;color:#ff6b00;border:1px solid #3a2000;font-size:.78rem;border-radius:8px;text-align:center;}
+.chat-msg .msg-sender{font-size:.72rem;color:#a855f7;font-weight:700;margin-bottom:3px;}
+.chat-msg .msg-sender.leader-sender{color:#00cfff;}
+.chat-msg .msg-sender.student-sender{color:#00e676;}
+.chat-msg .msg-time{font-size:.65rem;color:#666;margin-top:3px;text-align:left;}
+.chat-input-row{display:flex;gap:8px;}
+.chat-input{flex:1;padding:10px 14px;background:#1a1a2e;border:1px solid #2a2a4a;border-radius:10px;color:#fff;font-family:'Cairo',sans-serif;font-size:.9rem;text-align:right;}
+.chat-input:focus{outline:none;border-color:#a855f7;}
+/* NOTIFICATIONS */
+.notif-badge{position:absolute;top:-6px;right:-6px;background:#ff1744;color:#fff;border-radius:50%;width:18px;height:18px;font-size:.65rem;display:flex;align-items:center;justify-content:center;font-weight:900;animation:notifPop .3s ease;}
+.notif-panel{position:fixed;top:60px;left:16px;z-index:9998;background:#0d0020;border:1px solid #a855f7;border-radius:14px;padding:16px;max-width:340px;width:90%;max-height:70vh;overflow-y:auto;box-shadow:0 0 30px rgba(168,85,247,.4);}
+.notif-item{background:#1a0030;border:1px solid #2a0040;border-radius:10px;padding:12px;margin-bottom:8px;font-size:.85rem;}
+.notif-item .notif-title{color:#a855f7;font-weight:700;margin-bottom:6px;}
+.notif-item .notif-body{color:#ddd;margin-bottom:8px;line-height:1.5;}
+.notif-item .notif-actions{display:flex;gap:8px;}
+/* PENDING Q EDIT */
+.pending-edit{background:#1a1000;border:1px solid #3a2000;border-radius:10px;padding:12px;margin-bottom:8px;font-size:.85rem;}
+.pending-edit .pe-label{color:#ff6b00;font-weight:700;font-size:.75rem;margin-bottom:6px;}
+/* STUDENT CHAT WIDGET */
+.student-chat-widget{position:fixed;bottom:20px;left:20px;z-index:500;}
+.student-chat-btn{background:linear-gradient(135deg,#4c1d95,#7c3aed);border:1px solid #a855f7;border-radius:50%;width:52px;height:52px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;cursor:pointer;position:relative;box-shadow:0 4px 20px rgba(168,85,247,.4);}
+.student-chat-panel{position:absolute;bottom:60px;left:0;background:#0d0020;border:1px solid #3a1060;border-radius:16px;width:300px;max-height:420px;display:none;flex-direction:column;box-shadow:0 0 30px rgba(168,85,247,.3);}
+.student-chat-panel.open{display:flex;}
+.student-chat-header{padding:12px 16px;border-bottom:1px solid #2a0040;color:#a855f7;font-weight:700;font-size:.9rem;}
+/* EDIT MODAL */
+.edit-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;}
+.edit-modal{background:#0d0020;border:1px solid #a855f7;border-radius:16px;padding:24px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;}
+.edit-modal h3{color:#a855f7;margin-bottom:14px;}
 </style>
 </head>
 <body>
 <div class="stars" id="stars"></div>
 
-<!-- زرار Owner فوق على اليسار في صفحة التسجيل -->
-<button class="reg-owner-btn" id="reg-owner-floating-btn" onclick="openOwnerLogin()">👑 Owner</button>
+<!-- Floating Buttons -->
+<div class="floating-btns" id="floating-btns">
+  <div style="position:relative;display:inline-block;">
+    <button class="float-btn owner" onclick="openOwnerLogin()">👑 Owner</button>
+    <span id="owner-notif-badge" class="notif-badge" style="display:none;">0</span>
+  </div>
+  <div style="position:relative;display:inline-block;">
+    <button class="float-btn leader" onclick="openLeaderLogin()">🎖️ Leader</button>
+    <span id="leader-notif-badge" class="notif-badge" style="display:none;">0</span>
+  </div>
+</div>
 
+<!-- REGISTER -->
 <div id="screen-register">
   <div class="reg-card">
     <div style="font-size:2.5rem;margin-bottom:8px">⚓</div>
@@ -179,26 +255,25 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 </div>
 
+<!-- QUIZ -->
 <div id="screen-quiz">
   <div class="header">
-    <div style="display:flex;align-items:center;justify-content:center;">
-      <div style="text-align:center;">
-        <div class="mora-name" style="position:relative"><span class="straw-hat">🎩</span>MORA</div>
-        <div class="mora-glow"></div>
-        <div class="owner-badge">✦ OWNER ✦</div>
-      </div>
+    <div style="text-align:center;">
+      <div class="mora-name" style="position:relative"><span class="straw-hat">🎩</span>MORA</div>
+      <div class="mora-glow"></div>
+      <div class="owner-badge">✦ OWNER ✦</div>
     </div>
     <div class="quiz-subtitle">كويز علم السياسة — <span id="q-count-label">السؤال الأول</span></div>
     <div style="position:absolute;top:16px;left:16px;display:flex;gap:8px;">
       <button onclick="showLeaderboard()" style="background:none;border:1px solid var(--gold);border-radius:8px;color:var(--gold);font-family:'Cairo',sans-serif;font-size:.8rem;padding:6px 12px;cursor:pointer;">🏆 الأوائل</button>
-      <button onclick="openOwnerLogin()" style="background:linear-gradient(135deg,#4c1d95,#7c3aed);border:1px solid #a855f7;border-radius:8px;color:#fff;font-family:'Cairo',sans-serif;font-size:.8rem;padding:6px 12px;cursor:pointer;animation:ownerBorder 2s infinite;">👑 Owner</button>
     </div>
   </div>
   <div id="welcome-bar">
     <span style="font-size:1.1rem;">🎯</span>
     <span style="color:#aaa;font-size:.9rem;">أهلاً</span>
-    <span id="wb-name" style="color:#fff;font-weight:700;text-decoration:underline wavy #a855f7;text-underline-offset:3px;"></span>
-    <span id="owner-playing-indicator" style="display:none;" class="owner-playing-badge">👑 OWNER</span>
+    <span id="wb-name" style="color:#fff;font-weight:700;"></span>
+    <span id="owner-playing-indicator" style="display:none;background:linear-gradient(135deg,#4c1d95,#7c3aed);border:1px solid #a855f7;border-radius:6px;color:#fff;font-size:.75rem;padding:2px 8px;">👑 OWNER</span>
+    <span id="leader-playing-indicator" style="display:none;background:linear-gradient(135deg,#003366,#0066ff);border:1px solid #00cfff;border-radius:6px;color:#fff;font-size:.75rem;padding:2px 8px;">🎖️ LEADER</span>
     <span style="color:#aaa;font-size:.9rem;">— جروب</span>
     <span id="wb-group" style="color:#c084fc;font-weight:900;font-style:italic;"></span>
   </div>
@@ -223,6 +298,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 </div>
 
+<!-- RESULTS -->
 <div id="screen-results">
   <div class="results-card">
     <div style="font-size:3rem">🏴‍☠️</div>
@@ -244,6 +320,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 </div>
 
+<!-- LEADERBOARD -->
 <div id="screen-leaderboard">
   <div class="lb-card">
     <div class="lb-title">🏆 لوحة الأوائل</div>
@@ -255,87 +332,280 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 </div>
 
-<!-- EDIT QUESTION MODAL -->
+<!-- OWNER LOGIN -->
+<div id="owner-login-screen" class="panel-login" style="display:none;">
+  <div class="panel-login-card">
+    <div style="font-size:2.5rem">👑</div>
+    <div class="glow-purple">MORA Owner Panel</div>
+    <p style="color:#888;font-size:.85rem;margin:8px 0 20px;">ادخل بيانات الدخول</p>
+    <input class="owner-input" id="owner-user-inp" placeholder="اسم المستخدم" />
+    <input class="owner-input" id="owner-pass-inp" type="password" placeholder="كلمة المرور" onkeydown="if(event.key==='Enter')ownerLogin()"/>
+    <div id="owner-login-err" style="color:#ff1744;font-size:.85rem;min-height:18px;margin-bottom:8px;"></div>
+    <button class="owner-btn purple" style="width:100%;" onclick="ownerLogin()">🔐 دخول</button>
+    <button onclick="closeOwnerLogin()" style="margin-top:12px;background:none;border:none;color:#888;font-family:'Cairo',sans-serif;cursor:pointer;font-size:.85rem;">← رجوع</button>
+  </div>
+</div>
+
+<!-- LEADER LOGIN -->
+<div id="leader-login-screen" class="panel-login" style="display:none;">
+  <div class="panel-login-card" style="border-color:#003366;">
+    <div style="font-size:2.5rem">🎖️</div>
+    <div class="glow-cyan">Leader Panel</div>
+    <p style="color:#888;font-size:.85rem;margin:8px 0 20px;">ادخل بيانات الدخول</p>
+    <input class="leader-input" id="leader-user-inp" placeholder="اسم المستخدم" />
+    <input class="leader-input" id="leader-pass-inp" type="password" placeholder="كلمة المرور" onkeydown="if(event.key==='Enter')leaderLogin()"/>
+    <div id="leader-login-err" style="color:#ff1744;font-size:.85rem;min-height:18px;margin-bottom:8px;"></div>
+    <button class="owner-btn cyan" style="width:100%;" onclick="leaderLogin()">🔐 دخول</button>
+    <button onclick="document.getElementById('leader-login-screen').style.display='none'" style="margin-top:12px;background:none;border:none;color:#888;font-family:'Cairo',sans-serif;cursor:pointer;font-size:.85rem;">← رجوع</button>
+  </div>
+</div>
+
+<!-- OWNER PANEL -->
+<div id="screen-owner">
+  <div class="panel-wrap">
+    <div class="panel-header">
+      <div class="owner-title">👑 MORA — لوحة التحكم</div>
+      <div id="owner-action-status" style="color:#00e676;font-size:.85rem;margin-top:6px;min-height:18px;"></div>
+    </div>
+    <div class="owner-tabs">
+      <button class="owner-tab active" onclick="ownerTab('students',this)">👥 الطلاب</button>
+      <button class="owner-tab" onclick="ownerTab('questions',this)">📝 الأسئلة</button>
+      <button class="owner-tab" onclick="ownerTab('pending',this)" id="pending-tab-btn">⏳ طلبات التعديل <span id="pending-count" style="background:#ff6b00;color:#fff;border-radius:10px;padding:1px 6px;font-size:.75rem;display:none;">0</span></button>
+      <button class="owner-tab" onclick="ownerTab('chat',this)">💬 المحادثة <span id="owner-chat-badge" style="background:#ff1744;color:#fff;border-radius:10px;padding:1px 6px;font-size:.75rem;display:none;">!</span></button>
+      <button class="owner-tab" onclick="ownerTab('leaderboard',this)">🏆 الأوائل</button>
+      <button class="owner-tab" onclick="ownerTab('settings',this)">⚙️ إعدادات</button>
+      <button class="owner-tab" onclick="exitOwner()" style="margin-right:auto;border-color:#e8001d;color:#ff4444;">🚪 خروج</button>
+    </div>
+    <!-- STUDENTS -->
+    <div class="owner-section active" id="tab-students">
+      <div class="owner-card"><h3>👥 كل الطلاب</h3><div id="students-list"><div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div></div></div>
+    </div>
+    <!-- QUESTIONS -->
+    <div class="owner-section" id="tab-questions">
+      <div class="owner-card">
+        <h3>➕ إضافة سؤال جديد</h3>
+        <select class="owner-input" id="new-q-type" onchange="toggleQTypeFields('new')">
+          <option value="mcq">اختيار من متعدد</option>
+          <option value="tf">صح أو خطأ</option>
+        </select>
+        <textarea class="owner-input" id="new-q-text" placeholder="نص السؤال" rows="3"></textarea>
+        <div id="new-q-opts">
+          <input class="owner-input" id="opt0" placeholder="الاختيار الأول (أ)" />
+          <input class="owner-input" id="opt1" placeholder="الاختيار الثاني (ب)" />
+          <input class="owner-input" id="opt2" placeholder="الاختيار الثالث (ج)" />
+          <input class="owner-input" id="opt3" placeholder="الاختيار الرابع (د)" />
+          <select class="owner-input" id="new-q-ans">
+            <option value="0">الإجابة الصحيحة: أ</option>
+            <option value="1">الإجابة الصحيحة: ب</option>
+            <option value="2">الإجابة الصحيحة: ج</option>
+            <option value="3">الإجابة الصحيحة: د</option>
+          </select>
+        </div>
+        <div id="new-q-tf" style="display:none;">
+          <select class="owner-input" id="new-q-tf-ans">
+            <option value="true">الإجابة الصحيحة: صح</option>
+            <option value="false">الإجابة الصحيحة: خطأ</option>
+          </select>
+        </div>
+        <button class="owner-btn green" onclick="addQuestion()">➕ إضافة</button>
+        <span id="add-q-status" style="color:#00e676;font-size:.85rem;margin-right:10px;"></span>
+      </div>
+      <div class="owner-card"><h3>📋 الأسئلة الحالية</h3><div id="questions-list"><div style="color:#888;text-align:center;padding:20px;">⏳</div></div></div>
+    </div>
+    <!-- PENDING -->
+    <div class="owner-section" id="tab-pending">
+      <div class="owner-card"><h3>⏳ طلبات تعديل الأسئلة من Leader</h3><div id="pending-list"><div style="color:#888;text-align:center;padding:20px;">لا يوجد طلبات</div></div></div>
+    </div>
+    <!-- CHAT -->
+    <div class="owner-section" id="tab-chat">
+      <div class="owner-card">
+        <h3>💬 المحادثة مع Leader والطلاب</h3>
+        <div class="chat-box" id="owner-chat-box"></div>
+        <div class="chat-input-row">
+          <input class="chat-input" id="owner-chat-input" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')sendOwnerMsg()"/>
+          <button class="owner-btn purple" onclick="sendOwnerMsg()">إرسال</button>
+        </div>
+      </div>
+    </div>
+    <!-- LEADERBOARD -->
+    <div class="owner-section" id="tab-leaderboard">
+      <div class="owner-card"><h3>🏆 الأوائل الكاملة</h3><div id="owner-lb-list"><div style="color:#888;text-align:center;padding:20px;">⏳</div></div></div>
+    </div>
+    <!-- SETTINGS -->
+    <div class="owner-section" id="tab-settings">
+      <div class="owner-card">
+        <h3>⏱️ وقت الاختبار</h3>
+        <input class="owner-input" id="timer-setting" type="number" placeholder="الوقت بالدقائق (45)" min="5" max="180" />
+        <button class="owner-btn purple" onclick="saveTimerSetting()">💾 حفظ</button>
+        <span id="timer-status" style="color:#00e676;font-size:.85rem;margin-right:10px;"></span>
+      </div>
+      <div class="owner-card">
+        <h3>🎯 حد الفوز</h3>
+        <input class="owner-input" id="win-setting" type="number" placeholder="الدرجة المطلوبة (42)" min="1" />
+        <button class="owner-btn purple" onclick="saveWinSetting()">💾 حفظ</button>
+        <span id="win-status" style="color:#00e676;font-size:.85rem;margin-right:10px;"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEADER PANEL -->
+<div id="screen-leader">
+  <div class="panel-wrap">
+    <div class="panel-header" style="border-color:#003366;">
+      <div class="leader-title">🎖️ Leader Panel</div>
+      <div id="leader-action-status" style="color:#00cfff;font-size:.85rem;margin-top:6px;min-height:18px;"></div>
+    </div>
+    <div class="owner-tabs">
+      <button class="leader-tab active" onclick="leaderTab('questions',this)">📝 الأسئلة</button>
+      <button class="leader-tab" onclick="leaderTab('chat',this)">💬 المحادثة <span id="leader-chat-badge" style="background:#ff1744;color:#fff;border-radius:10px;padding:1px 6px;font-size:.75rem;display:none;">!</span></button>
+      <button class="leader-tab" onclick="leaderTab('leaderboard',this)">🏆 الأوائل</button>
+      <button class="leader-tab" onclick="exitLeader()" style="margin-right:auto;border-color:#e8001d;color:#ff4444;">🚪 خروج</button>
+    </div>
+    <!-- QUESTIONS (Leader - عرض فقط مع طلب تعديل) -->
+    <div class="owner-section active" id="ltab-questions">
+      <div class="leader-card">
+        <h3>📝 الأسئلة — اضغط "طلب تعديل" لأي سؤال وهيتراجعه Owner</h3>
+        <div id="leader-questions-list"><div style="color:#888;text-align:center;padding:20px;">⏳</div></div>
+      </div>
+    </div>
+    <!-- CHAT -->
+    <div class="owner-section" id="ltab-chat">
+      <div class="leader-card">
+        <h3>💬 المحادثة مع Owner</h3>
+        <div class="chat-box" id="leader-chat-box"></div>
+        <div class="chat-input-row">
+          <input class="leader-input" id="leader-chat-input" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')sendLeaderMsg()"/>
+          <button class="owner-btn cyan" onclick="sendLeaderMsg()">إرسال</button>
+        </div>
+      </div>
+    </div>
+    <!-- LEADERBOARD -->
+    <div class="owner-section" id="ltab-leaderboard">
+      <div class="leader-card"><h3>🏆 الأوائل</h3><div id="leader-lb-list"><div style="color:#888;text-align:center;padding:20px;">⏳</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODAL (Owner) -->
 <div id="edit-modal" class="edit-modal-overlay" style="display:none;">
   <div class="edit-modal">
     <h3>✏️ تعديل السؤال</h3>
     <input type="hidden" id="edit-q-index" />
-    <select class="owner-input" id="edit-q-type">
+    <select class="owner-input" id="edit-q-type" onchange="toggleQTypeFields('edit')">
       <option value="mcq">اختيار من متعدد</option>
       <option value="tf">صح أو خطأ</option>
     </select>
-    <textarea class="owner-input" id="edit-q-text" rows="3" placeholder="نص السؤال"></textarea>
+    <textarea class="owner-input" id="edit-q-text" rows="3"></textarea>
     <div id="edit-q-opts">
-      <input class="owner-input" id="edit-opt0" placeholder="الاختيار الأول (أ)" />
-      <input class="owner-input" id="edit-opt1" placeholder="الاختيار الثاني (ب)" />
-      <input class="owner-input" id="edit-opt2" placeholder="الاختيار الثالث (ج)" />
-      <input class="owner-input" id="edit-opt3" placeholder="الاختيار الرابع (د)" />
+      <input class="owner-input" id="edit-opt0" /><input class="owner-input" id="edit-opt1" />
+      <input class="owner-input" id="edit-opt2" /><input class="owner-input" id="edit-opt3" />
       <select class="owner-input" id="edit-q-ans">
-        <option value="0">الإجابة الصحيحة: أ</option>
-        <option value="1">الإجابة الصحيحة: ب</option>
-        <option value="2">الإجابة الصحيحة: ج</option>
-        <option value="3">الإجابة الصحيحة: د</option>
+        <option value="0">أ</option><option value="1">ب</option><option value="2">ج</option><option value="3">د</option>
       </select>
     </div>
     <div id="edit-q-tf" style="display:none;">
-      <select class="owner-input" id="edit-q-tf-ans">
-        <option value="0">الإجابة الصحيحة: صح</option>
-        <option value="1">الإجابة الصحيحة: خطأ</option>
-      </select>
+      <select class="owner-input" id="edit-q-tf-ans"><option value="0">صح</option><option value="1">خطأ</option></select>
     </div>
     <div style="display:flex;gap:10px;margin-top:10px;">
-      <button class="owner-btn green" style="flex:1;" onclick="saveEditQuestion()">💾 حفظ التعديل</button>
+      <button class="owner-btn green" style="flex:1;" onclick="saveEditQuestion()">💾 حفظ</button>
       <button class="owner-btn red" style="flex:1;" onclick="document.getElementById('edit-modal').style.display='none'">إلغاء</button>
     </div>
     <div id="edit-status" style="color:#00e676;font-size:.85rem;margin-top:8px;text-align:center;"></div>
   </div>
 </div>
 
+<!-- LEADER REQUEST MODAL -->
+<div id="leader-edit-modal" class="edit-modal-overlay" style="display:none;">
+  <div class="edit-modal" style="border-color:#00cfff;">
+    <h3 style="color:#00cfff;">📝 طلب تعديل سؤال</h3>
+    <input type="hidden" id="leader-edit-idx" />
+    <div id="leader-edit-original" style="background:#001a33;border:1px solid #003366;border-radius:8px;padding:10px;margin-bottom:10px;font-size:.85rem;color:#aaa;"></div>
+    <select class="leader-input" id="leader-edit-type" onchange="toggleQTypeFields('ledit')">
+      <option value="mcq">اختيار من متعدد</option>
+      <option value="tf">صح أو خطأ</option>
+    </select>
+    <textarea class="leader-input" id="leader-edit-text" rows="3" placeholder="النص الجديد للسؤال"></textarea>
+    <div id="ledit-q-opts">
+      <input class="leader-input" id="ledit-opt0" /><input class="leader-input" id="ledit-opt1" />
+      <input class="leader-input" id="ledit-opt2" /><input class="leader-input" id="ledit-opt3" />
+      <select class="leader-input" id="ledit-q-ans">
+        <option value="0">أ</option><option value="1">ب</option><option value="2">ج</option><option value="3">د</option>
+      </select>
+    </div>
+    <div id="ledit-q-tf" style="display:none;">
+      <select class="leader-input" id="ledit-q-tf-ans"><option value="0">صح</option><option value="1">خطأ</option></select>
+    </div>
+    <textarea class="leader-input" id="leader-edit-reason" rows="2" placeholder="سبب التعديل (اختياري)"></textarea>
+    <div style="display:flex;gap:10px;margin-top:10px;">
+      <button class="owner-btn cyan" style="flex:1;" onclick="submitLeaderEditRequest()">📤 إرسال للـ Owner</button>
+      <button class="owner-btn red" style="flex:1;" onclick="document.getElementById('leader-edit-modal').style.display='none'">إلغاء</button>
+    </div>
+    <div id="leader-edit-status" style="color:#00cfff;font-size:.85rem;margin-top:8px;text-align:center;"></div>
+  </div>
+</div>
+
+<!-- STUDENT CHAT WIDGET -->
+<div class="student-chat-widget" id="student-chat-widget" style="display:none;">
+  <div class="student-chat-panel" id="student-chat-panel">
+    <div class="student-chat-header">💬 سؤال للـ Owner / Leader</div>
+    <div class="chat-box" id="student-chat-box" style="height:240px;"></div>
+    <div style="padding:10px;">
+      <div class="chat-input-row">
+        <input class="chat-input" id="student-chat-input" placeholder="اكتب سؤالك..." onkeydown="if(event.key==='Enter')sendStudentMsg()"/>
+        <button class="owner-btn purple" style="padding:8px 12px;" onclick="sendStudentMsg()">إرسال</button>
+      </div>
+    </div>
+  </div>
+  <div class="student-chat-btn" onclick="toggleStudentChat()" style="position:relative;">
+    💬
+    <span id="student-chat-badge" class="notif-badge" style="display:none;">!</span>
+  </div>
+</div>
+
 <script>
+// ===== STARS =====
 (function(){const s=document.getElementById('stars');for(let i=0;i<60;i++){const el=document.createElement('span');const sz=Math.random()*2+1;el.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;s.appendChild(el);}})();
 
+// ===== JSONbin (للأسئلة والنتائج) =====
 const BIN_ID='6a2658ecf5f4af5e29c95d96';
 const API_KEY='$2a$10$DOe0/DgjrfHug0CKwB9PV.1KB4e0TgulBFT6HXjURNmNXG/tKN4xq';
 const BIN_URL=`https://api.jsonbin.io/v3/b/${BIN_ID}`;
 const HEADERS={'Content-Type':'application/json','X-Master-Key':API_KEY,'X-Bin-Versioning':'false'};
 const Q_BIN_URL='https://api.jsonbin.io/v3/b/6a260828f5f4af5e29c875ab';
 
-const OWNER_USER='MORA';
-const OWNER_PASS='MORA@2026';
-let ownerLoggedIn=false;
-
 async function fetchResults(){
-  try{
-    const r=await fetch(BIN_URL,{headers:{'X-Master-Key':API_KEY}});
-    const d=await r.json();
-    const arr=Array.isArray(d.record)?d.record:[];
-    return arr.filter(r=>r&&r.name&&r.name!=='undefined'&&r.score!==undefined&&r.score!==null&&!isNaN(r.score));
-  }catch(e){return[];}
+  try{const r=await fetch(BIN_URL,{headers:{'X-Master-Key':API_KEY}});const d=await r.json();
+  const arr=Array.isArray(d.record)?d.record:[];
+  return arr.filter(r=>r&&r.name&&r.name!=='undefined'&&r.score!==undefined&&r.score!==null&&!isNaN(r.score));}
+  catch(e){return[];}
 }
 async function saveResult(entry){
-  try{
-    const all=await fetchResults();
-    const idx=all.findIndex(r=>r.name===entry.name&&r.pin===entry.pin);
-    if(idx>=0){if(entry.score>all[idx].score)all[idx]=entry;}
-    else{all.push(entry);}
-    await fetch(BIN_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify(all)});
-    return true;
-  }catch(e){return false;}
+  try{const all=await fetchResults();
+  const idx=all.findIndex(r=>r.name===entry.name&&r.pin===entry.pin);
+  if(idx>=0){if(entry.score>all[idx].score)all[idx]=entry;}else{all.push(entry);}
+  await fetch(BIN_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify(all)});return true;}
+  catch(e){return false;}
 }
 async function fetchQuestionsFromBin(){
-  try{
-    const r=await fetch(Q_BIN_URL,{headers:{'X-Master-Key':API_KEY}});
-    const d=await r.json();
-    return d.record&&Array.isArray(d.record.questions)?d.record.questions:null;
-  }catch(e){return null;}
+  try{const r=await fetch(Q_BIN_URL,{headers:{'X-Master-Key':API_KEY}});const d=await r.json();
+  return d.record&&Array.isArray(d.record.questions)?d.record.questions:null;}catch(e){return null;}
 }
 async function saveQuestionsToBin(qs){
-  try{
-    await fetch(Q_BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY,'X-Bin-Versioning':'false'},body:JSON.stringify({questions:qs})});
-    return true;
-  }catch(e){return false;}
+  try{const r=await fetch(Q_BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY,'X-Bin-Versioning':'false'},body:JSON.stringify({questions:qs})});
+  if(!r.ok){console.error('saveQ failed:',r.status);return false;}return true;}catch(e){return false;}
+}
+async function getCurrentQuestions(){
+  const qs=await fetchQuestionsFromBin();return qs&&qs.length>0?qs:[...defaultQuestions];
 }
 
+// ===== ACCOUNTS =====
+const OWNER_USER='MORA',OWNER_PASS='MORA@2026';
+const LEADER_USER='leader',LEADER_PASS='leader@2026';
+let ownerLoggedIn=false,leaderLoggedIn=false;
+let _cachedResults=[];
+
+// ===== QUESTIONS DATA =====
 const mcqQuestions=[
   {q:"يُعتبر ........ أحد مزايا النظام شبه الرئاسي",opts:["خضوع رئيس الوزراء للبرلمان","أحقية الحكومة في إصدار قرارات لها قاطعية القوانين دون موافقة رئيس الجمهورية","وجود جهة حكم تنفيذية واحدة","غير ذلك"],ans:1},
   {q:"يُعد ........ أحد خصائص النظام البرلماني",opts:["إمكانية حل البرلمان","تنفيذ السلطة التنفيذية للقوانين التي يشرعها البرلمان دون الحق في مناقشتها","دعوة البرلمان للانعقاد في الفترات التشريعية فقط","غير ذلك"],ans:0},
@@ -346,22 +616,22 @@ const mcqQuestions=[
   {q:"تنظيمات تهدف إلى الوصول إلى الحكم من أجل تنفيذ برامجها",opts:["أحزاب","المجتمع المدني","جماعات مصالح أو ضغط","جميع ما سبق"],ans:0},
   {q:"من موضوعات علم السياسة",opts:["النظرية السياسية","الأحزاب السياسية","العلاقات الدولية","جميع ما سبق"],ans:3},
   {q:"النظام الأمريكي هو النظام الأمثل .....",opts:["للنظام الرئاسي","للنظام البرلماني","للنظام شبه الرئاسي","لنظام حكومة الجمعية"],ans:0},
-  {q:"النظام الذي يقوم على أساس التوازن بين السلطتين التشريعية والتنفيذية والتعاون المكثف بينهما، وذلك دون ترجيح أحدهما على الآخر هو.....",opts:["النظام الرئاسي","النظام البرلماني","النظام شبه الرئاسي","نظام حكومة الجمعية"],ans:2},
+  {q:"النظام الذي يقوم على أساس التوازن بين السلطتين التشريعية والتنفيذية",opts:["النظام الرئاسي","النظام البرلماني","النظام شبه الرئاسي","نظام حكومة الجمعية"],ans:2},
   {q:"ماذا تعني السياسة كفن؟",opts:["قدرتها على التحليل فقط","مهارة استخدام السلطة بطريقة فعالة","تحليل العلاقات الدولية فقط","إدارة الأزمات السياسية فقط"],ans:1},
   {q:"أي من الخيارات التالية ليس من العناصر الأساسية لقيام الدولة؟",opts:["الشعب","الإقليم","السلطة الحاكمة","اللغة"],ans:3},
   {q:"دول لا تخضع في شؤونها الداخلية أو الخارجية لهيمنة دولة أخرى",opts:["دول تامة السيادة","دول ناقصة السيادة","دول مركبة","غير ذلك"],ans:0},
-  {q:"يركز الفكر .... في تعريفه للحزب على الجانب العملي والهدف النهائي من العملية السياسية",opts:["الليبرالي","الماركسي","العربي","الإسلامي"],ans:0},
+  {q:"يركز الفكر .... في تعريفه للحزب على الجانب العملي والهدف النهائي",opts:["الليبرالي","الماركسي","العربي","الإسلامي"],ans:0},
   {q:"ما هي الدولة التي تكون تحت الحماية الاختيارية؟",opts:["الدولة التابعة","الدولة التي تضعها دولة قوية تحت حماية قسرية","الدولة تحت الانتداب","الدولة التي تختار حماية دولة أخرى بموجب معاهدة"],ans:3},
-  {q:"من صور الدستور ... تعديل القانون العادي بالأغلبية العادية لأعضاء المجلس البرلماني، بينما يُشترط لتعديل الدستور أغلبية ثلثي هؤلاء الأعضاء",opts:["المرن","الجامد جموداً مطلقاً","الجامد جموداً نسبياً","جميع ما سبق"],ans:2},
+  {q:"من صور الدستور الجامد جموداً نسبياً",opts:["المرن","الجامد جموداً مطلقاً","الجامد جموداً نسبياً","جميع ما سبق"],ans:2},
   {q:"يُعتبر ........... هو العنصر الإنساني اللازم لقيام الدولة",opts:["الشعب","الاعتراف","السلطة الحاكمة","جميع ما سبق"],ans:0},
   {q:"تتميز العلوم السياسية بالعديد من الخصائص وهي",opts:["المرونة","علم قديم لا يحتاج إلى مزيد من الدراسات","الاتفاق على تحديد مضمونه","إنه علم ثابت وليس متغير"],ans:0},
   {q:"ما هي الطريقة التي نشأت بها الأحزاب السياسية في البداية؟",opts:["من خلال التعاون مع الشركات","من خلال الحرب العالمية الأولى","من خلال انقسام البرلمان إلى كتل","من خلال تأسيسها في الكنائس"],ans:2},
-  {q:"دولة تربطها بدولة أخرى رابطة خضوع وولاء، وهو نظام تاريخي لم يعد له وجود في وقتنا الراهن",opts:["دولة محمية","دولة تابعة","دولة متبوعة","دولة تحت الانتداب"],ans:1},
+  {q:"دولة تربطها بدولة أخرى رابطة خضوع وولاء",opts:["دولة محمية","دولة تابعة","دولة متبوعة","دولة تحت الانتداب"],ans:1},
   {q:"الدستور الذي يتطلب موافقة الشعب في استفتاء لتعديله يُعتبر",opts:["مرن","جامد جموداً مطلقاً","جامد جموداً نسبياً","عرفي"],ans:1},
   {q:"........ هو الشكل الوحيد من الدول المركبة الذي يجعل من الدول الداخلة فيه دولاً واحدة",opts:["الاتحاد الشخصي","الاتحاد التعاهدي","الاتحاد الاستقلالي","الاتحاد الفيدرالي"],ans:3},
-  {q:"تلك الجماعات التي لها أصل عرفي ثابت وتقاليد دينية ولغوية وصفات خاصة بهم وتدين بالولاء للدولة التي تتمتع بجنسيتها",opts:["الأقليات","المواطنين","السكان","غير ذلك"],ans:0},
+  {q:"تلك الجماعات التي لها أصل عرفي ثابت وتقاليد دينية ولغوية",opts:["الأقليات","المواطنين","السكان","غير ذلك"],ans:0},
   {q:"أي حزب سياسي لابد أن يتوافر له",opts:["تنظيم","برنامج","هدف","جميع ما سبق"],ans:3},
-  {q:"الاعتراف الصريح هو ........",opts:["الذي يحصل عندما تدخل الدول في علاقات دولية مع الدولة أو الحكومة الجديدة","الإعلان المباشر الذي تعلنه الدول بصورة رسمية متضمناً الاعتراف بدولة معينة","الذي يحصل عند تبادل دبلوماسيين","غير ذلك"],ans:1},
+  {q:"الاعتراف الصريح هو ........",opts:["الذي يحصل عندما تدخل الدول في علاقات دولية مع الدولة الجديدة","الإعلان المباشر الذي تعلنه الدول بصورة رسمية","الذي يحصل عند تبادل دبلوماسيين","غير ذلك"],ans:1},
 ];
 const tfQuestions=[
   {q:"الإقليم يتضمن اليابس، والمياه المحيطة به، وكذلك الفضاء الجوي.",ans:true},
@@ -375,14 +645,14 @@ const tfQuestions=[
   {q:"من أهم مميزات الدساتير العرفية سرعة إصدارها",ans:true},
   {q:"يتكون الدستور الإنجليزي من قواعد دستورية عرفية وقواعد منصوص عليها في وثائق مستقلة",ans:true},
   {q:"يرتبط علم السياسة دائماً بالقيم الدينية فقط",ans:false},
-  {q:"يُعتبر الاتحاد المركزي أو الفيدرالي هو الشكل الوحيد من الدول المركبة الذي يجعل من الدول الداخلة فيه دولة واحدة تسمى دولة اتحادية",ans:true},
+  {q:"يُعتبر الاتحاد الفيدرالي هو الشكل الوحيد من الدول المركبة الذي يجعل من الدول الداخلة فيه دولة واحدة",ans:true},
   {q:"النظام شبه الرئاسي يمنح البرلمان الحق في التصديق على المعاهدات والموازنة العامة للدولة",ans:false},
   {q:"تكون مسؤولية الوزارة أمام البرلمان في ظل النظام البرلماني فردية أو تضامنية",ans:true},
   {q:"تقع المسؤولية السياسية في النظام البرلماني على رئيس الجمهورية",ans:false},
   {q:"الدولة التابعة هي الدولة التي تتبع دولة أخرى ويجمعها بها رابطة خضوع وولاء",ans:true},
   {q:"الحكم على أن دستوراً معين مرن يتوقف على طريقة وضع الدستور",ans:false},
   {q:"كان للبرلمان دوراً فاعلاً في نشأة ما يُعرف بأحزاب التكوين الخارجي",ans:false},
-  {q:"يُعد الدستور مكتوباً مادام قد تم تسجيله في وثيقة مكتوبة حتى لو لم يتم تسجيله في وثيقة رسمية",ans:false},
+  {q:"يُعد الدستور مكتوباً مادام قد تم تسجيله في وثيقة مكتوبة",ans:false},
   {q:"علم السياسة يقتصر فقط على دراسة النظام السياسي داخل الدولة",ans:false},
   {q:"يجب أن يكون نائب رئيس الدولة في أمريكا من نفس الولاية التي ينتمي إليها الرئيس",ans:false},
   {q:"يُعتبر جواز الجمع بين المنصب الوزاري والعضوية في البرلمان أحد مظاهر الفصل بين السلطات في النظام الرئاسي",ans:false},
@@ -395,31 +665,180 @@ let allQuestions=[...defaultQuestions];
 let TOTAL=allQuestions.length;
 const TIMER_SECS=45*60;
 let userName='',userGroup='',userPin='';
-let current=0;
-let answers=[];
-let answered=[];
-let timerInterval,secsLeft=TIMER_SECS;
-let quizStarted=false;
-let isOwnerPlaying=false;
+let current=0,answers=[],answered=[],timerInterval,secsLeft=TIMER_SECS,quizStarted=false;
+let isOwnerPlaying=false,isLeaderPlaying=false;
 
-function openOwnerLogin(){
-  // لو الأونر لوجد بالفعل، روحه على البانيل مباشرة
-  if(ownerLoggedIn){
-    goToOwnerPanel();return;
-  }
-  document.getElementById('owner-login-screen').style.display='flex';
-}
+// ===== FIREBASE HELPERS =====
+function db(){return window._db;}
+function fb(){return window._fb;}
+function waitFB(){return new Promise(r=>{if(window._fbReady)r();else window.addEventListener('fb-ready',r,{once:true});});}
 
-function goToOwnerPanel(){
-  document.getElementById('owner-login-screen').style.display='none';
-  // إخفي كل الشاشات
-  ['screen-register','screen-quiz','screen-results','screen-leaderboard'].forEach(id=>{
-    const el=document.getElementById(id);if(el)el.style.display='none';
+// ===== CHAT =====
+let chatUnsub=null;
+async function subscribeChat(){
+  await waitFB();
+  const {collection,query,orderBy,onSnapshot}=fb();
+  const q=query(collection(db(),'chat'),orderBy('ts'));
+  if(chatUnsub)chatUnsub();
+  chatUnsub=onSnapshot(q,snap=>{
+    renderChatAll(snap.docs.map(d=>({id:d.id,...d.data()})));
   });
-  document.getElementById('screen-owner').style.display='block';
-  loadOwnerData();
+}
+function renderChatAll(msgs){
+  ['owner-chat-box','leader-chat-box','student-chat-box'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    el.innerHTML='';
+    msgs.forEach(m=>el.appendChild(buildMsgEl(m,id)));
+    el.scrollTop=el.scrollHeight;
+  });
+  // بادج الطالب لو جاه رسالة جديدة
+  const lastMsg=msgs[msgs.length-1];
+  if(lastMsg&&lastMsg.role!=='student'&&quizStarted){
+    const badge=document.getElementById('student-chat-badge');
+    const panel=document.getElementById('student-chat-panel');
+    if(!panel.classList.contains('open')&&badge)badge.style.display='flex';
+  }
+}
+function buildMsgEl(m,boxId){
+  const div=document.createElement('div');
+  const isMe=(boxId==='owner-chat-box'&&m.role==='owner')||(boxId==='leader-chat-box'&&m.role==='leader')||(boxId==='student-chat-box'&&m.role==='student'&&m.name===userName);
+  div.className='chat-msg '+(isMe?'sent':'received');
+  if(m.role==='system')div.className='chat-msg system';
+  const senderEl=document.createElement('div');
+  senderEl.className='msg-sender'+(m.role==='leader'?' leader-sender':m.role==='student'?' student-sender':'');
+  senderEl.textContent=m.role==='owner'?'👑 MORA':m.role==='leader'?'🎖️ Leader':`🎓 ${m.name||'طالب'}`;
+  const textEl=document.createElement('div');textEl.textContent=m.text;
+  const timeEl=document.createElement('div');timeEl.className='msg-time';
+  timeEl.textContent=m.ts?.toDate?m.ts.toDate().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'';
+  if(m.role!=='system')div.appendChild(senderEl);
+  div.appendChild(textEl);div.appendChild(timeEl);
+  return div;
+}
+async function sendOwnerMsg(){
+  const inp=document.getElementById('owner-chat-input');
+  const text=inp.value.trim();if(!text)return;
+  await waitFB();
+  const {collection,addDoc,serverTimestamp}=fb();
+  await addDoc(collection(db(),'chat'),{role:'owner',text,ts:serverTimestamp()});
+  inp.value='';
+}
+async function sendLeaderMsg(){
+  const inp=document.getElementById('leader-chat-input');
+  const text=inp.value.trim();if(!text)return;
+  await waitFB();
+  const {collection,addDoc,serverTimestamp}=fb();
+  await addDoc(collection(db(),'chat'),{role:'leader',text,ts:serverTimestamp()});
+  inp.value='';
+}
+async function sendStudentMsg(){
+  const inp=document.getElementById('student-chat-input');
+  const text=inp.value.trim();if(!text)return;
+  await waitFB();
+  const {collection,addDoc,serverTimestamp}=fb();
+  await addDoc(collection(db(),'chat'),{role:'student',name:userName,group:userGroup,text,ts:serverTimestamp()});
+  inp.value='';
+}
+function toggleStudentChat(){
+  const panel=document.getElementById('student-chat-panel');
+  panel.classList.toggle('open');
+  if(panel.classList.contains('open')){
+    document.getElementById('student-chat-badge').style.display='none';
+    panel.querySelector('.chat-box').scrollTop=99999;
+  }
 }
 
+// ===== PENDING EDITS (Firestore) =====
+let pendingUnsub=null;
+async function subscribePending(){
+  await waitFB();
+  const {collection,query,where,onSnapshot}=fb();
+  const q=query(collection(db(),'pendingEdits'),where('status','==','pending'));
+  if(pendingUnsub)pendingUnsub();
+  pendingUnsub=onSnapshot(q,snap=>{
+    const docs=snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderPendingList(docs);
+    const cnt=docs.length;
+    const badge=document.getElementById('pending-count');
+    const tabBtn=document.getElementById('pending-tab-btn');
+    if(cnt>0){badge.textContent=cnt;badge.style.display='inline';tabBtn.style.color='#ff6b00';}
+    else{badge.style.display='none';tabBtn.style.color='';}
+    // owner badge
+    const ob=document.getElementById('owner-notif-badge');
+    if(cnt>0){ob.textContent=cnt;ob.style.display='flex';}else ob.style.display='none';
+  });
+}
+function renderPendingList(docs){
+  const el=document.getElementById('pending-list');
+  if(!docs.length){el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">لا يوجد طلبات معلقة ✅</div>';return;}
+  el.innerHTML='';
+  docs.forEach(doc=>{
+    const div=document.createElement('div');div.className='pending-edit';
+    div.innerHTML=`<div class="pe-label">📝 طلب تعديل من Leader — س${doc.qIdx+1}</div>
+    <div style="color:#888;font-size:.8rem;margin-bottom:6px;">السبب: ${doc.reason||'—'}</div>
+    <div style="margin-bottom:6px;"><strong style="color:#aaa;">الأصلي:</strong> <span style="color:#888;">${doc.original?.q||''}</span></div>
+    <div style="margin-bottom:10px;"><strong style="color:#00cfff;">المقترح:</strong> <span style="color:#ddd;">${doc.proposed?.q||''}</span></div>
+    <div style="display:flex;gap:8px;">
+      <button class="owner-btn green" style="padding:6px 14px;font-size:.82rem;" onclick="approvePendingEdit('${doc.id}')">✅ موافقة</button>
+      <button class="owner-btn red" style="padding:6px 14px;font-size:.82rem;" onclick="rejectPendingEdit('${doc.id}')">❌ رفض</button>
+    </div>`;
+    el.appendChild(div);
+  });
+}
+async function approvePendingEdit(docId){
+  await waitFB();
+  const {doc,getDoc,updateDoc}=fb();
+  const ref=doc(db(),'pendingEdits',docId);
+  const snap=await getDoc(ref);
+  if(!snap.exists())return;
+  const data=snap.data();
+  // طبق التعديل على الأسئلة
+  const list=await getCurrentQuestions();
+  list[data.qIdx]=data.proposed;
+  await saveQuestionsToBin(list);
+  await updateDoc(ref,{status:'approved'});
+  // رسالة في الشات
+  const {collection,addDoc,serverTimestamp}=fb();
+  await addDoc(collection(db(),'chat'),{role:'system',text:`✅ Owner وافق على تعديل س${data.qIdx+1}`,ts:serverTimestamp()});
+  document.getElementById('owner-action-status').textContent='✅ تم تطبيق التعديل';
+  setTimeout(()=>document.getElementById('owner-action-status').textContent='',3000);
+}
+async function rejectPendingEdit(docId){
+  await waitFB();
+  const {doc,updateDoc,collection,addDoc,serverTimestamp,getDoc}=fb();
+  const ref=doc(db(),'pendingEdits',docId);
+  const snap=await getDoc(ref);
+  const data=snap.data();
+  await updateDoc(ref,{status:'rejected'});
+  await addDoc(collection(db(),'chat'),{role:'system',text:`❌ Owner رفض تعديل س${data.qIdx+1}`,ts:serverTimestamp()});
+  document.getElementById('owner-action-status').textContent='❌ تم رفض الطلب';
+  setTimeout(()=>document.getElementById('owner-action-status').textContent='',3000);
+}
+async function submitLeaderEditRequest(){
+  const idx=parseInt(document.getElementById('leader-edit-idx').value);
+  const type=document.getElementById('leader-edit-type').value;
+  const text=document.getElementById('leader-edit-text').value.trim();
+  const reason=document.getElementById('leader-edit-reason').value.trim();
+  const status=document.getElementById('leader-edit-status');
+  if(!text){status.textContent='اكتب نص السؤال';return;}
+  let proposed;
+  if(type==='tf'){
+    proposed={q:text,type:'tf',opts:['صح ✓','خطأ ✗'],ans:parseInt(document.getElementById('ledit-q-tf-ans').value)};
+  }else{
+    const opts=[0,1,2,3].map(i=>document.getElementById('ledit-opt'+i).value.trim());
+    if(opts.some(o=>!o)){status.textContent='اكتب كل الاختيارات';return;}
+    proposed={q:text,type:'mcq',opts,ans:parseInt(document.getElementById('ledit-q-ans').value)};
+  }
+  const list=await getCurrentQuestions();
+  const original=list[idx];
+  await waitFB();
+  const {collection,addDoc,serverTimestamp}=fb();
+  await addDoc(collection(db(),'pendingEdits'),{qIdx:idx,original,proposed,reason,status:'pending',ts:serverTimestamp()});
+  await addDoc(collection(db(),'chat'),{role:'system',text:`🔔 Leader طلب تعديل س${idx+1} — في انتظار موافقة Owner`,ts:serverTimestamp()});
+  status.textContent='✅ تم إرسال الطلب للـ Owner!';status.style.color='#00cfff';
+  setTimeout(()=>{document.getElementById('leader-edit-modal').style.display='none';},1500);
+}
+
+// ===== QUIZ =====
 async function startQuiz(){
   const n=document.getElementById('inp-name').value.trim();
   const g=document.getElementById('inp-group').value.trim();
@@ -428,36 +847,32 @@ async function startQuiz(){
   if(!n||!g||!p){err.textContent='من فضلك اكتب اسمك وجروبك وكلمة السر';return;}
   if(p.length<4){err.textContent='كلمة السر لازم 4 أرقام على الأقل';return;}
   err.textContent='';
-  // هل هو الأونر؟
-  isOwnerPlaying=(n===OWNER_USER);
+  isOwnerPlaying=(n===OWNER_USER);isLeaderPlaying=(n===LEADER_USER);
   const btn=document.querySelector('.btn-start');
   btn.textContent='⏳ جاري تحميل الأسئلة...';btn.disabled=true;
   const binQs=await fetchQuestionsFromBin();
-  if(binQs&&binQs.length>0){allQuestions=binQs;}else{allQuestions=[...defaultQuestions];}
+  allQuestions=binQs&&binQs.length>0?binQs:[...defaultQuestions];
   TOTAL=allQuestions.length;
-  answers=new Array(TOTAL).fill(null);
-  answered=new Array(TOTAL).fill(false);
+  answers=new Array(TOTAL).fill(null);answered=new Array(TOTAL).fill(false);
   btn.textContent='🚀 ابدأ الاختبار';btn.disabled=false;
   userName=n;userGroup=g;userPin=p;
   document.getElementById('wb-name').textContent=n;
   document.getElementById('wb-group').textContent=g;
-  // بادج الأونر في welcome bar
   document.getElementById('owner-playing-indicator').style.display=isOwnerPlaying?'inline-block':'none';
+  document.getElementById('leader-playing-indicator').style.display=isLeaderPlaying?'inline-block':'none';
   document.getElementById('screen-register').style.display='none';
-  document.getElementById('reg-owner-floating-btn').style.display='none';
   document.getElementById('screen-quiz').style.display='block';
+  document.getElementById('student-chat-widget').style.display='block';
   quizStarted=true;
+  subscribeChat();
   buildDots();renderQ();startTimer();
 }
-
 function buildDots(){
   const d=document.getElementById('dots');d.innerHTML='';
   allQuestions.forEach((_,i)=>{
     const s=document.createElement('span');
-    s.className='dot'+(i===0?' current':'');
-    s.id=`dot-${i}`;s.textContent=i+1;
-    s.onclick=()=>{current=i;renderQ();};
-    d.appendChild(s);
+    s.className='dot'+(i===0?' current':'');s.id=`dot-${i}`;s.textContent=i+1;
+    s.onclick=()=>{current=i;renderQ();};d.appendChild(s);
   });
 }
 function updateDots(){
@@ -519,23 +934,16 @@ function showFeedback(correct){
 function prevQ(){if(current===0)return;current--;renderQ();}
 function nextQ(){
   if(!answered[current]&&!confirm('لم تجب على هذا السؤال، هل تريد تخطيه؟'))return;
-  if(current===TOTAL-1){endQuiz();return;}
-  current++;renderQ();
+  if(current===TOTAL-1){endQuiz();return;}current++;renderQ();
 }
-function skipQ(){
-  if(current===TOTAL-1){endQuiz();return;}
-  current++;renderQ();
-}
+function skipQ(){if(current===TOTAL-1){endQuiz();return;}current++;renderQ();}
 function startTimer(){
-  const disp=document.getElementById('timer-display');
-  const fill=document.getElementById('timer-fill');
+  const disp=document.getElementById('timer-display');const fill=document.getElementById('timer-fill');
   timerInterval=setInterval(()=>{
-    secsLeft--;
-    if(secsLeft<=0){clearInterval(timerInterval);endQuiz();return;}
+    secsLeft--;if(secsLeft<=0){clearInterval(timerInterval);endQuiz();return;}
     const m=Math.floor(secsLeft/60),s=secsLeft%60;
     disp.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    const pct=(secsLeft/TIMER_SECS)*100;
-    fill.style.width=pct+'%';
+    const pct=(secsLeft/TIMER_SECS)*100;fill.style.width=pct+'%';
     if(pct<20){fill.style.background='var(--wrong)';disp.className='timer-display danger';}
     else if(pct<40){fill.style.background='linear-gradient(90deg,#ff6b00,var(--gold))';disp.className='timer-display warn';}
   },1000);
@@ -544,22 +952,21 @@ async function endQuiz(){
   clearInterval(timerInterval);
   document.getElementById('screen-quiz').style.display='none';
   document.getElementById('screen-results').style.display='block';
+  document.getElementById('student-chat-widget').style.display='none';
   const score=answers.filter((a,i)=>a===allQuestions[i].ans).length;
   document.getElementById('res-name').textContent=userName;
   document.getElementById('res-score').textContent=`${score} / ${TOTAL}`;
   let label='';
-  if(score>=42){label='🌟 ممتاز جداً — أنت من أفضل الطلاب!';document.getElementById('winner-frame').classList.add('show');}
+  if(score>=42){label='🌟 ممتاز جداً!';document.getElementById('winner-frame').classList.add('show');}
   else if(score>=35)label='👏 جيد جداً — استمر!';
-  else if(score>=25)label='💪 جيد — تحتاج مزيداً من المراجعة';
+  else if(score>=25)label='💪 جيد — راجع أكتر';
   else label='📚 راجع المادة مرة أخرى';
   document.getElementById('res-label').textContent=label;
-  const st=document.getElementById('saving-status');
-  st.textContent='⏳ جاري حفظ نتيجتك...';
-  const timeTaken=TIMER_SECS-secsLeft;const mins=Math.floor(timeTaken/60);const secs=timeTaken%60;const timeStr=`${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
-  const entry={name:userName,group:userGroup,pin:userPin,score,date:new Date().toLocaleDateString('ar-EG'),time:timeStr};
+  const st=document.getElementById('saving-status');st.textContent='⏳ جاري حفظ نتيجتك...';
+  const timeTaken=TIMER_SECS-secsLeft;const mins=Math.floor(timeTaken/60);const secs=timeTaken%60;
+  const entry={name:userName,group:userGroup,pin:userPin,score,date:new Date().toLocaleDateString('ar-EG'),time:`${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`};
   const ok=await saveResult(entry);
-  st.textContent=ok?'✅ تم حفظ نتيجتك في لوحة الأوائل!':'⚠️ تعذر حفظ النتيجة، تحقق من الإنترنت';
-  st.style.color=ok?'var(--correct)':'#ff6b00';
+  st.textContent=ok?'✅ تم حفظ نتيجتك!':'⚠️ تعذر حفظ النتيجة';st.style.color=ok?'var(--correct)':'#ff6b00';
   const wrongDiv=document.getElementById('wrong-list');
   const wrongs=allQuestions.map((q,i)=>({q,i,a:answers[i]})).filter(({a},i)=>a!==allQuestions[i].ans);
   if(wrongs.length){
@@ -573,171 +980,205 @@ async function endQuiz(){
   window.scrollTo({top:0});
 }
 
-// ========== LEADERBOARD ==========
-function renderOwnerRow(r,rank,medal,showDelete){
-  // الأونر بينور بغض النظر عن ترتيبه
-  return `<div class="lb-row owner-row">
-    <div class="lb-rank">${medal||rank}</div>
-    <div class="lb-info">
-      <div class="lb-name owner-name">👑 ${r.name}</div>
-      <div class="lb-group">جروب ${r.group}</div>
-    </div>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div style="text-align:left">
-        <div class="lb-score">${r.score}/${TOTAL}</div>
-        ${r.time?`<div style="color:#888;font-size:.75rem">⏱️ ${r.time}</div>`:''}
-      </div>
-      ${showDelete?`<button class="owner-btn red" style="padding:4px 10px;font-size:.75rem;" onclick="deleteStudentLB('${r.name}','${r.pin}')">🗑️</button>`:''}
-    </div>
-  </div>`;
-}
-
+// ===== LEADERBOARD =====
 async function showLeaderboard(){
-  ['screen-register','screen-quiz','screen-results'].forEach(id=>{
-    const el=document.getElementById(id);if(el)el.style.display='none';
-  });
+  ['screen-register','screen-quiz','screen-results'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
   document.getElementById('screen-leaderboard').style.display='block';
-  document.getElementById('lb-content').innerHTML='<div class="lb-loading">⏳ جاري تحميل الأوائل...</div>';
+  document.getElementById('lb-content').innerHTML='<div class="lb-loading">⏳ جاري التحميل...</div>';
   window.scrollTo({top:0});
   const all=await fetchResults();
-  if(!all.length){document.getElementById('lb-content').innerHTML='<div class="lb-loading">لا يوجد نتائج بعد — كن أول الأوائل! 🏆</div>';return;}
-  const sorted=all.sort((a,b)=>b.score-a.score);
-  // أعلى 8 بس
-  const top=sorted.slice(0,8);
-  const medals=['🥇','🥈','🥉'];
-  let html='';
+  if(!all.length){document.getElementById('lb-content').innerHTML='<div class="lb-loading">لا يوجد نتائج بعد 🏆</div>';return;}
+  const top=all.sort((a,b)=>b.score-a.score).slice(0,8);
+  const medals=['🥇','🥈','🥉'];let html='';
   top.forEach((r,i)=>{
-    const isOwner=r.name===OWNER_USER;
+    const isOwner=r.name===OWNER_USER,isLeader=r.name===LEADER_USER;
     const medal=i<3?medals[i]:`${i+1}`;
-    if(isOwner){
-      html+=renderOwnerRow(r,i+1,medal,false);
-      return;
-    }
-    const cls=i<3?`top${i+1}`:'';
-    let nameClass='lb-name';
-    if(i===0)nameClass+=' rank1';
-    else if(i===1)nameClass+=' rank2';
-    else if(i===2)nameClass+=' rank3';
-    html+=`<div class="lb-row ${cls}">
+    const rowCls=isOwner?'owner-row':isLeader?'leader-row':i===0?'top1':i===1?'top2':i===2?'top3':'';
+    const nameCls=isOwner?'lb-name owner-name':isLeader?'lb-name leader-name':i===0?'lb-name rank1':i===1?'lb-name rank2':i===2?'lb-name rank3':'lb-name';
+    const prefix=isOwner?'👑 ':isLeader?'🎖️ ':'';
+    html+=`<div class="lb-row ${rowCls}">
       <div class="lb-rank">${medal}</div>
-      <div class="lb-info">
-        <div class="${nameClass}">${r.name}</div>
-        <div class="lb-group">جروب ${r.group}</div>
-      </div>
-      <div style="text-align:left">
-        <div class="lb-score">${r.score}/${TOTAL}</div>
-        ${r.time?`<div style="color:#888;font-size:.75rem">⏱️ ${r.time}</div>`:''}
-      </div>
+      <div class="lb-info"><div class="${nameCls}">${prefix}${r.name}</div><div class="lb-group">جروب ${r.group}</div></div>
+      <div style="text-align:left"><div class="lb-score">${r.score}/${TOTAL}</div>${r.time?`<div style="color:#888;font-size:.75rem">⏱️ ${r.time}</div>`:''}</div>
     </div>`;
   });
   document.getElementById('lb-content').innerHTML=html;
 }
-
 function goBack(){
   document.getElementById('screen-leaderboard').style.display='none';
-  if(quizStarted){
-    document.getElementById('screen-quiz').style.display='block';
-    renderQ();window.scrollTo({top:0});
-  }else{
-    document.getElementById('screen-register').style.display='flex';
-    document.getElementById('reg-owner-floating-btn').style.display='block';
-  }
+  if(quizStarted){document.getElementById('screen-quiz').style.display='block';renderQ();window.scrollTo({top:0});}
+  else{document.getElementById('screen-register').style.display='flex';}
 }
 
-// ========== OWNER SYSTEM ==========
+// ===== OWNER =====
+function openOwnerLogin(){
+  if(ownerLoggedIn){goToOwnerPanel();return;}
+  document.getElementById('owner-login-screen').style.display='flex';
+}
+function closeOwnerLogin(){
+  document.getElementById('owner-login-screen').style.display='none';
+  if(quizStarted){document.getElementById('screen-quiz').style.display='block';renderQ();}
+}
 function ownerLogin(){
   const u=document.getElementById('owner-user-inp').value.trim();
   const p=document.getElementById('owner-pass-inp').value.trim();
   if(u===OWNER_USER&&p===OWNER_PASS){
-    ownerLoggedIn=true;
-    goToOwnerPanel();
-  }else{
-    document.getElementById('owner-login-err').textContent='بيانات خاطئة!';
-  }
+    ownerLoggedIn=true;document.getElementById('owner-login-screen').style.display='none';goToOwnerPanel();
+  }else{document.getElementById('owner-login-err').textContent='بيانات خاطئة!';}
 }
-
+function goToOwnerPanel(){
+  ['screen-register','screen-quiz','screen-results','screen-leaderboard','screen-leader'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  document.getElementById('screen-owner').style.display='block';
+  loadOwnerData();subscribePending();subscribeChat();
+}
 function exitOwner(){
   document.getElementById('screen-owner').style.display='none';
-  if(quizStarted){
-    document.getElementById('screen-quiz').style.display='block';
-    renderQ();window.scrollTo({top:0});
-  }else{
-    document.getElementById('screen-register').style.display='flex';
-    document.getElementById('reg-owner-floating-btn').style.display='block';
-  }
+  if(quizStarted){document.getElementById('screen-quiz').style.display='block';renderQ();window.scrollTo({top:0});}
+  else{document.getElementById('screen-register').style.display='flex';}
 }
-
-function ownerTab(name){
-  document.querySelectorAll('.owner-section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.owner-tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  event.target.classList.add('active');
+function ownerTab(name,btn){
+  document.querySelectorAll('#screen-owner .owner-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('#screen-owner .owner-tab').forEach(t=>t.classList.remove('active'));
+  const sec=document.getElementById('tab-'+name)||document.getElementById('ltab-'+name);
+  if(sec)sec.classList.add('active');
+  if(btn)btn.classList.add('active');
   if(name==='students')loadStudents();
   if(name==='questions')loadQuestionsPanel();
   if(name==='leaderboard')loadOwnerLB();
+  if(name==='chat'){document.getElementById('owner-chat-badge').style.display='none';}
 }
 async function loadOwnerData(){loadStudents();loadQuestionsPanel();}
 
-// ---- STUDENTS ----
-async function loadStudents(){
-  const el=document.getElementById('students-list');
-  el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div>';
-  const all=await fetchResults();
-  if(!all.length){el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">لا يوجد طلاب بعد</div>';return;}
-  const sorted=all.sort((a,b)=>b.score-a.score);
-  let html=`<table class="students-table"><thead><tr><th>#</th><th>الاسم</th><th>الجروب</th><th>الدرجة</th><th>التاريخ</th><th>حذف</th></tr></thead><tbody>`;
-  sorted.forEach((s,i)=>{
-    const isOwner=s.name===OWNER_USER;
-    html+=`<tr style="${isOwner?'background:linear-gradient(90deg,#1a0030,#0d0020);':''}">
-      <td style="color:${isOwner?'#a855f7':'#a855f7'}">${i+1}</td>
-      <td style="color:${isOwner?'#ec4899':'#fff'};font-weight:${isOwner?'900':'400'}">${isOwner?'👑 ':''}${s.name}</td>
-      <td style="color:#c084fc">${s.group}</td>
-      <td style="color:var(--gold);font-weight:700">${s.score}/${TOTAL}</td>
-      <td style="color:#888">${s.date||'-'}</td>
-      <td><button class="owner-btn red" style="padding:4px 10px;font-size:.75rem;" onclick="deleteStudent('${s.name}','${s.pin}')">🗑️</button></td>
-    </tr>`;
-  });
-  html+=`</tbody></table>`;
-  el.innerHTML=html;
+// ===== LEADER =====
+function openLeaderLogin(){
+  if(leaderLoggedIn){goToLeaderPanel();return;}
+  document.getElementById('leader-login-screen').style.display='flex';
 }
-
-async function deleteStudent(name,pin){
-  if(!confirm(`هتحذف ${name} من الأوائل؟`))return;
-  const all=await fetchResults();
-  const updated=all.filter(r=>!(r.name===name&&r.pin===pin));
-  await fetch(BIN_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify(updated)});
-  loadStudents();
-  if(document.getElementById('owner-lb-list'))loadOwnerLB();
-  document.getElementById('owner-action-status').textContent=`✅ تم حذف ${name}`;
-  setTimeout(()=>document.getElementById('owner-action-status').textContent='',3000);
+function leaderLogin(){
+  const u=document.getElementById('leader-user-inp').value.trim();
+  const p=document.getElementById('leader-pass-inp').value.trim();
+  if(u===LEADER_USER&&p===LEADER_PASS){
+    leaderLoggedIn=true;document.getElementById('leader-login-screen').style.display='none';goToLeaderPanel();
+  }else{document.getElementById('leader-login-err').textContent='بيانات خاطئة!';}
 }
-
-// حذف من الأوائل العامة (لو الأونر شايفها)
-async function deleteStudentLB(name,pin){
-  if(!confirm(`هتحذف ${name}؟`))return;
-  const all=await fetchResults();
-  const updated=all.filter(r=>!(r.name===name&&r.pin===pin));
-  await fetch(BIN_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify(updated)});
-  showLeaderboard();
+function goToLeaderPanel(){
+  ['screen-register','screen-quiz','screen-results','screen-leaderboard','screen-owner'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  document.getElementById('screen-leader').style.display='block';
+  loadLeaderQuestions();subscribeChat();
 }
-
-// ---- QUESTIONS ----
-async function loadQuestionsPanel(){
-  const el=document.getElementById('questions-list');
-  el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div>';
-  const qs=await fetchQuestionsFromBin();
-  const list=qs||defaultQuestions;
-  if(!list.length){el.innerHTML='<div style="color:#888;text-align:center;">لا توجد أسئلة</div>';return;}
+function exitLeader(){
+  document.getElementById('screen-leader').style.display='none';
+  if(quizStarted){document.getElementById('screen-quiz').style.display='block';renderQ();window.scrollTo({top:0});}
+  else{document.getElementById('screen-register').style.display='flex';}
+}
+function leaderTab(name,btn){
+  document.querySelectorAll('#screen-leader .owner-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('#screen-leader .leader-tab').forEach(t=>t.classList.remove('active'));
+  const sec=document.getElementById('ltab-'+name);if(sec)sec.classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(name==='questions')loadLeaderQuestions();
+  if(name==='leaderboard')loadLeaderLB();
+  if(name==='chat')document.getElementById('leader-chat-badge').style.display='none';
+}
+async function loadLeaderQuestions(){
+  const el=document.getElementById('leader-questions-list');
+  el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">⏳</div>';
+  const list=await getCurrentQuestions();
   let html='';
   list.forEach((q,i)=>{
     const typeLabel=q.type==='tf'?'صح/خطأ':'اختيار متعدد';
     html+=`<div class="q-edit-item">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
         <div style="flex:1;">
-          <span style="color:#a855f7;font-size:.75rem;margin-bottom:4px;display:block;">س${i+1} — ${typeLabel}</span>
+          <span style="color:#00cfff;font-size:.75rem;margin-bottom:4px;display:block;">س${i+1} — ${typeLabel}</span>
           <div class="q-text-preview">${q.q}</div>
           <div style="color:#00e676;font-size:.8rem;">✓ ${q.opts[q.ans]}</div>
         </div>
+        <button class="owner-btn cyan" style="padding:6px 12px;font-size:.8rem;flex-shrink:0;" onclick="openLeaderEditModal(${i})">📝 طلب تعديل</button>
+      </div>
+    </div>`;
+  });
+  el.innerHTML=html;
+}
+async function openLeaderEditModal(idx){
+  const list=await getCurrentQuestions();const q=list[idx];
+  document.getElementById('leader-edit-idx').value=idx;
+  document.getElementById('leader-edit-original').textContent=`الأصلي: ${q.q} | الإجابة: ${q.opts[q.ans]}`;
+  document.getElementById('leader-edit-type').value=q.type;
+  document.getElementById('leader-edit-text').value=q.q;
+  document.getElementById('leader-edit-reason').value='';
+  document.getElementById('leader-edit-status').textContent='';
+  if(q.type==='tf'){
+    document.getElementById('ledit-q-opts').style.display='none';
+    document.getElementById('ledit-q-tf').style.display='block';
+    document.getElementById('ledit-q-tf-ans').value=q.ans;
+  }else{
+    document.getElementById('ledit-q-opts').style.display='block';
+    document.getElementById('ledit-q-tf').style.display='none';
+    q.opts.forEach((o,i)=>{document.getElementById('ledit-opt'+i).value=o;});
+    document.getElementById('ledit-q-ans').value=q.ans;
+  }
+  document.getElementById('leader-edit-modal').style.display='flex';
+}
+async function loadLeaderLB(){
+  const el=document.getElementById('leader-lb-list');
+  const all=await fetchResults();
+  if(!all.length){el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">لا يوجد نتائج</div>';return;}
+  const sorted=all.sort((a,b)=>b.score-a.score).slice(0,10);
+  const medals=['🥇','🥈','🥉'];let html='';
+  sorted.forEach((r,i)=>{
+    const isOwner=r.name===OWNER_USER,isLeader=r.name===LEADER_USER;
+    const rowCls=isOwner?'owner-row':isLeader?'leader-row':i<3?`top${i+1}`:'';
+    const nameCls=isOwner?'lb-name owner-name':isLeader?'lb-name leader-name':'lb-name';
+    html+=`<div class="lb-row ${rowCls}"><div class="lb-rank">${i<3?medals[i]:i+1}</div>
+    <div class="lb-info"><div class="${nameCls}">${isOwner?'👑 ':isLeader?'🎖️ ':''}${r.name}</div><div class="lb-group">جروب ${r.group}</div></div>
+    <div class="lb-score">${r.score}/${TOTAL}</div></div>`;
+  });
+  el.innerHTML=html;
+}
+
+// ===== OWNER STUDENTS & QUESTIONS =====
+async function loadStudents(){
+  const el=document.getElementById('students-list');
+  el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">⏳</div>';
+  const all=await fetchResults();
+  if(!all.length){el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">لا يوجد طلاب بعد</div>';return;}
+  const sorted=all.sort((a,b)=>b.score-a.score);_cachedResults=sorted;
+  let html=`<table class="students-table"><thead><tr><th>#</th><th>الاسم</th><th>الجروب</th><th>الدرجة</th><th>التاريخ</th><th>حذف</th></tr></thead><tbody>`;
+  sorted.forEach((s,i)=>{
+    const isOwner=s.name===OWNER_USER,isLeader=s.name===LEADER_USER;
+    html+=`<tr style="${isOwner?'background:linear-gradient(90deg,#1a0030,#0d0020);':isLeader?'background:linear-gradient(90deg,#001a33,#000d1a);':''}">
+      <td style="color:#a855f7">${i+1}</td>
+      <td style="color:${isOwner?'#ec4899':isLeader?'#00cfff':'#fff'};font-weight:${(isOwner||isLeader)?900:400}">${isOwner?'👑 ':isLeader?'🎖️ ':''}${s.name}</td>
+      <td style="color:#c084fc">${s.group}</td>
+      <td style="color:var(--gold);font-weight:700">${s.score}/${TOTAL}</td>
+      <td style="color:#888">${s.date||'-'}</td>
+      <td><button class="owner-btn red" style="padding:4px 10px;font-size:.75rem;" onclick="deleteStudent(${i})">🗑️</button></td>
+    </tr>`;
+  });
+  html+=`</tbody></table>`;el.innerHTML=html;
+}
+async function deleteStudent(idx){
+  const entry=_cachedResults[idx];if(!entry)return;
+  if(!confirm(`هتحذف ${entry.name}؟`))return;
+  const all=await fetchResults();
+  const updated=all.filter(r=>!(r.name===entry.name&&r.pin===entry.pin));
+  const res=await fetch(BIN_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify(updated)});
+  if(res.ok){loadStudents();document.getElementById('owner-action-status').textContent=`✅ تم حذف ${entry.name}`;
+  setTimeout(()=>document.getElementById('owner-action-status').textContent='',3000);}
+  else alert('فشل الحذف');
+}
+async function loadQuestionsPanel(){
+  const el=document.getElementById('questions-list');
+  el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">⏳</div>';
+  const list=await getCurrentQuestions();
+  let html='';
+  list.forEach((q,i)=>{
+    const typeLabel=q.type==='tf'?'صح/خطأ':'اختيار متعدد';
+    html+=`<div class="q-edit-item">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+        <div style="flex:1;"><span style="color:#a855f7;font-size:.75rem;display:block;margin-bottom:4px;">س${i+1} — ${typeLabel}</span>
+        <div class="q-text-preview">${q.q}</div><div style="color:#00e676;font-size:.8rem;">✓ ${q.opts[q.ans]}</div></div>
         <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
           <button class="owner-btn blue" style="padding:6px 12px;font-size:.8rem;" onclick="openEditQuestion(${i})">✏️ تعديل</button>
           <button class="owner-btn red" style="padding:6px 12px;font-size:.8rem;" onclick="deleteQuestion(${i})">🗑️ حذف</button>
@@ -745,260 +1186,100 @@ async function loadQuestionsPanel(){
       </div>
     </div>`;
   });
-  el.innerHTML=html;
-  // إعداد مستمع النوع لإضافة سؤال جديد
-  setupQTypeListener();
+  el.innerHTML=html||'<div style="color:#888;text-align:center;">لا توجد أسئلة</div>';
 }
-
-function setupQTypeListener(){
-  const el=document.getElementById('new-q-type');if(!el)return;
-  el.onchange=function(){
-    document.getElementById('new-q-opts').style.display=this.value==='tf'?'none':'block';
-    document.getElementById('new-q-tf').style.display=this.value==='tf'?'block':'none';
-  };
-  const el2=document.getElementById('edit-q-type');if(!el2)return;
-  el2.onchange=function(){
-    document.getElementById('edit-q-opts').style.display=this.value==='tf'?'none':'block';
-    document.getElementById('edit-q-tf').style.display=this.value==='tf'?'block':'none';
-  };
-}
-
 async function openEditQuestion(idx){
-  const qs=await fetchQuestionsFromBin();
-  const list=qs||defaultQuestions;
-  const q=list[idx];
+  const list=await getCurrentQuestions();const q=list[idx];
   document.getElementById('edit-q-index').value=idx;
   document.getElementById('edit-q-type').value=q.type;
   document.getElementById('edit-q-text').value=q.q;
   if(q.type==='tf'){
-    document.getElementById('edit-q-opts').style.display='none';
-    document.getElementById('edit-q-tf').style.display='block';
+    document.getElementById('edit-q-opts').style.display='none';document.getElementById('edit-q-tf').style.display='block';
     document.getElementById('edit-q-tf-ans').value=q.ans;
   }else{
-    document.getElementById('edit-q-opts').style.display='block';
-    document.getElementById('edit-q-tf').style.display='none';
-    q.opts.forEach((o,i)=>{document.getElementById('edit-opt'+i).value=o;});
+    document.getElementById('edit-q-opts').style.display='block';document.getElementById('edit-q-tf').style.display='none';
+    q.opts.forEach((o,i)=>document.getElementById('edit-opt'+i).value=o);
     document.getElementById('edit-q-ans').value=q.ans;
   }
   document.getElementById('edit-status').textContent='';
   document.getElementById('edit-modal').style.display='flex';
 }
-
 async function saveEditQuestion(){
   const idx=parseInt(document.getElementById('edit-q-index').value);
   const type=document.getElementById('edit-q-type').value;
   const text=document.getElementById('edit-q-text').value.trim();
   const status=document.getElementById('edit-status');
-  if(!text){status.textContent='اكتب نص السؤال';status.style.color='#ff1744';return;}
+  if(!text){status.textContent='اكتب نص السؤال';return;}
   let editedQ;
-  if(type==='tf'){
-    const ans=parseInt(document.getElementById('edit-q-tf-ans').value);
-    editedQ={q:text,type:'tf',opts:['صح ✓','خطأ ✗'],ans};
-  }else{
+  if(type==='tf'){editedQ={q:text,type:'tf',opts:['صح ✓','خطأ ✗'],ans:parseInt(document.getElementById('edit-q-tf-ans').value)};}
+  else{
     const opts=[0,1,2,3].map(i=>document.getElementById('edit-opt'+i).value.trim());
-    if(opts.some(o=>!o)){status.textContent='اكتب كل الاختيارات';status.style.color='#ff1744';return;}
-    const ans=parseInt(document.getElementById('edit-q-ans').value);
-    editedQ={q:text,type:'mcq',opts,ans};
+    if(opts.some(o=>!o)){status.textContent='اكتب كل الاختيارات';return;}
+    editedQ={q:text,type:'mcq',opts,ans:parseInt(document.getElementById('edit-q-ans').value)};
   }
-  const existing=await fetchQuestionsFromBin();
-  const list=existing||[...defaultQuestions];
-  list[idx]=editedQ;
+  const list=await getCurrentQuestions();list[idx]=editedQ;
   const ok=await saveQuestionsToBin(list);
-  if(ok){
-    status.textContent='✅ تم حفظ التعديل!';status.style.color='#00e676';
-    setTimeout(()=>{document.getElementById('edit-modal').style.display='none';loadQuestionsPanel();},1000);
-  }else{
-    status.textContent='❌ فشل الحفظ';status.style.color='#ff1744';
-  }
+  if(ok){status.textContent='✅ تم الحفظ!';status.style.color='#00e676';
+  setTimeout(()=>{document.getElementById('edit-modal').style.display='none';loadQuestionsPanel();},1000);}
+  else{status.textContent='❌ فشل الحفظ';status.style.color='#ff1744';}
 }
-
 async function addQuestion(){
   const type=document.getElementById('new-q-type').value;
   const text=document.getElementById('new-q-text').value.trim();
   const status=document.getElementById('add-q-status');
   if(!text){status.textContent='اكتب نص السؤال';status.style.color='#ff1744';return;}
   let newQ;
-  if(type==='tf'){
-    const ans=document.getElementById('new-q-tf-ans').value==='true';
-    newQ={q:text,type:'tf',opts:['صح ✓','خطأ ✗'],ans:ans?0:1};
-  }else{
+  if(type==='tf'){newQ={q:text,type:'tf',opts:['صح ✓','خطأ ✗'],ans:document.getElementById('new-q-tf-ans').value==='true'?0:1};}
+  else{
     const opts=[0,1,2,3].map(i=>document.getElementById('opt'+i).value.trim());
     if(opts.some(o=>!o)){status.textContent='اكتب كل الاختيارات';status.style.color='#ff1744';return;}
-    const ans=parseInt(document.getElementById('new-q-ans').value);
-    newQ={q:text,type:'mcq',opts,ans};
+    newQ={q:text,type:'mcq',opts,ans:parseInt(document.getElementById('new-q-ans').value)};
   }
-  const existing=await fetchQuestionsFromBin();
-  const list=existing||[...defaultQuestions];
-  list.push(newQ);
+  const list=await getCurrentQuestions();list.push(newQ);
   const ok=await saveQuestionsToBin(list);
-  if(ok){
-    status.textContent='✅ تم إضافة السؤال!';status.style.color='#00e676';
-    document.getElementById('new-q-text').value='';
-    [0,1,2,3].forEach(i=>{const el=document.getElementById('opt'+i);if(el)el.value='';});
-    loadQuestionsPanel();
-  }else{
-    status.textContent='❌ فشل الحفظ';status.style.color='#ff1744';
-  }
+  if(ok){status.textContent='✅ تمت الإضافة!';status.style.color='#00e676';
+  document.getElementById('new-q-text').value='';[0,1,2,3].forEach(i=>{const el=document.getElementById('opt'+i);if(el)el.value='';});
+  loadQuestionsPanel();}
+  else{status.textContent='❌ فشل الحفظ';status.style.color='#ff1744';}
 }
-
 async function deleteQuestion(idx){
   if(!confirm('هتحذف السؤال ده؟'))return;
-  const existing=await fetchQuestionsFromBin();
-  const list=existing||[...defaultQuestions];
-  list.splice(idx,1);
+  const list=await getCurrentQuestions();list.splice(idx,1);
   const ok=await saveQuestionsToBin(list);
-  if(ok){loadQuestionsPanel();}
-  else{alert('فشل الحذف، حاول تاني');}
+  if(ok)loadQuestionsPanel();else alert('فشل الحذف');
 }
-
-function saveTimerSetting(){
-  const v=parseInt(document.getElementById('timer-setting').value);
-  if(!v||v<5)return;
-  document.getElementById('timer-status').textContent=`✅ الوقت هيكون ${v} دقيقة`;
-}
-function saveWinSetting(){
-  const v=parseInt(document.getElementById('win-setting').value);
-  if(!v||v<1)return;
-  document.getElementById('win-status').textContent=`✅ حد الفوز هيكون ${v} درجة`;
-}
-
-// ---- OWNER LEADERBOARD (مع حذف + كل الناس) ----
 async function loadOwnerLB(){
   const el=document.getElementById('owner-lb-list');
-  el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div>';
+  el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">⏳</div>';
   const all=await fetchResults();
   if(!all.length){el.innerHTML='<div style="color:#888;text-align:center;padding:20px;">لا يوجد نتائج</div>';return;}
-  const sorted=all.sort((a,b)=>b.score-a.score);
-  const medals=['🥇','🥈','🥉'];
-  let html='';
+  const sorted=all.sort((a,b)=>b.score-a.score);_cachedResults=sorted;
+  const medals=['🥇','🥈','🥉'];let html='';
   sorted.forEach((r,i)=>{
-    const isOwner=r.name===OWNER_USER;
-    const medal=i<3?medals[i]:`${i+1}`;
-    if(isOwner){
-      html+=renderOwnerRow(r,i+1,medal,true);
-      return;
-    }
-    let nameClass='lb-name';
-    if(i===0)nameClass+=' rank1';
-    else if(i===1)nameClass+=' rank2';
-    else if(i===2)nameClass+=' rank3';
-    html+=`<div class="lb-row ${i===0?'top1':i===1?'top2':i===2?'top3':''}">
-      <div class="lb-rank">${medal}</div>
-      <div class="lb-info">
-        <div class="${nameClass}">${r.name}</div>
-        <div class="lb-group">جروب ${r.group}</div>
-      </div>
+    const isOwner=r.name===OWNER_USER,isLeader=r.name===LEADER_USER;
+    const rowCls=isOwner?'owner-row':isLeader?'leader-row':i<3?`top${i+1}`:'';
+    const nameCls=isOwner?'lb-name owner-name':isLeader?'lb-name leader-name':'lb-name';
+    html+=`<div class="lb-row ${rowCls}">
+      <div class="lb-rank">${i<3?medals[i]:i+1}</div>
+      <div class="lb-info"><div class="${nameCls}">${isOwner?'👑 ':isLeader?'🎖️ ':''}${r.name}</div><div class="lb-group">جروب ${r.group}</div></div>
       <div style="display:flex;align-items:center;gap:8px;">
-        <div style="text-align:left">
-          <div class="lb-score">${r.score}/${TOTAL}</div>
-          ${r.time?`<div style="color:#888;font-size:.75rem">⏱️ ${r.time}</div>`:''}
-        </div>
-        <button class="owner-btn red" style="padding:4px 10px;font-size:.75rem;" onclick="deleteStudent('${r.name}','${r.pin}')">🗑️</button>
+        <div style="text-align:left"><div class="lb-score">${r.score}/${TOTAL}</div>${r.time?`<div style="color:#888;font-size:.75rem">⏱️ ${r.time}</div>`:''}</div>
+        <button class="owner-btn red" style="padding:4px 10px;font-size:.75rem;" onclick="deleteStudent(${i})">🗑️</button>
       </div>
     </div>`;
   });
   el.innerHTML=html;
 }
+function toggleQTypeFields(prefix){
+  const type=document.getElementById(prefix+'-q-type')||document.getElementById(prefix+'edit-type');
+  const val=type?type.value:'mcq';
+  const optsEl=document.getElementById(prefix==='new'?'new-q-opts':prefix==='edit'?'edit-q-opts':'ledit-q-opts');
+  const tfEl=document.getElementById(prefix==='new'?'new-q-tf':prefix==='edit'?'edit-q-tf':'ledit-q-tf');
+  if(optsEl)optsEl.style.display=val==='tf'?'none':'block';
+  if(tfEl)tfEl.style.display=val==='tf'?'block':'none';
+}
+function saveTimerSetting(){const v=parseInt(document.getElementById('timer-setting').value);if(!v||v<5)return;document.getElementById('timer-status').textContent=`✅ الوقت هيكون ${v} دقيقة`;}
+function saveWinSetting(){const v=parseInt(document.getElementById('win-setting').value);if(!v||v<1)return;document.getElementById('win-status').textContent=`✅ حد الفوز ${v} درجة`;}
 </script>
-
-<!-- OWNER LOGIN -->
-<div id="owner-login-screen" class="owner-login" style="display:none;">
-  <div class="owner-login-card">
-    <div style="font-size:2.5rem">👑</div>
-    <div class="glow-purple">MORA Owner Panel</div>
-    <p style="color:#888;font-size:.85rem;margin:8px 0 20px;">ادخل بيانات الدخول</p>
-    <input class="owner-input" id="owner-user-inp" placeholder="اسم المستخدم" />
-    <input class="owner-input" id="owner-pass-inp" type="password" placeholder="كلمة المرور" onkeydown="if(event.key==='Enter')ownerLogin()"/>
-    <div id="owner-login-err" style="color:#ff1744;font-size:.85rem;min-height:18px;margin-bottom:8px;"></div>
-    <button class="owner-btn purple" style="width:100%;" onclick="ownerLogin()">🔐 دخول</button>
-    <button onclick="document.getElementById('owner-login-screen').style.display='none';if(quizStarted){document.getElementById('screen-quiz').style.display='block';renderQ();}" style="margin-top:12px;background:none;border:none;color:#888;font-family:'Cairo',sans-serif;cursor:pointer;font-size:.85rem;">← رجوع</button>
-  </div>
-</div>
-
-<!-- OWNER PANEL -->
-<div id="screen-owner">
-  <div class="owner-wrap">
-    <div class="owner-header">
-      <div class="owner-title">👑 MORA — لوحة التحكم</div>
-      <div style="color:#888;font-size:.8rem;margin-top:4px;">Owner Panel</div>
-      <div id="owner-action-status" style="color:#00e676;font-size:.85rem;margin-top:6px;min-height:18px;"></div>
-    </div>
-    <div class="owner-tabs">
-      <button class="owner-tab active" onclick="ownerTab('students')">👥 الطلاب</button>
-      <button class="owner-tab" onclick="ownerTab('questions')">📝 الأسئلة</button>
-      <button class="owner-tab" onclick="ownerTab('settings')">⚙️ الإعدادات</button>
-      <button class="owner-tab" onclick="ownerTab('leaderboard')">🏆 الأوائل</button>
-      <button class="owner-tab" onclick="exitOwner()" style="margin-right:auto;border-color:#e8001d;color:#ff4444;">🚪 خروج</button>
-    </div>
-
-    <!-- STUDENTS -->
-    <div class="owner-section active" id="tab-students">
-      <div class="owner-card">
-        <h3>👥 كل الطلاب اللي امتحنوا</h3>
-        <div id="students-list"><div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div></div>
-      </div>
-    </div>
-
-    <!-- QUESTIONS -->
-    <div class="owner-section" id="tab-questions">
-      <div class="owner-card">
-        <h3>➕ إضافة سؤال جديد</h3>
-        <select class="owner-input" id="new-q-type">
-          <option value="mcq">اختيار من متعدد</option>
-          <option value="tf">صح أو خطأ</option>
-        </select>
-        <textarea class="owner-input" id="new-q-text" placeholder="نص السؤال" rows="3"></textarea>
-        <div id="new-q-opts">
-          <input class="owner-input" id="opt0" placeholder="الاختيار الأول (أ)" />
-          <input class="owner-input" id="opt1" placeholder="الاختيار الثاني (ب)" />
-          <input class="owner-input" id="opt2" placeholder="الاختيار الثالث (ج)" />
-          <input class="owner-input" id="opt3" placeholder="الاختيار الرابع (د)" />
-          <select class="owner-input" id="new-q-ans">
-            <option value="0">الإجابة الصحيحة: أ</option>
-            <option value="1">الإجابة الصحيحة: ب</option>
-            <option value="2">الإجابة الصحيحة: ج</option>
-            <option value="3">الإجابة الصحيحة: د</option>
-          </select>
-        </div>
-        <div id="new-q-tf" style="display:none;">
-          <select class="owner-input" id="new-q-tf-ans">
-            <option value="true">الإجابة الصحيحة: صح</option>
-            <option value="false">الإجابة الصحيحة: خطأ</option>
-          </select>
-        </div>
-        <button class="owner-btn green" onclick="addQuestion()">➕ إضافة السؤال</button>
-        <span id="add-q-status" style="color:#00e676;font-size:.85rem;margin-right:10px;"></span>
-      </div>
-      <div class="owner-card">
-        <h3>📋 الأسئلة الحالية <span style="color:#888;font-size:.8rem;">(اضغط تعديل لتغيير أي سؤال)</span></h3>
-        <div id="questions-list"><div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div></div>
-      </div>
-    </div>
-
-    <!-- SETTINGS -->
-    <div class="owner-section" id="tab-settings">
-      <div class="owner-card">
-        <h3>⏱️ تعديل وقت الاختبار</h3>
-        <input class="owner-input" id="timer-setting" type="number" placeholder="الوقت بالدقائق (الحالي: 45)" min="5" max="180" />
-        <button class="owner-btn purple" onclick="saveTimerSetting()">💾 حفظ الوقت</button>
-        <span id="timer-status" style="color:#00e676;font-size:.85rem;margin-right:10px;"></span>
-      </div>
-      <div class="owner-card">
-        <h3>🎯 تعديل حد الفوز</h3>
-        <input class="owner-input" id="win-setting" type="number" placeholder="الدرجة المطلوبة للفوز (الحالي: 42)" min="1" />
-        <button class="owner-btn purple" onclick="saveWinSetting()">💾 حفظ</button>
-        <span id="win-status" style="color:#00e676;font-size:.85rem;margin-right:10px;"></span>
-      </div>
-    </div>
-
-    <!-- LEADERBOARD -->
-    <div class="owner-section" id="tab-leaderboard">
-      <div class="owner-card">
-        <h3>🏆 لوحة الأوائل الكاملة — مع إمكانية الحذف</h3>
-        <div id="owner-lb-list"><div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div></div>
-      </div>
-    </div>
-  </div>
-</div>
 </body>
 </html>

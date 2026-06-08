@@ -112,7 +112,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .lb-group{color:#888;font-size:.8rem;}
 .lb-score{font-weight:900;font-size:1.1rem;color:var(--gold);}
 .lb-loading{text-align:center;padding:30px;color:#888;}
-/* OWNER */
 #screen-owner{display:none;position:fixed;inset:0;z-index:9999;background:#050508;overflow-y:auto;padding:20px 16px 60px;}
 .owner-wrap{max-width:900px;margin:0 auto;}
 .owner-header{text-align:center;padding:24px 0 20px;border-bottom:2px solid #2a0040;margin-bottom:24px;}
@@ -241,7 +240,7 @@ const BIN_URL=`https://api.jsonbin.io/v3/b/${BIN_ID}`;
 const HEADERS={'Content-Type':'application/json','X-Master-Key':API_KEY,'X-Bin-Versioning':'false'};
 const Q_BIN_URL='https://api.jsonbin.io/v3/b/6a260828f5f4af5e29c875ab';
 
-async function fetchResults(){try{const r=await fetch(BIN_URL,{headers:{'X-Master-Key':API_KEY}});const d=await r.json();return Array.isArray(d.record)?d.record:[];}catch(e){return[];}}
+async function fetchResults(){try{const r=await fetch(BIN_URL,{headers:{'X-Master-Key':API_KEY}});const d=await r.json();const arr=Array.isArray(d.record)?d.record:[];return arr.filter(r=>r&&r.name&&r.name!=='undefined'&&r.score!==undefined&&r.score!==null);}catch(e){return[];}}
 async function saveResult(entry){try{const all=await fetchResults();const idx=all.findIndex(r=>r.name===entry.name&&r.pin===entry.pin);if(idx>=0){if(entry.score>all[idx].score)all[idx]=entry;}else{all.push(entry);}await fetch(BIN_URL,{method:'PUT',headers:HEADERS,body:JSON.stringify(all)});return true;}catch(e){return false;}}
 async function fetchQuestionsFromBin(){try{const r=await fetch(Q_BIN_URL,{headers:{'X-Master-Key':API_KEY}});const d=await r.json();return d.record&&Array.isArray(d.record.questions)?d.record.questions:null;}catch(e){return null;}}
 async function saveQuestionsToBin(qs){try{await fetch(Q_BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY,'X-Bin-Versioning':'false'},body:JSON.stringify({questions:qs})});return true;}catch(e){return false;}}
@@ -504,7 +503,6 @@ function goBack(){
   }
 }
 
-// ========== OWNER SYSTEM ==========
 const OWNER_USER='MORA';
 const OWNER_PASS='MORA@2026';
 let ownerLoggedIn=false;
@@ -526,7 +524,12 @@ function ownerLogin(){
 }
 function exitOwner(){
   document.getElementById('screen-owner').style.display='none';
-  document.getElementById('screen-register').style.display='flex';
+  if(quizStarted){
+    document.getElementById('screen-quiz').style.display='block';
+    renderQ();window.scrollTo({top:0});
+  }else{
+    document.getElementById('screen-register').style.display='flex';
+  }
 }
 function ownerTab(name){
   document.querySelectorAll('.owner-section').forEach(s=>s.classList.remove('active'));
@@ -675,10 +678,8 @@ async function loadOwnerLB(){
   });
   el.innerHTML=html;
 }
-// ========== END OWNER ==========
 </script>
 
-<!-- OWNER LOGIN -->
 <div id="owner-login-screen" class="owner-login" style="display:none;">
   <div class="owner-login-card">
     <div style="font-size:2.5rem">👑</div>
@@ -688,11 +689,10 @@ async function loadOwnerLB(){
     <input class="owner-input" id="owner-pass-inp" type="password" placeholder="كلمة المرور" />
     <div id="owner-login-err" style="color:#ff1744;font-size:.85rem;min-height:18px;margin-bottom:8px;"></div>
     <button class="owner-btn purple" style="width:100%;" onclick="ownerLogin()">🔐 دخول</button>
-    <button onclick="document.getElementById('owner-login-screen').style.display='none'" style="margin-top:12px;background:none;border:none;color:#888;font-family:'Cairo',sans-serif;cursor:pointer;font-size:.85rem;">← رجوع</button>
+    <button onclick="document.getElementById('owner-login-screen').style.display='none';if(quizStarted){document.getElementById('screen-quiz').style.display='block';renderQ();}" style="margin-top:12px;background:none;border:none;color:#888;font-family:'Cairo',sans-serif;cursor:pointer;font-size:.85rem;">← رجوع</button>
   </div>
 </div>
 
-<!-- OWNER PANEL -->
 <div id="screen-owner">
   <div class="owner-wrap">
     <div class="owner-header">
@@ -707,14 +707,12 @@ async function loadOwnerLB(){
       <button class="owner-tab" onclick="ownerTab('leaderboard')">🏆 الأوائل</button>
       <button class="owner-tab" onclick="exitOwner()" style="margin-right:auto;border-color:#e8001d;color:#ff4444;">🚪 خروج</button>
     </div>
-    <!-- STUDENTS -->
     <div class="owner-section active" id="tab-students">
       <div class="owner-card">
         <h3>👥 كل الطلاب اللي امتحنوا</h3>
         <div id="students-list"><div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div></div>
       </div>
     </div>
-    <!-- QUESTIONS -->
     <div class="owner-section" id="tab-questions">
       <div class="owner-card">
         <h3>➕ إضافة سؤال جديد</h3>
@@ -749,7 +747,6 @@ async function loadOwnerLB(){
         <div id="questions-list"><div style="color:#888;text-align:center;padding:20px;">⏳ جاري التحميل...</div></div>
       </div>
     </div>
-    <!-- SETTINGS -->
     <div class="owner-section" id="tab-settings">
       <div class="owner-card">
         <h3>⏱️ تعديل وقت الاختبار</h3>
@@ -764,7 +761,6 @@ async function loadOwnerLB(){
         <span id="win-status" style="color:#00e676;font-size:.85rem;margin-right:10px;"></span>
       </div>
     </div>
-    <!-- LEADERBOARD -->
     <div class="owner-section" id="tab-leaderboard">
       <div class="owner-card">
         <h3>🏆 لوحة الأوائل الكاملة — مع إمكانية الحذف</h3>
